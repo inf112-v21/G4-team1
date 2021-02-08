@@ -37,8 +37,6 @@ public class HelloWorld implements ApplicationListener {
         map = mapLoader.load("RoboRallyTile.tmx");
 
         camera = new OrthographicCamera();
-        rederer = new OrthogonalTiledMapRenderer(map,1/300);
-        rederer.setView(camera);
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
         hole = (TiledMapTileLayer) map.getLayers().get("Hole");
@@ -46,9 +44,11 @@ public class HelloWorld implements ApplicationListener {
         player = (TiledMapTileLayer) map.getLayers().get("Player");
 
         camera.setToOrtho(false,11,11);
-        camera.x
+
+
         camera.update();
 
+        rederer = new OrthogonalTiledMapRenderer(map,1/300);
         rederer.setView(camera);
     }
 
