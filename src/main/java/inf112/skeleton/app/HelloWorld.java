@@ -46,7 +46,6 @@ public class HelloWorld implements ApplicationListener {
         player = (TiledMapTileLayer) map.getLayers().get("Player");
 
         camera.setToOrtho(false,11,11);
-        camera.x
         camera.update();
 
         rederer.setView(camera);
