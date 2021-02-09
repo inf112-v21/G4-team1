@@ -16,7 +16,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class HelloWorld implements ApplicationListener {
     private SpriteBatch batch;
-    private BitmapFont font;
 
     private TiledMap map;
     private TmxMapLoader mapLoader;
@@ -35,7 +34,6 @@ public class HelloWorld implements ApplicationListener {
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("RoboRallyTile.tmx");
-
         camera = new OrthographicCamera();
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
@@ -44,11 +42,9 @@ public class HelloWorld implements ApplicationListener {
         player = (TiledMapTileLayer) map.getLayers().get("Player");
 
         camera.setToOrtho(false,11,11);
-
-
         camera.update();
 
-        rederer = new OrthogonalTiledMapRenderer(map,1/300);
+        rederer = new OrthogonalTiledMapRenderer(map,1/300f);
         rederer.setView(camera);
     }
 
