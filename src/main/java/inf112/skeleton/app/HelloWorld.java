@@ -14,11 +14,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-
 public class HelloWorld implements ApplicationListener {
     private SpriteBatch batch;
+    private BitmapFont font;
 
     private TiledMap map;
+    private TmxMapLoader mapLoader;
 
     private TiledMapTileLayer baseLayer;
     private TiledMapTileLayer hole;
@@ -32,10 +33,12 @@ public class HelloWorld implements ApplicationListener {
     public void create() {
         batch = new SpriteBatch();
 
-        map = new TmxMapLoader().load("assets/RoboRallyTile.tmx");
-        rederer = new OrthogonalTiledMapRenderer(map, 1/300f);
-        camera = new OrthographicCamera();
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("RoboRallyTile.tmx");
 
+        camera = new OrthographicCamera();
+        rederer = new OrthogonalTiledMapRenderer(map,1/300);
+        rederer.setView(camera);
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
         hole = (TiledMapTileLayer) map.getLayers().get("Hole");
@@ -43,6 +46,9 @@ public class HelloWorld implements ApplicationListener {
         player = (TiledMapTileLayer) map.getLayers().get("Player");
 
         camera.setToOrtho(false,11,11);
+        camera.update();
+
+        rederer.setView(camera);
     }
 
     @Override
@@ -55,7 +61,6 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        rederer.setView(camera);
         rederer.render();
     }
 
