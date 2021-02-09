@@ -33,7 +33,7 @@ public class HelloWorld implements ApplicationListener {
         batch = new SpriteBatch();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("RoboRallyTile.tmx");
+        map = mapLoader.load("RoboRallyTile.tmx");  
         camera = new OrthographicCamera();
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
