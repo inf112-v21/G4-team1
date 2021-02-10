@@ -23,7 +23,7 @@ public class Game {
                 //rob.pickcard()
             }
             //rob.move();
-            Checkwinner();
+            //Checkwinner();
         }
     }
 
@@ -39,7 +39,7 @@ public class Game {
                     if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
                         rob.registerFlag(flag);
                         if(flag.equals(finalflag())) {
-                            System.out.println(rob.getName + "is the winner!");
+                            //System.out.println(rob.getName + "is the winner!");
                             playing = false;
                         }
                     }
