@@ -4,23 +4,19 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-
-import javax.swing.*;
+import objects.Flag;
+import objects.Robot;
 
 public class HelloWorld extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -28,10 +24,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private TiledMap map;
     private TmxMapLoader mapLoader;
 
-    private TiledMapTileLayer baseLayer;
-    private TiledMapTileLayer hole;
-    private TiledMapTileLayer flag;
-    private TiledMapTileLayer player;
+    private TiledMapTileLayer baseLayerLayer;
+    private TiledMapTileLayer holeLayer;
+    private TiledMapTileLayer flagLayer;
+    private TiledMapTileLayer playerLayer;
 
     private Texture playerTexture;
 
@@ -43,6 +39,15 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerWonCell;
     private Vector2 playerPosition;
 
+    Robot robot;
+    Flag flag;
+
+    public HelloWorld() {
+        robot = new Robot(0,0);
+        flag = new Flag(4,4);
+    }
+
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -51,10 +56,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         map = mapLoader.load("RoboRallyTile.tmx");  
         camera = new OrthographicCamera();
 
-        baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
-        hole = (TiledMapTileLayer) map.getLayers().get("Hole");
-        flag = (TiledMapTileLayer) map.getLayers().get("Flag");
-        player = (TiledMapTileLayer) map.getLayers().get("Player");
+        baseLayerLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
+        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
+        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
 
         TextureRegion[][] playerTextures = TextureRegion.split(new Texture("player.png"), 300, 300);
 
@@ -89,25 +94,29 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),playerCell);
+        playerLayer.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),playerCell);
         rederer.render();
     }
 
     @Override
     public boolean keyUp(int keycode){
-        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),null);
+        playerLayer.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),null);
 
         if(keycode == Input.Keys.UP){
             playerPosition.add(0,1);
+            robot.setYPosition(robot.getY()+1);
         }
         else if(keycode == Input.Keys.DOWN){
             playerPosition.add(0,-1);
+            robot.setYPosition(robot.getY()-1);
         }
         else if(keycode == Input.Keys.LEFT){
             playerPosition.add(-1,0);
+            robot.setXPosition(robot.getX()-1);
         }
         else if(keycode == Input.Keys.RIGHT){
             playerPosition.add(1,0);
+            robot.setXPosition(robot.getX()+1);
         }
         return true;
     }

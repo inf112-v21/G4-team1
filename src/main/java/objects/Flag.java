@@ -1,10 +1,10 @@
 package objects;
 
-public class flag implements IObject{
+public class Flag implements IObject{
     int posX;
     int posY;
 
-    public flag(int x, int y){
+    public Flag(int x, int y){
         setXPosition(x);
         setYPosition(y);
     }

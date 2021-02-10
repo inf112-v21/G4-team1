@@ -1,21 +1,22 @@
 package objects;
 
-public class robot implements IObject{
+public class Robot implements IObject{
     int lifeTokens;
-    flag lastFlag = null;
+    Flag lastFlag = null;
     int damageTokens;
     //TODO: direction
 
     int posX;
     int posY;
 
-    public robot(int x, int y){
+    public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
 
         setXPosition(x);
         setYPosition(y);
     }
+
     @Override
     public void setXPosition(int x) {
         posX = x;
@@ -61,11 +62,11 @@ public class robot implements IObject{
     }
 
     //TODO: Visited flag should register, update last flag
-    public void registerFlag(flag flag){
+    public void registerFlag(Flag flag){
         lastFlag = flag;
     }
 
-    public flag getLastFlag(){
+    public Flag getLastFlag(){
         return lastFlag;
     }
 }
