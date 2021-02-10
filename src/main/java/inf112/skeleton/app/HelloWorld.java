@@ -20,6 +20,8 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 
+import javax.swing.*;
+
 public class HelloWorld extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
 
@@ -44,7 +46,6 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        Gdx.input.setInputProcessor(this);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("RoboRallyTile.tmx");  
@@ -72,6 +73,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
 
         rederer = new OrthogonalTiledMapRenderer(map,1/300f);
         rederer.setView(camera);
+
+        Gdx.input.setInputProcessor(this);
+        playerPosition = new Vector2();
+        playerPosition.set(0,0);
     }
 
     @Override
@@ -84,12 +89,14 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        player.setCell(0,0,playerCell);
+        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),playerCell);
         rederer.render();
     }
 
     @Override
     public boolean keyUp(int keycode){
+        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),null);
+
         if(keycode == Input.Keys.UP){
             playerPosition.add(0,1);
         }
@@ -97,10 +104,10 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
             playerPosition.add(0,-1);
         }
         else if(keycode == Input.Keys.LEFT){
-            playerPosition.add(-1,1);
+            playerPosition.add(-1,0);
         }
         else if(keycode == Input.Keys.RIGHT){
-            playerPosition.add(1,1);
+            playerPosition.add(1,0);
         }
         return true;
     }
