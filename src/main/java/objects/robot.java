@@ -2,7 +2,6 @@ package objects;
 
 public class robot implements IObject{
     int lifeTokens;
-    int registeredFlags;
     flag lastFlag = null;
     int damageTokens;
     //TODO: direction
@@ -12,7 +11,6 @@ public class robot implements IObject{
 
     public robot(int x, int y){
         lifeTokens = 3;
-        registeredFlags = 0;
         damageTokens = 0;
 
         setXPosition(x);
@@ -61,5 +59,9 @@ public class robot implements IObject{
     //TODO: Visited flag should register, update last flag
     private void registerFlag(flag flag){
         lastFlag = flag;
+    }
+
+    public flag getLastFlag(){
+        return lastFlag;
     }
 }
