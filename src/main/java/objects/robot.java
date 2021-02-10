@@ -57,7 +57,7 @@ public class robot implements IObject{
     }
 
     //TODO: Visited flag should register, update last flag
-    private void registerFlag(flag flag){
+    public void registerFlag(flag flag){
         lastFlag = flag;
     }
 
