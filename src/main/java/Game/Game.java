@@ -1,15 +1,15 @@
 package Game;
 
-import objects.flag;
-import objects.robot;
+import objects.Flag;
+import objects.Robot;
 
 import java.util.ArrayList;
 
 public class Game {
     Boolean playing = false;
-    ArrayList<robot> players = new ArrayList<>();
+    ArrayList<Robot> players = new ArrayList<>();
     int numberOfFlags;
-    ArrayList<flag> flags = new ArrayList<>();
+    ArrayList<Flag> flags = new ArrayList<>();
     //Map Gamemap;
 
 
@@ -19,7 +19,7 @@ public class Game {
 
     public void Playgame() {
         while (playing) {
-            for (robot rob : players) {
+            for (Robot rob : players) {
                 //rob.pickcard()
             }
             //rob.move();
@@ -33,8 +33,8 @@ public class Game {
      * player wins and the game is done
      */
     public void RegistrerFlag() {
-        for(robot rob : players)
-            for(flag flag : flags){
+        for(Robot rob : players)
+            for(Flag flag : flags){
                 if (rob.getX() == (flag.getX()) && rob.getY() == (flag.getY()))
                     if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
                         rob.registerFlag(flag);
@@ -50,7 +50,7 @@ public class Game {
 
     }
 
-    public flag finalflag(){
+    public Flag finalflag(){
        return flags.get(flags.size()-1);
     }
 
