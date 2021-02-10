@@ -6,13 +6,7 @@ public interface IObject {
      * Set x position of object
      * @param x
      */
-    public void setXPosition(int x);
-
-    /**
-     * Set y position of object
-     * @param y
-     */
-    public void setYPosition(int y);
+    public void setPosition(float x, float y);
 
     /**
      *

@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Vector2;
 import objects.Flag;
 import objects.Robot;
 
@@ -37,9 +36,8 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
-    private Vector2 playerPosition;
+    private Robot robot;
 
-    Robot robot;
     Flag flag;
 
     public HelloWorld() {
@@ -71,8 +69,6 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         playerDiedCell.setTile(new StaticTiledMapTile(playerTextures[0][1]));
         playerWonCell.setTile(new StaticTiledMapTile(playerTextures[0][2]));
 
-        playerPosition = new Vector2();
-
         camera.setToOrtho(false,11,11);
         camera.update();
 
@@ -80,8 +76,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         rederer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
-        playerPosition = new Vector2();
-        playerPosition.set(0,0);
+        robot.set(0,0);
     }
 
     @Override
@@ -94,28 +89,28 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        playerLayer.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),playerCell);
+        playerLayer.setCell(Math.round(robot.x),Math.round(robot.y),playerCell);
         rederer.render();
     }
 
     @Override
     public boolean keyUp(int keycode){
-        playerLayer.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),null);
+        playerLayer.setCell(Math.round(robot.x),Math.round(robot.y),null);
 
         if(keycode == Input.Keys.UP){
-            playerPosition.add(0,1);
+            robot.add(0,1);
             robot.setYPosition(robot.getY()+1);
         }
         else if(keycode == Input.Keys.DOWN){
-            playerPosition.add(0,-1);
+            robot.add(0,-1);
             robot.setYPosition(robot.getY()-1);
         }
         else if(keycode == Input.Keys.LEFT){
-            playerPosition.add(-1,0);
+            robot.add(-1,0);
             robot.setXPosition(robot.getX()-1);
         }
         else if(keycode == Input.Keys.RIGHT){
-            playerPosition.add(1,0);
+            robot.add(1,0);
             robot.setXPosition(robot.getX()+1);
         }
         return true;

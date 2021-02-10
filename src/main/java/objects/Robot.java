@@ -1,40 +1,34 @@
 package objects;
 
-public class Robot implements IObject{
+import com.badlogic.gdx.math.Vector2;
+
+public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     Flag lastFlag = null;
     int damageTokens;
     //TODO: direction
 
-    int posX;
-    int posY;
 
     public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
 
-        setXPosition(x);
-        setYPosition(y);
+       setPosition(x,y);
     }
 
     @Override
-    public void setXPosition(int x) {
-        posX = x;
-    }
-
-    @Override
-    public void setYPosition(int y) {
-        posY = y;
+    public void setPosition(float x, float y) {
+        this.set(x,y);
     }
 
     @Override
     public int getX() {
-        return posX;
+        return Math.round(this.x);
     }
 
     @Override
     public int getY() {
-        return posY;
+        return Math.round(this.y);
     }
 
     //TODO
