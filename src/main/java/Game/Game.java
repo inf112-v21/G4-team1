@@ -15,6 +15,9 @@ public class Game {
 
     public Game() {
         playing = true;
+        players.add(new Robot(0,0));
+        flags.add(new Flag(4,4));
+
     }
 
     public void Playgame() {
