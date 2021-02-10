@@ -21,7 +21,6 @@ public class robot implements IObject{
     @Override
     public void setXPosition(int x) {
         posX = x;
-
     }
 
     @Override
@@ -57,5 +56,10 @@ public class robot implements IObject{
     //TODO
     private void repair(){
 
+    }
+
+    //TODO: Visited flag should register, update last flag
+    private void registerFlag(flag flag){
+        lastFlag = flag;
     }
 }
