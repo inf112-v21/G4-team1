@@ -16,7 +16,7 @@ public class Robot implements IObject{
         setXPosition(x);
         setYPosition(y);
     }
-    
+
     @Override
     public void setXPosition(int x) {
         posX = x;
