@@ -1,10 +1,10 @@
 package Cards;
 
-public class movementCard implements ICards{
+public class MovementCard implements ICards{
     int distance;
     int priority;
 
-    public movementCard(int move, int prio){
+    public MovementCard(int move, int prio){
         distance = move;
         priority = prio;
     }
