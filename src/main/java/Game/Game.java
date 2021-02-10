@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Game {
     Boolean playing = false;
     ArrayList<robot> players = new ArrayList<>();
-    int numberofflags;
+    int numberOfFlags;
     ArrayList<flag> flags = new ArrayList<>();
     //Map Gamemap;
 
@@ -27,15 +27,21 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if robot position equals flag position
+     * If flag equals the final flag and robot has visited all previous flags,
+     * player wins and the game is done
+     */
     public void RegistrerFlag() {
         for(robot rob : players)
             for(flag flag : flags){
-                if (rob.getX().equals(flags.get(0).getX()) && rob.getY().equals(flags.get(0).getY()))
-                {
-                    rob.registerFlag(flag);
-                    if(flag.equals(finalflag())) {
-                        System.out.println(rob.getName + "is the winner!");
-                        playing = false;
+                if (rob.getX() == (flag.getX()) && rob.getY() == (flag.getY()))
+                    if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
+                        rob.registerFlag(flag);
+                        if(flag.equals(finalflag())) {
+                            System.out.println(rob.getName + "is the winner!");
+                            playing = false;
+                        }
                     }
                 }
 

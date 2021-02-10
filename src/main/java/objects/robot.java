@@ -40,13 +40,17 @@ public class robot implements IObject{
 
     /**
      * moves x tiles in the direction the robot is facing
-     * @param tiles
+     * @param tiles number of tiles it moves
      */
     private void move(int tiles){
 
     }
 
     //TODO
+
+    /**
+     * Turns robot in given direction
+     */
     private void turn(){
 
     }
