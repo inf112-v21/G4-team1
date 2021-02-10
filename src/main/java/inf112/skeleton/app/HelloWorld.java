@@ -4,23 +4,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-
-import javax.swing.*;
 
 public class HelloWorld extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -29,9 +23,9 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private TmxMapLoader mapLoader;
 
     private TiledMapTileLayer baseLayer;
-    private TiledMapTileLayer hole;
-    private TiledMapTileLayer flag;
-    private TiledMapTileLayer player;
+    private TiledMapTileLayer holeLayer;
+    private TiledMapTileLayer flagLayer;
+    private TiledMapTileLayer playerLayer;
 
     private Texture playerTexture;
 
@@ -48,15 +42,15 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         batch = new SpriteBatch();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("RoboRallyTile.tmx");  
+        map = mapLoader.load("assets/RoboRallyTile.tmx");
         camera = new OrthographicCamera();
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
-        hole = (TiledMapTileLayer) map.getLayers().get("Hole");
-        flag = (TiledMapTileLayer) map.getLayers().get("Flag");
-        player = (TiledMapTileLayer) map.getLayers().get("Player");
+        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
+        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
 
-        TextureRegion[][] playerTextures = TextureRegion.split(new Texture("player.png"), 300, 300);
+        TextureRegion[][] playerTextures = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
 
         playerCell = new TiledMapTileLayer.Cell();
         playerDiedCell = new TiledMapTileLayer.Cell();
@@ -89,13 +83,26 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),playerCell);
+
+        if(holeLayer.getCell(playerXPosition(),playerYPosition()) != null){
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerDiedCell);
+
+        }
+        else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
+            pause();
+        }
+
+        else{
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
+        }
+
         rederer.render();
     }
 
     @Override
     public boolean keyUp(int keycode){
-        player.setCell(Math.round(playerPosition.x),Math.round(playerPosition.y),null);
+        playerLayer.setCell(playerXPosition(),playerYPosition(),null);
 
         if(keycode == Input.Keys.UP){
             playerPosition.add(0,1);
@@ -122,5 +129,12 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    public int playerXPosition(){
+        return Math.round(playerPosition.x);
+    }
+    public int playerYPosition(){
+        return Math.round(playerPosition.y);
     }
 }
