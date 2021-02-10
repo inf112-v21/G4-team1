@@ -96,22 +96,20 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode){
         playerLayer.setCell(Math.round(robot.x),Math.round(robot.y),null);
+        float robotX = robot.getX();
+        float robotY = robot.getY();
 
         if(keycode == Input.Keys.UP){
-            robot.add(0,1);
-            robot.setYPosition(robot.getY()+1);
+            robot.setPosition(robotX, robotY +1);
         }
         else if(keycode == Input.Keys.DOWN){
-            robot.add(0,-1);
-            robot.setYPosition(robot.getY()-1);
+            robot.setPosition(robotX, robotY -1);
         }
         else if(keycode == Input.Keys.LEFT){
-            robot.add(-1,0);
-            robot.setXPosition(robot.getX()-1);
+            robot.setPosition(robotX-1, robotY);
         }
         else if(keycode == Input.Keys.RIGHT){
-            robot.add(1,0);
-            robot.setXPosition(robot.getX()+1);
+            robot.setPosition(robotX+1, robotY);
         }
         return true;
     }

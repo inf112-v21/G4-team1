@@ -5,27 +5,23 @@ public class Flag implements IObject{
     int posY;
 
     public Flag(int x, int y){
-        setXPosition(x);
-        setYPosition(y);
+        setPosition(x,y);
+    }
+
+
+
+    @Override
+    public void setPosition(float x, float y) {
+
     }
 
     @Override
-    public void setXPosition(int x) {
-        posX = x;
-    }
-
-    @Override
-    public void setYPosition(int y) {
-        posY = y;
-    }
-
-    @Override
-    public int getX() {
+    public float getX() {
         return posX;
     }
 
     @Override
-    public int getY() {
+    public float getY() {
         return posY;
     }
 }

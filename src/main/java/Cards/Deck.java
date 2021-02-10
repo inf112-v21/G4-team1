@@ -2,10 +2,10 @@ package Cards;
 
 import java.util.ArrayList;
 
-public class deck {
+public class Deck {
     ArrayList<ICards> cardDeck;
 
-    public deck(){
+    public Deck(){
 
     }
 

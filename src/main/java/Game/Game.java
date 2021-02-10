@@ -47,9 +47,9 @@ public class Game {
                         }
                     }
                 }
-
-
             }
+
+
 
     public Flag finalflag(){
        return flags.get(flags.size()-1);

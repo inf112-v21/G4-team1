@@ -22,13 +22,13 @@ public class Robot extends Vector2 implements IObject{
     }
 
     @Override
-    public int getX() {
-        return Math.round(this.x);
+    public float getX() {
+        return this.x;
     }
 
     @Override
-    public int getY() {
-        return Math.round(this.y);
+    public float getY() {
+        return this.y;
     }
 
     //TODO

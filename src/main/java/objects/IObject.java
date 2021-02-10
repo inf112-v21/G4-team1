@@ -12,11 +12,11 @@ public interface IObject {
      *
      * @return objects x position
      */
-    public int getX();
+    public float getX();
 
     /**
      *
      * @return objects y position
      */
-    public int getY();
+    public float getY();
 }
