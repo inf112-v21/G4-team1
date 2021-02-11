@@ -27,10 +27,8 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer flagLayer;
     private TiledMapTileLayer playerLayer;
 
-    private Texture playerTexture;
-
     private OrthographicCamera camera;
-    private OrthogonalTiledMapRenderer rederer;
+    private OrthogonalTiledMapRenderer renderer;
 
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
@@ -65,8 +63,8 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         camera.setToOrtho(false,11,11);
         camera.update();
 
-        rederer = new OrthogonalTiledMapRenderer(map,1/300f);
-        rederer.setView(camera);
+        renderer = new OrthogonalTiledMapRenderer(map,1/300f);
+        renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
         playerPosition = new Vector2();
@@ -97,7 +95,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
             playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
         }
 
-        rederer.render();
+        renderer.render();
     }
 
     @Override
@@ -106,17 +104,21 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
 
         if(keycode == Input.Keys.UP){
             playerPosition.add(0,1);
+            return true;
         }
         else if(keycode == Input.Keys.DOWN){
             playerPosition.add(0,-1);
+            return true;
         }
         else if(keycode == Input.Keys.LEFT){
             playerPosition.add(-1,0);
+            return true;
         }
         else if(keycode == Input.Keys.RIGHT){
             playerPosition.add(1,0);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
