@@ -9,7 +9,7 @@ public class Main {
         cfg.setTitle("RoboTestApp");
         cfg.setWindowedMode(500, 500);
 
-        new Lwjgl3Application(new HelloWorld(), cfg);
+        new Lwjgl3Application(new Aplication(), cfg);
 
 
     }

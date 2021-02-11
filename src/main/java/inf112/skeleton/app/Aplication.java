@@ -16,7 +16,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 
-public class HelloWorld extends InputAdapter implements ApplicationListener {
+public class Aplication extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
 
     private TiledMap map;
@@ -30,7 +30,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
     private Texture playerTexture;
 
     private OrthographicCamera camera;
-    private OrthogonalTiledMapRenderer rederer;
+    private OrthogonalTiledMapRenderer renderer;
 
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
@@ -65,8 +65,8 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
         camera.setToOrtho(false,11,11);
         camera.update();
 
-        rederer = new OrthogonalTiledMapRenderer(map,1/300f);
-        rederer.setView(camera);
+        renderer = new OrthogonalTiledMapRenderer(map,1/300f);
+        renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
         playerPosition = new Vector2();
@@ -97,7 +97,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener {
             playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
         }
 
-        rederer.render();
+        renderer.render();
     }
 
     @Override

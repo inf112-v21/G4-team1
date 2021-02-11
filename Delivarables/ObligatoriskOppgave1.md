@@ -33,6 +33,11 @@ Kristian ble valgt som teamleder på grunn av tidligere erfaring med håndtering
 
 **Prosjektmetodikk:** Kanban
 
+Her er et utklipp av vårt projectboard på et stadie. Alle arbeidsoppgaver som blir oprettet legges i backlog, og flyttet til prioritert om de haster.
+I tilleg har hvert medlem en egen kolonne hvor de flytter tingen de holder på med til, vanligvis ville ikke hvert medlem hatt en egen kolonne, men dette funker siden vi ikke er så mange.
+Til slutt blir arbeidsoppgaver som er ferdig lagt i den siste kolonna.
+![img.png](projectBoard.png)
+
 **Møter:** Møtes fysisk mandag ettermiddag, gruppetimer onsdag,  fredag om det trengs mer arbeid på prosjektet.
 
 **Kommunikasjon:** Vi bruker Discord og Facebook messenger til å kommunisere mellom møtene.
@@ -52,6 +57,13 @@ Denne applikasjonen skal inneholde muligheten til å spille brettspillet RoboRal
 
 Som spiller ønsker jeg å kunne se brettet jeg spiller på og de forskjellige brikkene på brettet for å kunne bevege meg.
 
+
+####Arbeidsoppgaver
+* Lage et map i programmet "Tiled"
+* Spillebrettet må vises i aplikasjonen
+* Spilleren må vises på brettet
+* Spilleren må kunne flyttes (kun med piltastene foreløpig)
+
 ####Akseptansekriterier
 
 Gitt at
@@ -59,18 +71,21 @@ Gitt at
 spiller ser brettet og brikkene på det
 
 
-når Spiller trykker på ->
+når Spiller trykker på høyre piltast
 
-så beveger spiller seg på brettet i retning ->.
+så beveger spiller seg på brettet til høyre.
 
 ####Brukerhistorie:
 
 
 Som spiller ønsker jeg å kunne besøke flagg i spillet, slik at det er mulig å vinne.
 
+####Arbeidsoppgaver
+* Flagg må vises på brettet
+* Når spiller går på et flagg må dette registreres
+* Når spiller har vært på alle flagg skal spiller vinne
+
 ####Akseptansekriterier
-
-
 
 Gitt at
 
@@ -83,3 +98,5 @@ spiller er på felt(6,5)
 når spiller går fra felt (6,5) til felt(6,6)
 
 så vinner spilleren
+
+
