@@ -15,8 +15,6 @@ Erfaring med Java fra inf101 og inf102, litt python fra inf100, Går IKT 4. Seme
 **Anders Refvik Torsvik :**
 Erfaring med Java fra inf101 og inf102, litt python fra inf100, Går IKT 4. Semester
 
-
-
 ###Roller
 
 **Teamleder:** Kristian
@@ -30,8 +28,6 @@ Erfaring med Java fra inf101 og inf102, litt python fra inf100, Går IKT 4. Seme
 **Programmerere:** Ulrik, Kristian, Nathaniel, Anders
 
 Kristian ble valgt som teamleder på grunn av tidligere erfaring med håndtering av større prosjekter. Anders har rollen tester fordi han viste interesse for det under første møte. Nathaniel er kundekontakt fordi han er målbevisst og har god kontroll på hva som skal prioriteres. Ulrik ble nettverksansvarlig siden han har litt erfaring med å sette opp nettverk fra før. Alle har rollen som programmer for at jobben ikke skal bli for krevende for enkeltpersoner. Disse rollene er i bruk hovedsakelig til første oblig, og vi er bevisste på at det kan endre seg i løpet av prosjektet.
-
-
 
 ## Deloppgave 2
 
@@ -47,19 +43,17 @@ Kristian ble valgt som teamleder på grunn av tidligere erfaring med håndtering
 
 **Deling av felles kode:** vi bruker repositorium på git og google disk mappe
 
-
-
 ## Deloppgave 3
+
 Denne applikasjonen skal inneholde muligheten til å spille brettspillet RoboRally digitalt. Spillet vil inneholde funksjonalitet basert på brettspill-utgaven, men spesifisert av oppgaveteksten gitt av UiB. Målet er at spillet skal ha en grei spillopplevelse med mulighet for multiplayer.
 
-
-
 ####Brukerhistorie
+
+
 Som spiller ønsker jeg å kunne se brettet jeg spiller på og de forskjellige brikkene på brettet for å kunne bevege meg.
 
-
-
 ####Akseptansekriterier
+
 Gitt at
 
 spiller ser brettet og brikkene på det
@@ -69,14 +63,15 @@ når Spiller trykker på ->
 
 så beveger spiller seg på brettet i retning ->.
 
-
-
 ####Brukerhistorie:
+
+
 Som spiller ønsker jeg å kunne besøke flagg i spillet, slik at det er mulig å vinne.
 
-
-
 ####Akseptansekriterier
+
+
+
 Gitt at
 
 spiller ser brettet og kan bevege seg.
@@ -88,25 +83,3 @@ spiller er på felt(6,5)
 når spiller går fra felt (6,5) til felt(6,6)
 
 så vinner spilleren
-
-
-##Testing
-For testingen lagde vi bare en JUnit test til dette programmet, FileLoadTest. 
-Denne testen, tester på om det finnes en fil som heter RoboRallyTile, altså tmx filen for kartet.
-
-####Visuelle tester
-Vi foretok noen visuelle tester for spillbrettet og for beveging av karaktern.
-For spillbrettet sjekket vi at alle de ulike lagene viste (baselayer, holelayer,flaglayer og playerlayer).
-Når alle de ulike lagene kunne sees, var testen passert. 
-
-Neste testingen ble gjort på spillerbrikken. Først plasserte vi brikken ved noen negative koordinater for å sjekke at dette ikke gikk.
-Her kunne vi jo (åpenbart) ikke se brikken, så vi endret kordinatene til 0,0.
-Da ble brikken satt i nedre vestre hjørnet, så testen sto. 
-
-Flytting av brikker var den neste visuelle testen. Her sjekket vi at brikken bevegde en brikke av gangen og i den retningen den trykkede piltastet viste. 
-Alle brikkene bevegde seg bare etter piltastene og ikke noen andre taster. Karakteren bevegde seg som den skal.
-
-Neste, og siste visuelle test var en test på om karakteren endret ikon (skin) om den traff på et hull eller et flag.
-På spillebrettet var det to hull og et flag. Hullet og flagget skulle gi to ulike skins, noe som det gjorde. 
-Det funket som det skulle, og derfor har alle de visuelle testen stått. 
- 
