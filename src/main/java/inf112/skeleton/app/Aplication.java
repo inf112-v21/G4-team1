@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import objects.Robot;
 
 public class Aplication extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -33,8 +34,11 @@ public class Aplication extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
-    private Vector2 playerPosition;
+    private Robot playerPosition;
 
+    /**
+     * Loads in map and every object on it
+     */
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -58,8 +62,6 @@ public class Aplication extends InputAdapter implements ApplicationListener {
         playerDiedCell.setTile(new StaticTiledMapTile(playerTextures[0][1]));
         playerWonCell.setTile(new StaticTiledMapTile(playerTextures[0][2]));
 
-        playerPosition = new Vector2();
-
         camera.setToOrtho(false,11,11);
         camera.update();
 
@@ -67,8 +69,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
         renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
-        playerPosition = new Vector2();
-        playerPosition.set(0,0);
+        playerPosition = new Robot(0,0);
     }
 
     @Override
@@ -100,6 +101,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
 
     @Override
     public boolean keyUp(int keycode){
+
         playerLayer.setCell(playerXPosition(),playerYPosition(),null);
 
         if(keycode == Input.Keys.UP){
@@ -134,9 +136,9 @@ public class Aplication extends InputAdapter implements ApplicationListener {
     }
 
     public int playerXPosition(){
-        return Math.round(playerPosition.x);
+        return Math.round(playerPosition.getX());
     }
     public int playerYPosition(){
-        return Math.round(playerPosition.y);
+        return Math.round(playerPosition.getY());
     }
 }

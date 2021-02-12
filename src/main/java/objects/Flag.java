@@ -1,8 +1,8 @@
 package objects;
 
-public class Flag implements IObject{
-    int posX;
-    int posY;
+import com.badlogic.gdx.math.Vector2;
+
+public class Flag extends Vector2 implements IObject{
 
     public Flag(int x, int y){
         setPosition(x,y);
@@ -12,16 +12,16 @@ public class Flag implements IObject{
 
     @Override
     public void setPosition(float x, float y) {
-
+        this.set(x,y);
     }
 
     @Override
     public float getX() {
-        return posX;
+        return this.x;
     }
 
     @Override
     public float getY() {
-        return posY;
+        return this.y;
     }
 }
