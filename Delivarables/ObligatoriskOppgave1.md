@@ -33,6 +33,11 @@ Kristian ble valgt som teamleder på grunn av tidligere erfaring med håndtering
 
 **Prosjektmetodikk:** Kanban
 
+Her er et skjermdump av vårt project board. Nye issues blir lagt i "backlog", de viktigste blir flyttet til "prioritert".
+Alle gruppemedlemmene har sin egen kolonne hvor de kan dra issues de jobber på inn. I teams med flere medlemmer enn oss hadde det ikke funket med så mange kolonner,
+men siden vi bare er 4, funker dette bra. Når en issue lukkes blir den lagt i "Ferdig"
+![img.png](img.png)
+
 **Møter:** Møtes fysisk mandag ettermiddag, gruppetimer onsdag,  fredag om det trengs mer arbeid på prosjektet.
 
 **Kommunikasjon:** Vi bruker Discord og Facebook messenger til å kommunisere mellom møtene.
@@ -52,6 +57,13 @@ Denne applikasjonen skal inneholde muligheten til å spille brettspillet RoboRal
 
 Som spiller ønsker jeg å kunne se brettet jeg spiller på og de forskjellige brikkene på brettet for å kunne bevege meg.
 
+####Arbeidsoppgaver:
+
+* Lage brettet i programmet 'tiled'
+* Vise brettet i aplikasjonen
+* Vise spiller på aplikasjonen
+* Spiller skal kunne klytte på brettet
+
 ####Akseptansekriterier
 
 Gitt at
@@ -68,6 +80,11 @@ så beveger spiller seg på brettet i retning ->.
 
 Som spiller ønsker jeg å kunne besøke flagg i spillet, slik at det er mulig å vinne.
 
+####Arbeidsoppgaver:
+
+* Flagg skal vises på brettet
+* Spiller skal registrere når den går over flagg
+
 ####Akseptansekriterier
 
 
@@ -83,3 +100,23 @@ spiller er på felt(6,5)
 når spiller går fra felt (6,5) til felt(6,6)
 
 så vinner spilleren
+
+##Testing
+For testingen lagde vi bare en JUnit test til dette programmet, FileLoadTest.
+Denne testen, tester på om det finnes en fil som heter RoboRallyTile, altså tmx filen for kartet.
+
+####Visuelle tester
+Vi foretok noen visuelle tester for spillbrettet og for beveging av karaktern.
+For spillbrettet sjekket vi at alle de ulike lagene viste (baselayer, holelayer,flaglayer og playerlayer).
+Når alle de ulike lagene kunne sees, var testen passert.
+
+Neste testingen ble gjort på spillerbrikken. Først plasserte vi brikken ved noen negative koordinater for å sjekke at dette ikke gikk.
+Her kunne vi jo (åpenbart) ikke se brikken, så vi endret kordinatene til 0,0.
+Da ble brikken satt i nedre vestre hjørnet, så testen sto.
+
+Flytting av brikker var den neste visuelle testen. Her sjekket vi at brikken bevegde en brikke av gangen og i den retningen den trykkede piltastet viste.
+Alle brikkene bevegde seg bare etter piltastene og ikke noen andre taster. Karakteren bevegde seg som den skal.
+
+Neste, og siste visuelle test var en test på om karakteren endret ikon (skin) om den traff på et hull eller et flag.
+På spillebrettet var det to hull og et flag. Hullet og flagget skulle gi to ulike skins, noe som det gjorde.
+Det funket som det skulle, og derfor har alle de visuelle testen stått. 
