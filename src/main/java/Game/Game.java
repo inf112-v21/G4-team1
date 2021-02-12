@@ -10,7 +10,6 @@ public class Game {
     ArrayList<Robot> players = new ArrayList<>();
     int numberOfFlags;
     ArrayList<Flag> flags = new ArrayList<>();
-    //Map Gamemap;
 
 
     public Game() {
