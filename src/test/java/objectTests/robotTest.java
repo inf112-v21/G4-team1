@@ -25,6 +25,23 @@ public class robotTest {
         assertEquals(3, robot.getX(), 0.1);
         assertEquals(4, robot.getY(), 0.1);
     }
+
+    @Test
+    public void turnLeftTest(){
+        robot = new Robot(0,0);
+        robot.setDirection("S");
+        robot.turnLeft();
+        assertEquals("E", robot.getDir());
+    }
+
+    @Test
+    public void turnRightTest(){
+        robot = new Robot(0,0);
+        robot.setDirection("S");
+        robot.turnRight();
+        assertEquals("W", robot.getDir());
+    }
+
     //TODO: test om move faktisk flytter
 
     //TODO: teste om robot for damage tokens når den tar skade

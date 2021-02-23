@@ -4,13 +4,14 @@ import Cards.ICards;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     Flag lastFlag = null;
     int damageTokens;
     ArrayList<ICards> currentcards = new ArrayList<ICards>();
-    //TODO: direction
+    String dir = "E";
 
 
     public Robot(int x, int y){
@@ -46,9 +47,20 @@ public class Robot extends Vector2 implements IObject{
     }
 
     /**
+     *
+     * @param direction
+     */
+    public void setDirection(String direction) {
+        if ((direction == "N") || (direction == "E") || (direction == "S") || (direction == "E")) {
+            dir = direction;
+        }
+
+    }
+
+    /**
      * Turns robot in left
      */
-    private void turnLeft(){
+    public void turnLeft(){
         if (dir == "N"){
             dir = "W";
         }
@@ -66,7 +78,7 @@ public class Robot extends Vector2 implements IObject{
     /**
      * Turns robot right
      */
-    private void turnRight(){
+    public void turnRight(){
         if (dir == "N"){
             dir = "E";
         }
