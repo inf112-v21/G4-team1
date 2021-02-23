@@ -2,12 +2,13 @@ package objects;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     Flag lastFlag = null;
     int damageTokens;
-    //TODO: direction
-
+    String dir = "E";
 
     public Robot(int x, int y){
         lifeTokens = 3;
@@ -41,13 +42,48 @@ public class Robot extends Vector2 implements IObject{
 
     }
 
-    //TODO
+    /**
+     * Turns robot in left
+     */
+    private void turnLeft(){
+        if (dir == "N"){
+            dir = "W";
+        }
+        else if (dir == "E"){
+            dir = "N";
+        }
+        else if (dir == "S"){
+            dir = "E";
+        }
+        else if (dir == "W"){
+            dir = "S";
+        }
+    }
 
     /**
-     * Turns robot in given direction
+     * Turns robot right
      */
-    private void turn(){
+    private void turnRight(){
+        if (dir == "N"){
+            dir = "E";
+        }
+        else if (dir == "E"){
+            dir = "S";
+        }
+        else if (dir == "S"){
+            dir = "W";
+        }
+        else if (dir == "W"){
+            dir = "N";
+        }
+    }
 
+    /**
+     *
+     * @return the direction the robot is facing
+     */
+    public String getDir(){
+        return dir;
     }
 
     //TODO
