@@ -29,6 +29,11 @@ public class Game {
         }
     }
 
+    public void Playturn(){
+
+
+    }
+
     /**
      * Checks if robot position equals flag position
      * If flag equals the final flag and robot has visited all previous flags,
