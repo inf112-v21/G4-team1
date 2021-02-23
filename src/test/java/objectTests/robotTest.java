@@ -26,6 +26,20 @@ public class robotTest {
         assertEquals(4, robot.getY(), 0.1);
     }
 
+    /**
+     * Checks if setDirection() updates direction, and that only N, S, E or W is accepted.
+     */
+    @Test
+    public void setDirectionShouldChangeDirection(){
+        robot = new Robot(2,2);
+
+        robot.setDirection("N");
+        assertEquals("N", robot.getDir());
+
+        robot.setDirection("M");
+        assertEquals("N", robot.getDir());
+    }
+
     @Test
     public void turnLeftTest(){
         robot = new Robot(0,0);

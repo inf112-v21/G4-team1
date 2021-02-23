@@ -51,7 +51,7 @@ public class Robot extends Vector2 implements IObject{
      * @param direction
      */
     public void setDirection(String direction) {
-        if ((direction == "N") || (direction == "E") || (direction == "S") || (direction == "E")) {
+        if ((direction == "N") || (direction == "E") || (direction == "S") || (direction == "W")) {
             dir = direction;
         }
 
