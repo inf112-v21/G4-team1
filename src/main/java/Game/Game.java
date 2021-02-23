@@ -4,6 +4,7 @@ import objects.Flag;
 import objects.Robot;
 
 import java.util.ArrayList;
+import Cards.*;
 
 public class Game {
     Boolean playing = false;
@@ -30,7 +31,15 @@ public class Game {
     }
 
     public void Playturn(){
+        for(Robot Rob : players){
+            ICards card = Rob.getFirstCard();
+            if(card.getClass() == MovementCard.class){
+                Rob.move(((MovementCard) card).getDistance());
+            }
+            if(card.getClass() == TurningCard.class){
 
+            }
+        }
 
     }
 

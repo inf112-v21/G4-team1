@@ -9,4 +9,11 @@ public class MovementCard implements ICards{
         priority = prio;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
 }

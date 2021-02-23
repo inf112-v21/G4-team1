@@ -42,7 +42,7 @@ public class Robot extends Vector2 implements IObject{
      * moves x tiles in the direction the robot is facing
      * @param tiles number of tiles it moves
      */
-    private void move(int tiles){
+    public void move(int tiles){
 
     }
 
