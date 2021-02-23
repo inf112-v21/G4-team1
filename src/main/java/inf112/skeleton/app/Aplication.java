@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import objects.Flag;
 import objects.Robot;
 
 public class Aplication extends InputAdapter implements ApplicationListener {
@@ -35,6 +36,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
     private Robot playerPosition;
+    private Flag flagPosition;
 
     /**
      * Loads in map and every object on it
@@ -70,6 +72,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
 
         Gdx.input.setInputProcessor(this);
         playerPosition = new Robot(0,0);
+        flagPosition = new Flag(4,4);
     }
 
     @Override
@@ -89,6 +92,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
         }
         else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
             playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
+            registerflag();
             pause();
         }
 
@@ -135,10 +139,21 @@ public class Aplication extends InputAdapter implements ApplicationListener {
     public void resume() {
     }
 
+    public void registerflag() {
+        playerPosition.registerFlag(flagPosition);
+    }
+
     public int playerXPosition(){
         return Math.round(playerPosition.getX());
     }
     public int playerYPosition(){
         return Math.round(playerPosition.getY());
+    }
+
+    public int flagXPosition(){
+        return Math.round(flagPosition.getX());
+    }
+    public int flagYPosition(){
+        return Math.round(flagPosition.getY());
     }
 }
