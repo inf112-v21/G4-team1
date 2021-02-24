@@ -1,11 +1,11 @@
 package Cards;
 
 public class TurningCard implements ICards{
-    int direction;
+    String direction;
     int priority;
 
-    public TurningCard(int move, int prio){
-        direction = move;
+    public TurningCard(String dir, int prio){
+        direction = dir;
         priority = prio;
     }
 
@@ -13,7 +13,7 @@ public class TurningCard implements ICards{
         return priority;
     }
 
-    public int getDirection() {
+    public String getDirection() {
         return direction;
     }
 }
