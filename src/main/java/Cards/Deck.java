@@ -7,6 +7,8 @@ public class Deck {
     ArrayList<ICards> cardDeck;
 
     public Deck(){
+        cardDeck = new ArrayList<ICards>();
+
         //18 move 1 cards
         AddMovementCards(18, 1);
         /*for (int i = 1; i < 19; i++){
@@ -75,6 +77,13 @@ public class Deck {
             int prio = (int)Math.round(100*Math.random());
             cardDeck.add(new TurningCard(turnRight, uTurn, prio));
         }
+    }
+
+    /**
+     * Returns entire deck of cards
+     */
+    public ArrayList<ICards> getCardDeck() {
+        return cardDeck;
     }
 
     /**
