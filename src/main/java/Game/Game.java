@@ -13,11 +13,10 @@ public class Game {
     ArrayList<Flag> flags = new ArrayList<>();
 
 
-    public Game() {
+    public Game(Robot player, Flag flag) {
         playing = true;
-        players.add(new Robot(0,0));
-        flags.add(new Flag(4,4));
-
+        players.add(player);
+        flags.add(flag);
     }
 
     public void Playgame() {
@@ -44,23 +43,36 @@ public class Game {
 
     }
 
+    public void CheckifWinner(){
+        for(Robot player : players){
+            if(player.getLastFlag().equals(finalflag())){
+                System.out.println("you win!");
+                playing = false;
+            }
+        }
+    }
+
     /**
      * Checks if robot position equals flag position
      * If flag equals the final flag and robot has visited all previous flags,
      * player wins and the game is done
      */
-    public void RegistrerFlag() {
-        for(Robot rob : players)
-            for(Flag flag : flags){
-                if (rob.getX() == (flag.getX()) && rob.getY() == (flag.getY()))
-                    if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
-                        rob.registerFlag(flag);
-                        if(flag.equals(finalflag())) {
+    public void RegisterFlag(Flag flag) {
+
+
+
+
+//        for(Robot rob : players)
+//            for(Flag flag : flags){
+//                if (rob.getX() == (flag.getX()) && rob.getY() == (flag.getY()))
+//                    if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
+//                        rob.registerFlag(flag);
+//                        if(flag.equals(finalflag())) {
                             //System.out.println(rob.getName + "is the winner!");
-                            playing = false;
-                        }
-                    }
-                }
+//                            playing = false;
+//                        }
+//                    }
+//                }
             }
 
 
