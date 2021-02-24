@@ -1,19 +1,25 @@
 package Cards;
 
 public class TurningCard implements ICards{
-    int direction;
+    boolean turnRight;
     int priority;
+    boolean isUturn;
 
-    public TurningCard(int move, int prio){
-        direction = move;
+    public TurningCard(boolean right, boolean uturn, int prio){
+        turnRight = right;
         priority = prio;
+        isUturn = uturn;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public int getDirection() {
-        return direction;
+    public boolean getDirection() {
+        return turnRight;
+    }
+
+    public boolean isUturn(){
+        return isUturn;
     }
 }

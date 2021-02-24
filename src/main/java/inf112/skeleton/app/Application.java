@@ -17,8 +17,9 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import objects.Flag;
 import objects.Robot;
+import Game.Game;
 
-public class Aplication extends InputAdapter implements ApplicationListener {
+public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
 
     private TiledMap map;
@@ -37,6 +38,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerWonCell;
     private Robot playerPosition;
     private Flag flagPosition;
+    private Game game;
 
     /**
      * Loads in map and every object on it
@@ -73,6 +75,7 @@ public class Aplication extends InputAdapter implements ApplicationListener {
         Gdx.input.setInputProcessor(this);
         playerPosition = new Robot(0,0);
         flagPosition = new Flag(4,4);
+        game = new Game(playerPosition, flagPosition);
     }
 
     @Override
@@ -92,7 +95,9 @@ public class Aplication extends InputAdapter implements ApplicationListener {
         }
         else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
             playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
-            registerflag();
+            playerPosition.registerFlag(flagPosition);
+            game.CheckifWinner();
+
             pause();
         }
 
@@ -137,10 +142,6 @@ public class Aplication extends InputAdapter implements ApplicationListener {
 
     @Override
     public void resume() {
-    }
-
-    public void registerflag() {
-        playerPosition.registerFlag(flagPosition);
     }
 
     public int playerXPosition(){

@@ -108,8 +108,10 @@ public class Robot extends Vector2 implements IObject{
 
     //TODO: Visited flag should register, update last flag
     public void registerFlag(Flag flag){
+        if(flag.equals(getLastFlag())){
+            return;
+        }
         lastFlag = flag;
-        System.out.println("you won!");
     }
 
     public Flag getLastFlag(){

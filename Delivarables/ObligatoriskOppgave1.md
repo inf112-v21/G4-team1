@@ -3,7 +3,7 @@
 
 ###Kompetanse
 
-**Kristian Oterholt** :**
+**Kristian Oterholt:** 
 Har erfaring med Java fra inf101 of inf102. Går IKT 4. semester
 
 **Ulrik Seibt :**
@@ -36,7 +36,7 @@ Kristian ble valgt som teamleder på grunn av tidligere erfaring med håndtering
 Her er et skjermdump av vårt project board. Nye issues blir lagt i "backlog", de viktigste blir flyttet til "prioritert".
 Alle gruppemedlemmene har sin egen kolonne hvor de kan dra issues de jobber på inn. I teams med flere medlemmer enn oss hadde det ikke funket med så mange kolonner,
 men siden vi bare er 4, funker dette bra. Når en issue lukkes blir den lagt i "Ferdig"
-![img.png](img.png)
+![img.png](projectboardexm.png)
 
 **Møter:** Møtes fysisk mandag ettermiddag, gruppetimer onsdag,  fredag om det trengs mer arbeid på prosjektet.
 
