@@ -13,7 +13,7 @@ public class DeckTest {
 
         // Checks if correct amount of cards was added
         int amountOfCardsBeforeAddition = deck.getCardDeck().size();
-        deck.AddMovementCards(18, 1);
+        deck.AddMovementCardsToDeck(18, 1);
         assertEquals(amountOfCardsBeforeAddition + 18, deck.getCardDeck().size());
     }
 
@@ -23,7 +23,7 @@ public class DeckTest {
 
         // Checks if correct amount of cards was added
         int amountOfCardsBeforeAddition = deck.getCardDeck().size();
-        deck.AddTurnCards(18, true, false);
+        deck.AddTurnCardsToDeck(18, true, false);
         assertEquals(amountOfCardsBeforeAddition + 18, deck.getCardDeck().size());
     }
 

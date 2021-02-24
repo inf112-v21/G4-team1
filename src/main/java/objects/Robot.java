@@ -43,7 +43,26 @@ public class Robot extends Vector2 implements IObject{
      * @param tiles number of tiles it moves
      */
     public void move(int tiles){
+        Vector2 moveDirection = new Vector2(0,0);
 
+        switch (dir) {
+            case "N":
+                moveDirection.y = 1;
+                break;
+            case "E":
+                moveDirection.x = 1;
+                break;
+            case "S":
+                moveDirection.y = -1;
+                break;
+            case "W":
+                moveDirection.x = -1;
+                break;
+        }
+
+        for (int i = 0; i < tiles; i++) {
+            setPosition(getX() + moveDirection.x, getY() + moveDirection.y);
+        }
     }
 
     /**

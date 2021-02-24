@@ -10,59 +10,33 @@ public class Deck {
         cardDeck = new ArrayList<ICards>();
 
         //18 move 1 cards
-        AddMovementCards(18, 1);
-        /*for (int i = 1; i < 19; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new MovementCard(1, prio));
-        }*/
+        AddMovementCardsToDeck(18, 1);
 
         //Move 2 cards
-        AddMovementCards(12, 2);
-        /*for (int i = 1; i < 13; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new MovementCard(2, prio));
-        }*/
+        AddMovementCardsToDeck(12, 2);
 
         //Move 3 cards
-        AddMovementCards(6, 3);
-        /*for (int i = 1; i < 7; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new MovementCard(3, prio));
-        }*/
+        AddMovementCardsToDeck(6, 3);
 
         //Move 1 back cards
-        AddMovementCards(6, -1);
-        /*for (int i = 1; i < 7; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new MovementCard(-1, prio));
-        }*/
+        AddMovementCardsToDeck(6, -1);
 
         //Turn right cards
-        AddTurnCards(18, true, false);
-        /*for (int i = 1; i < 19; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new TurningCard(true, false, prio));
-        }*/
+        AddTurnCardsToDeck(18, true, false);
 
         //Turn left cards
-        AddTurnCards(18, false, false);
-        /*for (int i = 1; i < 19; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new TurningCard(false, false, prio));
-        }*/
+        AddTurnCardsToDeck(18, false, false);
 
         //Uturn cards
-        AddTurnCards(6, true, true);
-        /*for (int i = 1; i < 7; i++){
-            int prio = (int)Math.round(100*Math.random());
-            cardDeck.add(new TurningCard(true, true, prio));
-        }*/
+        AddTurnCardsToDeck(6, true, true);
     }
 
     /**
-     * Adds amountOfCards amounts of movement cards with distance moveDistance
+     * Adds movement cards
+     * @param amountOfCards Amount of cards added to the deck
+     * @param moveDistance The amount of tiles the card moves the robot
      */
-    public void AddMovementCards(int amountOfCards, int moveDistance) {
+    public void AddMovementCardsToDeck(int amountOfCards, int moveDistance) {
         for (int i = 0; i < amountOfCards; i++){
             int prio = (int)Math.round(100*Math.random());
             cardDeck.add(new MovementCard(moveDistance, prio));
@@ -70,9 +44,12 @@ public class Deck {
     }
 
     /**
-     * Adds amountOfCards amounts of turn cards
+     * Adds turn cards to deck
+     * @param amountOfCards Amount of cards added to the deck
+     * @param turnRight Robot turns right if true, left if not.
+     * @param uTurn Whether the card is a uTurn card or not.
      */
-    public void AddTurnCards(int amountOfCards, boolean turnRight, boolean uTurn) {
+    public void AddTurnCardsToDeck(int amountOfCards, boolean turnRight, boolean uTurn) {
         for (int i = 0; i < amountOfCards; i++){
             int prio = (int)Math.round(100*Math.random());
             cardDeck.add(new TurningCard(turnRight, uTurn, prio));

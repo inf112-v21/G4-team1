@@ -40,6 +40,26 @@ public class robotTest {
         assertEquals("N", robot.getDir());
     }
 
+    /**
+     * Checks if move() moves the Robot as it should
+     */
+    @Test
+    public void checkIfMoveWorks(){
+        robot = new Robot(0,0);
+
+        // Checks vertical movement
+        float initialYCoordinate = robot.getY();
+        robot.setDirection("N");
+        robot.move(3);
+        assertEquals(initialYCoordinate + 3, robot.getY(), 0.1);
+
+        // Check horisontal movement
+        float initialXCoordinate = robot.getX();
+        robot.setDirection("W");
+        robot.move(3);
+        assertEquals(initialXCoordinate + -3, robot.getX(), 0.1);
+    }
+
     @Test
     public void turnLeftTest(){
         robot = new Robot(0,0);
