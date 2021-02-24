@@ -3,7 +3,7 @@
 
 ###Kompetanse
 
-**Kristian Oterholt** :**
+**Kristian Oterholt:** 
 Har erfaring med Java fra inf101 of inf102. Går IKT 4. semester
 
 **Ulrik Seibt :**

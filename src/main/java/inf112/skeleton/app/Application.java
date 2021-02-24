@@ -18,7 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import objects.Flag;
 import objects.Robot;
 
-public class Aplication extends InputAdapter implements ApplicationListener {
+public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
 
     private TiledMap map;

@@ -37,8 +37,8 @@ public class Game {
                 Rob.move(((MovementCard) card).getDistance());
             }
             if(card.getClass() == TurningCard.class){
-                if(((TurningCard) card).getDirection() == "Left") Rob.turnLeft();
-                if(((TurningCard) card).getDirection() == "Right") Rob.turnRight();
+                if(!((TurningCard) card).getDirection()) Rob.turnLeft();
+                if(((TurningCard) card).getDirection()) Rob.turnRight();
             }
         }
 
