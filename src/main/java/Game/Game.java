@@ -8,15 +8,16 @@ import Cards.*;
 
 public class Game {
     Boolean playing = false;
-    ArrayList<Robot> players = new ArrayList<>();
+    ArrayList<Robot> players;
     int numberOfFlags;
-    ArrayList<Flag> flags = new ArrayList<>();
+    ArrayList<Flag> flags;
 
 
-    public Game(Robot player, Flag flag) {
+    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist) {
         playing = true;
-        players.add(player);
-        flags.add(flag);
+        players = playerlist;
+        flags = flaglist;
+        numberOfFlags = flags.size();
     }
 
     public void Playgame() {
