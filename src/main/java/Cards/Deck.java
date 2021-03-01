@@ -29,6 +29,8 @@ public class Deck {
 
         //Uturn cards
         AddTurnCardsToDeck(6, true, true);
+
+        shuffle();
     }
 
     /**
@@ -68,7 +70,7 @@ public class Deck {
      * @return the top card of the deck
      */
     private Object draw(){
-        return null;
+        return cardDeck.get(0);
     }
 
     /**
