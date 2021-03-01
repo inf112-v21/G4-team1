@@ -43,13 +43,15 @@ public class Game {
 
     }
 
-    public void CheckifWinner(){
+    public boolean CheckifWinner(){
         for(Robot player : players){
             if(player.getLastFlag().equals(finalflag())){
                 System.out.println("you win!");
                 playing = false;
+                return true;
             }
         }
+        return false;
     }
 
     /**

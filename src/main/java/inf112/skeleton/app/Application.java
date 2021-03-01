@@ -39,6 +39,14 @@ public class Application extends InputAdapter implements ApplicationListener {
     private Robot playerPosition;
     private Flag flagPosition;
     private Game game;
+    public enum State
+    {
+        PAUSE,
+        RUN,
+        RESUME,
+        STOPPED
+    }
+    private State state = State.RUN;
 
     /**
      * Loads in map and every object on it
@@ -85,27 +93,19 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-
-        if(holeLayer.getCell(playerXPosition(),playerYPosition()) != null){
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerDiedCell);
-
+        switch(state){
+            case RUN:
+                update();
+                break;
+            case PAUSE:
+                break;
+            case STOPPED:
+                System.out.println("The game is over");
+                Gdx.app.exit();
         }
-        else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
-            playerPosition.registerFlag(flagPosition);
-            game.CheckifWinner();
+        draw();
 
-            pause();
-        }
-
-        else{
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
-        }
-
-        renderer.render();
     }
 
     @Override
@@ -136,12 +136,46 @@ public class Application extends InputAdapter implements ApplicationListener {
     public void resize(int width, int height) {
     }
 
+
+    public void draw(){
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+
+        renderer.render();
+    }
+
+    public void update(){
+        if(holeLayer.getCell(playerXPosition(),playerYPosition()) != null){
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerDiedCell);
+
+        }
+        else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
+            playerPosition.registerFlag(flagPosition);
+            if(game.CheckifWinner()){
+                setGameState(State.STOPPED);
+            }
+
+        }
+
+        else{
+            playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
+        }
+    }
+
     @Override
     public void pause() {
+        this.state = State.PAUSE;
     }
 
     @Override
     public void resume() {
+        this.state = State.RESUME;
+    }
+
+    public void setGameState(State s){
+        this.state = s;
     }
 
     public int playerXPosition(){
