@@ -1,7 +1,10 @@
 package objects;
 
 import Cards.ICards;
+import Cards.MovementCard;
+import Cards.TurningCard;
 import com.badlogic.gdx.math.Vector2;
+import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -13,6 +16,11 @@ public class Robot extends Vector2 implements IObject{
     ArrayList<ICards> currentcards = new ArrayList<ICards>();
     String dir = "E";
 
+    /** TODO
+     * Finish checkIfRobotIsAtPosition()
+     * Finish pushRobot()
+     * Integrate with server
+     */
 
     public Robot(int x, int y){
         lifeTokens = 3;
@@ -36,7 +44,18 @@ public class Robot extends Vector2 implements IObject{
         return this.y;
     }
 
-    //TODO
+    /**
+     * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
+     * It will discard the used card from the current cards list.
+     */
+    public void moveBasedOnNextCard(){
+        ICards card = drawAndDiscardFirstCardInList();
+        if (card.getClass() == MovementCard.class) {
+            moveBasedOnCard((MovementCard) card);
+        } else {
+            turnBasedOnCard((TurningCard) card);
+        }
+    }
 
     /**
      * moves x tiles in the direction the robot is facing
@@ -60,8 +79,62 @@ public class Robot extends Vector2 implements IObject{
                 break;
         }
 
+        // The position the robot moves to each loop
+        Vector2 newPosition = new Vector2(0,0);
+        // The position the robot will push another robot to each loop. It's the position two steps ahead, instead of 1 step ahead.
+        Vector2 pushPositon = new Vector2(0, 0);
+
         for (int i = 0; i < tiles; i++) {
-            setPosition(getX() + moveDirection.x, getY() + moveDirection.y);
+            newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
+            pushPositon = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
+            if (checkIfPositionIsClear(newPosition)) {
+                setPosition(newPosition.x, newPosition.y);
+            } else {
+                // Position is not clear, figure out what to do
+            }
+        }
+    }
+
+    // TODO
+    /**
+     * Check if position is clear
+     * @param position
+     */
+    public boolean checkIfPositionIsClear(Vector2 position) {
+        return true;
+    }
+
+    // TODO
+    /**
+     * Push robot at position
+     * @param position
+     */
+    public void pushRobot(Vector2 position, Vector2 newPosition) {
+
+    }
+
+    /**
+     * Moves robot according to one of the given cards
+     * @param movementCard Moves robot x tiles according to card
+     */
+    public void moveBasedOnCard(MovementCard movementCard) {
+        move(movementCard.getDistance());
+    }
+
+    /**
+     * Turns robot according to one of the given cards
+     * @param turnCard Turns robot according to card
+     */
+    public void turnBasedOnCard(TurningCard turnCard) {
+        if (turnCard.getDirection())
+            turnRight();
+        else {
+            if (turnCard.isUturn()) {
+                turnRight();
+                turnRight();
+            } else {
+                turnLeft();
+            }
         }
     }
 
@@ -139,6 +212,12 @@ public class Robot extends Vector2 implements IObject{
 
     public ICards getFirstCard(){
         return currentcards.get(0);
+    }
+
+    public ICards drawAndDiscardFirstCardInList(){
+        ICards card = currentcards.get(0);
+        currentcards.remove(0);
+        return card;
     }
 
     public void addCard(ICards card){
