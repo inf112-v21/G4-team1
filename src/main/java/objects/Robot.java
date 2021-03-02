@@ -4,6 +4,8 @@ import Cards.Deck;
 import Cards.ICards;
 import Cards.MovementCard;
 import Cards.TurningCard;
+import Game.Game;
+import Multiplayer.Client;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ public class Robot extends Vector2 implements IObject{
     ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
     ArrayList<ICards> chosenCards = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
     String dir = "E";
+    Client client;
+    String id;
+    Game game;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -29,9 +34,37 @@ public class Robot extends Vector2 implements IObject{
        setPosition(x,y);
     }
 
+    public Robot(int x, int y, Game game){
+        this.game = game;
+        lifeTokens = 3;
+        damageTokens = 0;
+
+        setPosition(x,y);
+    }
+
+    public void IntializeClient(Game game) {
+        this.game = game;
+        client = new Client(game, this);
+    }
+
     @Override
     public void setPosition(float x, float y) {
+
+        System.out.println("POSITION " + x + "," + y + " set for " + getId());
+
+        if (game != null) {
+            game.getApplication().getPlayerLayer().setCell(Math.round(getX()), Math.round(getY()), null);
+        } else {
+            System.out.println("ERROR ERROR ERROR FOR " + getId());
+        }
+
         this.set(x,y);
+
+        // If client has been initialized
+        if (client != null) {
+            System.out.println("^^^^^^^^ WAS BROADCASTED ^^^^^^^^^^^^");
+            client.UpdateClientPosition(new Vector2(x, y), getId());
+        }
     }
 
     @Override
@@ -230,5 +263,17 @@ public class Robot extends Vector2 implements IObject{
             deck.discardCard(i);
         }
         hand.clear();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
