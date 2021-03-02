@@ -19,6 +19,9 @@ import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
 
@@ -36,8 +39,8 @@ public class Application extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
-    private Robot playerPosition;
-    private Flag flagPosition;
+    private ArrayList<Robot> players = new ArrayList<>();
+    private ArrayList<Flag> flags = new ArrayList<>();
     private Game game;
     public enum State
     {
@@ -81,9 +84,14 @@ public class Application extends InputAdapter implements ApplicationListener {
         renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
-        playerPosition = new Robot(0,0);
-        flagPosition = new Flag(4,4);
-        game = new Game(playerPosition, flagPosition);
+        Robot player1 = new Robot(0,0);
+        Flag flag1 = new Flag(3,3);
+        Flag flag2 = new Flag(6,6);
+        players.add(player1);
+        flags.add(flag1);
+        flags.add(flag2);
+
+        game = new Game(players, flags);
     }
 
     @Override
@@ -111,22 +119,22 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode){
 
-        playerLayer.setCell(playerXPosition(),playerYPosition(),null);
+        playerLayer.setCell(playerXPosition(players.get(0)),playerYPosition(players.get(0)),null);
 
         if(keycode == Input.Keys.UP){
-            playerPosition.add(0,1);
+            players.get(0).add(0,1);
             return true;
         }
         else if(keycode == Input.Keys.DOWN){
-            playerPosition.add(0,-1);
+            players.get(0).add(0,-1);
             return true;
         }
         else if(keycode == Input.Keys.LEFT){
-            playerPosition.add(-1,0);
+            players.get(0).add(-1,0);
             return true;
         }
         else if(keycode == Input.Keys.RIGHT){
-            playerPosition.add(1,0);
+            players.get(0).add(1,0);
             return true;
         }
         return false;
@@ -145,22 +153,21 @@ public class Application extends InputAdapter implements ApplicationListener {
         renderer.render();
     }
 
-    public void update(){
-        if(holeLayer.getCell(playerXPosition(),playerYPosition()) != null){
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerDiedCell);
+    public void update() {
+        if (holeLayer.getCell(playerXPosition(players.get(0)), playerYPosition(players.get(0))) != null) {
+            playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerDiedCell);
 
         }
-        else if(flagLayer.getCell(playerXPosition(),playerYPosition()) != null){
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerWonCell);
-            playerPosition.registerFlag(flagPosition);
-            if(game.CheckifWinner()){
+        /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/
+        else if(playerOnFlag()){
+            if (game.CheckifWinner()) {
                 setGameState(State.STOPPED);
             }
-
         }
 
+
         else{
-            playerLayer.setCell(playerXPosition(),playerYPosition(),playerCell);
+            playerLayer.setCell(playerXPosition(players.get(0)),playerYPosition(players.get(0)),playerCell);
         }
     }
 
@@ -178,17 +185,29 @@ public class Application extends InputAdapter implements ApplicationListener {
         this.state = s;
     }
 
-    public int playerXPosition(){
-        return Math.round(playerPosition.getX());
+    public int playerXPosition(Robot player){
+        return Math.round(player.getX());
     }
-    public int playerYPosition(){
-        return Math.round(playerPosition.getY());
+    public int playerYPosition(Robot player){
+        return Math.round(player.getY());
     }
 
-    public int flagXPosition(){
-        return Math.round(flagPosition.getX());
+    public int flagXPosition(Flag flag){
+        return Math.round(flag.getX());
     }
-    public int flagYPosition(){
-        return Math.round(flagPosition.getY());
+    public int flagYPosition(Flag flag){
+        return Math.round(flag.getY());
+    }
+    public boolean playerOnFlag() {
+        for (Flag flag : flags) {
+            if ((playerXPosition(players.get(0)) == flagXPosition(flag)) && (playerYPosition(players.get(0)) == flagYPosition(flag))) {
+                playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerWonCell);
+                players.get(0).registerFlag(flag);
+
+                return true;
+            }
+
+        }
+        return false;
     }
 }

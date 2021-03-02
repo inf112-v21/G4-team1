@@ -1,9 +1,13 @@
 package objectTests;
 
+import Cards.MovementCard;
+import Cards.TurningCard;
+import com.badlogic.gdx.math.Vector2;
 import objects.Robot;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.lwjgl.system.CallbackI;
 
 import static org.junit.Assert.assertEquals;
 
@@ -58,6 +62,37 @@ public class robotTest {
         robot.setDirection("W");
         robot.move(3);
         assertEquals(initialXCoordinate + -3, robot.getX(), 0.1);
+    }
+
+    /**
+     * Test moveBasedOnNextCard
+     */
+    @Test
+    public void checkIfMoveBasedOnNextCardWorks(){
+        robot = new Robot(0,0);
+        robot.setDirection("N");
+
+        // Checks if robot moves 1 up
+        robot.addCard(new MovementCard(1,0));
+        robot.moveBasedOnNextCard();
+        assertEquals(1, robot.getY(), 0.1);
+
+        // Checks if robot turns 1 time to the right
+        robot.addCard(new TurningCard(true, false, 0));
+        robot.moveBasedOnNextCard();
+        assertEquals("E", robot.getDir());
+
+        // Checks if robot can do a sequence of cards
+        robot.addCard(new MovementCard(2,0));
+        robot.addCard(new TurningCard(true, false, 0));
+        robot.addCard(new MovementCard(3,0));
+
+        Vector2 originalPosition = new Vector2(robot.getX(), robot.getY());
+        robot.moveBasedOnNextCard();
+        robot.moveBasedOnNextCard();
+        robot.moveBasedOnNextCard();
+        assertEquals(new Vector2(originalPosition.x + 2, originalPosition.y - 3), new Vector2(robot.getX(), robot.getY()));
+
     }
 
     @Test
