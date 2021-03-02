@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class Deck {
     ArrayList<ICards> cardDeck;
+    ArrayList<ICards> discardPile;
 
     public Deck(){
         cardDeck = new ArrayList<ICards>();
@@ -69,8 +70,14 @@ public class Deck {
      *
      * @return the top card of the deck
      */
-    private Object draw(){
-        return cardDeck.get(0);
+    public ICards draw(){
+        if (cardDeck.isEmpty()){
+            for (ICards i: discardPile){
+                cardDeck.add(i);
+            }
+            shuffle();
+        }
+        return cardDeck.remove(0);
     }
 
     /**
@@ -78,5 +85,9 @@ public class Deck {
      */
     private void shuffle(){
         Collections.shuffle(cardDeck);
+    }
+
+    public void discardCard(ICards card){
+        discardPile.add(card);
     }
 }

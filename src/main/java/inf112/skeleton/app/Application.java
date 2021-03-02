@@ -14,12 +14,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Vector2;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Application extends InputAdapter implements ApplicationListener {
@@ -160,7 +158,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         }
         /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/
         else if(playerOnFlag()){
-            if (game.CheckifWinner()) {
+            if (game.checkIfWinner()) {
                 setGameState(State.STOPPED);
             }
         }

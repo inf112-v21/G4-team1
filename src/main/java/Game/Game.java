@@ -11,6 +11,7 @@ public class Game {
     ArrayList<Robot> players;
     int numberOfFlags;
     ArrayList<Flag> flags;
+    Deck deck;
 
 
     public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist) {
@@ -18,19 +19,34 @@ public class Game {
         players = playerlist;
         flags = flaglist;
         numberOfFlags = flags.size();
+        deck = new Deck();
     }
 
-    public void Playgame() {
+    /**
+     * the games turn order
+     */
+    public void playGame() {
         while (playing) {
-            for (Robot rob : players) {
-                //rob.pickcard()
-            }
-            //rob.move();
-            //Checkwinner();
+            drawStep();
+            playTurn();
+            checkIfWinner();
+            discardStep();
         }
     }
 
-    public void Playturn(){
+    public void drawStep(){
+        for (Robot rob : players) {
+            rob.drawHand(deck);
+        }
+    }
+
+    public void discardStep(){
+        for (Robot rob : players) {
+            rob.discardHand(deck);
+        }
+    }
+
+    public void playTurn(){
         for(Robot Rob : players){
             ICards card = Rob.getFirstCard();
             if(card.getClass() == MovementCard.class){
@@ -44,9 +60,9 @@ public class Game {
 
     }
 
-    public boolean CheckifWinner(){
+    public boolean checkIfWinner(){
         for(Robot player : players){
-            if(player.getLastFlag().equals(finalflag())){
+            if(player.getLastFlag().equals(finalFlag())){
                 System.out.println("you win!");
                 playing = false;
                 return true;
@@ -60,7 +76,7 @@ public class Game {
      * If flag equals the final flag and robot has visited all previous flags,
      * player wins and the game is done
      */
-    public void RegisterFlag(Flag flag) {
+    public void registerFlag(Flag flag) {
 
 
 
@@ -80,7 +96,7 @@ public class Game {
 
 
 
-    public Flag finalflag(){
+    public Flag finalFlag(){
        return flags.get(flags.size()-1);
     }
 

@@ -1,19 +1,19 @@
 package objects;
 
+import Cards.Deck;
 import Cards.ICards;
 import Cards.MovementCard;
 import Cards.TurningCard;
 import com.badlogic.gdx.math.Vector2;
-import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     Flag lastFlag = null;
     int damageTokens;
-    ArrayList<ICards> currentcards = new ArrayList<ICards>();
+    ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
+    ArrayList<ICards> chosenCards = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
     String dir = "E";
 
     /** TODO
@@ -193,11 +193,6 @@ public class Robot extends Vector2 implements IObject{
         return dir;
     }
 
-    //TODO
-    private void repair(){
-
-    }
-
     public void registerFlag(Flag flag){
         if(flag.equals(getLastFlag())){
             return;
@@ -210,16 +205,30 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public ICards getFirstCard(){
-        return currentcards.get(0);
+        return chosenCards.get(0);
     }
 
     public ICards drawAndDiscardFirstCardInList(){
-        ICards card = currentcards.get(0);
-        currentcards.remove(0);
+        ICards card = chosenCards.get(0);
+        chosenCards.remove(0);
         return card;
     }
 
-    public void addCard(ICards card){
-        currentcards.add(card);
+    public void drawHand(Deck deck){
+        for (int i = 0; i<9; i++) {
+            hand.add(deck.draw());
+        }
+    }
+
+    public void chooseCard(ICards card){
+        chosenCards.add(card);
+    }
+
+
+    public void discardHand(Deck deck){
+        for (ICards i: hand){
+            deck.discardCard(i);
+        }
+        hand.clear();
     }
 }
