@@ -123,10 +123,21 @@ public class Robot extends Vector2 implements IObject{
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
             pushPositon = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
-            if (checkIfPositionIsClear(newPosition)) {
-                setPosition(newPosition.x, newPosition.y);
-            } else {
-                // Position is not clear, figure out what to do
+            switch (checkIfPositionIsClear(newPosition)) {
+                case 0:
+                    // Position was clear
+                    setPosition(newPosition.x, newPosition.y);
+                    break;
+                case 1:
+                    // Position blocked by a robot
+                    System.out.println("POSITION BLOCKED BY ROBOT");
+                    for (Robot robot : game.getPlayers()) {
+                        if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
+                            pushRobot(robot.getId(), new Vector2(0,0), pushPositon);
+                        }
+                    }
+                    setPosition(newPosition.x, newPosition.y);
+                    break;
             }
         }
     }
@@ -135,9 +146,16 @@ public class Robot extends Vector2 implements IObject{
     /**
      * Check if position is clear
      * @param position
+     * @return 0 means position is clear, 1 means position has a robot
      */
-    public boolean checkIfPositionIsClear(Vector2 position) {
-        return true;
+    public int checkIfPositionIsClear(Vector2 position) {
+        // Check if a robot is in the way
+        for (Robot robot : game.getPlayers()) {
+            if (robot.getX() == position.x && robot.getY() == position.y) {
+                return 1;
+            }
+        }
+        return 0;
     }
 
     // TODO
@@ -145,8 +163,13 @@ public class Robot extends Vector2 implements IObject{
      * Push robot at position
      * @param position
      */
-    public void pushRobot(Vector2 position, Vector2 newPosition) {
-
+    public void pushRobot(String id, Vector2 position, Vector2 newPosition) {
+        client.UpdateClientPosition(newPosition, id);
+        for (Robot robot : game.getPlayers()) {
+            if (robot.getId().equals(id)) {
+                robot.setPosition(newPosition.x, newPosition.y);
+            }
+        }
     }
 
     /**

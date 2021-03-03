@@ -1,13 +1,13 @@
 package Multiplayer;
 
-import com.esotericsoftware.kryonet.Client;
+/*import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Listener;*/
 
 import java.util.ArrayList;
 
-public class ClientProgram extends Listener {
-    static Client client;
+public class ClientProgram /*extends Listener*/ {
+    /*static Client client;
     static String ip = "localhost";
     static int tcpPort = 27960, udpPort = 27960;
     static boolean messageReceived = false;
@@ -60,7 +60,7 @@ public class ClientProgram extends Listener {
         listToSend.add("O");
         listToSend.add("O");
         return listToSend;
-    }
+    }*/
 }
 
 
