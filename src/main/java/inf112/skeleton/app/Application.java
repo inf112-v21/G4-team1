@@ -50,7 +50,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     private ArrayList<Robot> players = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
 
-    private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player.png", "assets/player2.png"));
+    private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player1.png", "assets/player2.png", "assets/player3.png", "assets/player4.png", "assets/player5.png", "assets/player6.png"));
 
     private Game game;
     public enum State
@@ -200,7 +200,9 @@ public class Application extends InputAdapter implements ApplicationListener {
                     setGameState(State.STOPPED);
                 }
             } else{
-                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(i));
+                if (game.getPlayers().get(i).getId() != null) {
+                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1));
+                }
             }
         }
         /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/
