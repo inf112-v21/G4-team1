@@ -22,7 +22,7 @@ public class Client {
     public Client(Game game, Robot robot) {
         this.game_ = game;
 
-        uri = URI.create("http://localhost:3001");
+        uri = URI.create("http://ec2-3-140-185-175.us-east-2.compute.amazonaws.com/");
         options = IO.Options.builder().build();
         socket = IO.socket(uri, options);
         socket.connect();
@@ -36,13 +36,11 @@ public class Client {
                 for (int i = 0; i < result.length; i++) {
                     if (i == 0) {
                         id = result[i];
-                        System.out.println("OUR ID IS: " + id);
                         robot.setId(result[i]);
                     } else {
                         Robot robot = new Robot(Integer.parseInt(result[i+1]),Integer.parseInt(result[i+2]), game);
                         robot.setId(result[i]);
                         game_.AddPlayer(robot);
-                        System.out.println("A robot already existed at " + result[i+1] + "," + result[i+2] + " with id " + result[i]);
                         i += 2;
                     }
                 }
@@ -70,12 +68,10 @@ public class Client {
             @Override
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
-                System.out.println("POSITION CHANGE RECEIVED FOR: " + objectList[0]+"");
                 String[] result = (objectList[0]+"").split(",");
                 for (Robot robot : game.getPlayers()) {
                     if (Integer.parseInt(robot.getId()) == Integer.parseInt(result[0])) {
                         robot.setPosition(Float.parseFloat(result[1]), Float.parseFloat(result[2]));
-                        System.out.println("ROBOT FOUND, POSITION HAS BEEN UPDATED FOR " + robot.getId());
                     }
                 }
             }
@@ -83,7 +79,6 @@ public class Client {
     }
 
     public void UpdateClientPosition(Vector2 position, String id) {
-        System.out.println("POSITION BROADCAST: " + id + "," + position.x + "," + position.y);
         socket.emit("updateClientPosition", id + "," + position.x + "," + position.y);
     }
 

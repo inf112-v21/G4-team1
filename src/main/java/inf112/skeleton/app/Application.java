@@ -118,14 +118,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode){
 
-        System.out.println("NEW NEW NEW NEW KEY PRESS KEY PRESS KEY PRESS KEY PRESS: ");
-
         playerLayer.setCell(playerXPosition(game.getPlayers().get(0)),playerYPosition(game.getPlayers().get(0)),null);
-
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            System.out.println("PLAYER PRINT: " + game.getPlayers().get(i).getId());
-            System.out.println("GAME PRINT: " + game.getPlayers().get(i).getGame());
-        }
 
         if(keycode == Input.Keys.UP){
             game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);

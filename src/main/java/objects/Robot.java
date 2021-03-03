@@ -27,6 +27,11 @@ public class Robot extends Vector2 implements IObject{
      * Integrate with server
      */
 
+    /** TODO SERVER INTEGRATION
+     *
+     *
+     */
+
     public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
@@ -50,19 +55,16 @@ public class Robot extends Vector2 implements IObject{
     @Override
     public void setPosition(float x, float y) {
 
-        System.out.println("POSITION " + x + "," + y + " set for " + getId());
-
         if (game != null) {
             game.getApplication().getPlayerLayer().setCell(Math.round(getX()), Math.round(getY()), null);
         } else {
-            System.out.println("ERROR ERROR ERROR FOR " + getId());
+
         }
 
         this.set(x,y);
 
         // If client has been initialized
         if (client != null) {
-            System.out.println("^^^^^^^^ WAS BROADCASTED ^^^^^^^^^^^^");
             client.UpdateClientPosition(new Vector2(x, y), getId());
         }
     }
