@@ -124,8 +124,6 @@ public class Game {
 
 
 
-
-
     public Flag finalFlag(){
        return flags.get(flags.size()-1);
     }
