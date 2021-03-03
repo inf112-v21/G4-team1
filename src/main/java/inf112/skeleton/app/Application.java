@@ -76,7 +76,28 @@ public class Application extends InputAdapter implements ApplicationListener {
         flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
 
-        TextureRegion[][] playerTextures = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
+        Robot player1 = new Robot(0,0);
+        Flag flag1 = new Flag(3,3);
+        Flag flag2 = new Flag(6,6);
+        players.add(player1);
+        flags.add(flag1);
+        flags.add(flag2);
+
+        game = new Game(players, flags, this);
+        players.get(0).IntializeClient(game);
+
+        String playerSkinPath = "";
+
+        switch (player1.getId()) {
+            case "1":
+                playerSkinPath = "assets/player.png";
+                break;
+            case "2":
+                playerSkinPath = "assets/player2.png";
+                break;
+        }
+
+        TextureRegion[][] playerTextures = TextureRegion.split(new Texture(playerSkinPath), 300, 300);
 
         playerCell = new TiledMapTileLayer.Cell();
         playerDiedCell = new TiledMapTileLayer.Cell();
@@ -93,15 +114,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
-        Robot player1 = new Robot(0,0);
-        Flag flag1 = new Flag(3,3);
-        Flag flag2 = new Flag(6,6);
-        players.add(player1);
-        flags.add(flag1);
-        flags.add(flag2);
 
-        game = new Game(players, flags, this);
-        players.get(0).IntializeClient(game);
     }
 
     @Override
