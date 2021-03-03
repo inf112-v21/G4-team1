@@ -1,5 +1,6 @@
 package Game;
 
+import inf112.skeleton.app.Application;
 import objects.Flag;
 import objects.Robot;
 
@@ -12,9 +13,10 @@ public class Game {
     int numberOfFlags;
     ArrayList<Flag> flags;
     Deck deck;
+    Application application;
 
-
-    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist) {
+    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist, Application application) {
+        this.application = application;
         playing = true;
         players = playerlist;
         flags = flaglist;
@@ -88,4 +90,15 @@ public class Game {
        return flags.get(flags.size()-1);
     }
 
+    public ArrayList<Robot> getPlayers() {
+        return players;
+    }
+
+    public void AddPlayer(Robot robot) {
+        players.add(robot);
+    }
+
+    public Application getApplication() {
+        return application;
+    }
 }

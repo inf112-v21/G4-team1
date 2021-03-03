@@ -89,7 +89,8 @@ public class Application extends InputAdapter implements ApplicationListener {
         flags.add(flag1);
         flags.add(flag2);
 
-        game = new Game(players, flags);
+        game = new Game(players, flags, this);
+        players.get(0).IntializeClient(game);
     }
 
     @Override
@@ -117,22 +118,22 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode){
 
-        playerLayer.setCell(playerXPosition(players.get(0)),playerYPosition(players.get(0)),null);
+        playerLayer.setCell(playerXPosition(game.getPlayers().get(0)),playerYPosition(game.getPlayers().get(0)),null);
 
         if(keycode == Input.Keys.UP){
-            players.get(0).add(0,1);
+            game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
             return true;
         }
         else if(keycode == Input.Keys.DOWN){
-            players.get(0).add(0,-1);
+            game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() - 1);
             return true;
         }
         else if(keycode == Input.Keys.LEFT){
-            players.get(0).add(-1,0);
+            game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX() - 1, game.getPlayers().get(0).getY());
             return true;
         }
         else if(keycode == Input.Keys.RIGHT){
-            players.get(0).add(1,0);
+            game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX() + 1, game.getPlayers().get(0).getY());
             return true;
         }
         return false;
@@ -152,21 +153,18 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     public void update() {
-        if (holeLayer.getCell(playerXPosition(players.get(0)), playerYPosition(players.get(0))) != null) {
-            playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerDiedCell);
-
-        }
-        /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/
-        else if(playerOnFlag()){
-            if (game.checkIfWinner()) {
-                setGameState(State.STOPPED);
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (holeLayer.getCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i))) != null) {
+                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i)), playerDiedCell);
+            } else if(playerOnFlag()){
+                if (game.checkIfWinner()) {
+                    setGameState(State.STOPPED);
+                }
+            } else{
+                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell);
             }
         }
-
-
-        else{
-            playerLayer.setCell(playerXPosition(players.get(0)),playerYPosition(players.get(0)),playerCell);
-        }
+        /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/
     }
 
     @Override
@@ -198,15 +196,22 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
     public boolean playerOnFlag() {
         for (Flag flag : flags) {
-            if(players.get(0).getVisitedFlags().contains(flag)) continue;
-            if(flags.get(0).equals(flag) || players.get(0).getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
-                    if ((playerXPosition(players.get(0)) == flagXPosition(flag)) && (playerYPosition(players.get(0)) == flagYPosition(flag))) {
-                        playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerWonCell);
-                        players.get(0).registerFlag(flag);
-                        return true;
-                    }
-                }
+            if ((playerXPosition(game.getPlayers().get(0)) == flagXPosition(flag)) && (playerYPosition(game.getPlayers().get(0)) == flagYPosition(flag))) {
+                playerLayer.setCell(playerXPosition(game.getPlayers().get(0)), playerYPosition(game.getPlayers().get(0)), playerWonCell);
+                game.getPlayers().get(0).registerFlag(flag);
+
+                return true;
             }
+
+        }
         return false;
+    }
+
+    public void AddPlayer(Robot robot) {
+        game.getPlayers().get(0).add(robot);
+    }
+
+    public TiledMapTileLayer getPlayerLayer() {
+        return playerLayer;
     }
 }
