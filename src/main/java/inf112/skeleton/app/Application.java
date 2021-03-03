@@ -32,7 +32,6 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     private TiledMap map;
     private TmxMapLoader mapLoader;
-    private Stage stage;
 
     private TiledMapTileLayer baseLayer;
     private TiledMapTileLayer holeLayer;
@@ -106,6 +105,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         playerCell.setTile(new StaticTiledMapTile(playerTextures[0][0]));
         playerDiedCell.setTile(new StaticTiledMapTile(playerTextures[0][1]));
         playerWonCell.setTile(new StaticTiledMapTile(playerTextures[0][2]));
+
 
         camera.setToOrtho(false,11,11);
         camera.update();
