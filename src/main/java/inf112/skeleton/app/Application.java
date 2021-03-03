@@ -26,6 +26,8 @@ import objects.Robot;
 import Game.Game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -41,12 +43,14 @@ public class Application extends InputAdapter implements ApplicationListener {
     private OrthographicCamera camera;
     private OrthogonalTiledMapRenderer renderer;
 
-    private TiledMapTileLayer.Cell playerCell;
+    private ArrayList<TiledMapTileLayer.Cell> playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
 
     private ArrayList<Robot> players = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
+
+    private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player.png", "assets/player2.png"));
 
     private Game game;
     public enum State
@@ -63,18 +67,6 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     @Override
     public void create() {
-        batch = new SpriteBatch();
-
-        mapLoader = new TmxMapLoader();
-        map = mapLoader.load("assets/RoboRallyTile.tmx");
-        camera = new OrthographicCamera();
-
-
-        baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
-        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
-        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
-        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
-
         Robot player1 = new Robot(0,0);
         Flag flag1 = new Flag(3,3);
         Flag flag2 = new Flag(6,6);
@@ -83,29 +75,31 @@ public class Application extends InputAdapter implements ApplicationListener {
         flags.add(flag2);
 
         game = new Game(players, flags, this);
-        players.get(0).IntializeClient(game);
+        players.get(0).IntializeClient(game, this);
 
-        String playerSkinPath = "";
+        String playerSkinPath = "assets/player.png";
 
-        switch (player1.getId()) {
+        /*switch (game.getPlayers().get(0).getId()) {
             case "1":
                 playerSkinPath = "assets/player.png";
                 break;
             case "2":
                 playerSkinPath = "assets/player2.png";
                 break;
-        }
+        }*/
 
-        TextureRegion[][] playerTextures = TextureRegion.split(new Texture(playerSkinPath), 300, 300);
+        batch = new SpriteBatch();
 
-        playerCell = new TiledMapTileLayer.Cell();
-        playerDiedCell = new TiledMapTileLayer.Cell();
-        playerWonCell = new TiledMapTileLayer.Cell();
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("assets/RoboRallyTile.tmx");
+        camera = new OrthographicCamera();
 
-        playerCell.setTile(new StaticTiledMapTile(playerTextures[0][0]));
-        playerDiedCell.setTile(new StaticTiledMapTile(playerTextures[0][1]));
-        playerWonCell.setTile(new StaticTiledMapTile(playerTextures[0][2]));
+        baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
+        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
+        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
 
+        SetPlayerSkin(playerSkinPath);
 
         camera.setToOrtho(false,11,11);
         camera.update();
@@ -115,6 +109,21 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         Gdx.input.setInputProcessor(this);
 
+    }
+
+    public void SetPlayerSkin(String playerSkinPath) {
+        playerCell = new ArrayList<TiledMapTileLayer.Cell>();
+        playerDiedCell = new TiledMapTileLayer.Cell();
+        playerWonCell = new TiledMapTileLayer.Cell();
+
+        for (int i = 0; i < playerSkinPaths.size(); i++) {
+            TextureRegion[][] playerTextures = TextureRegion.split(new Texture(playerSkinPaths.get(i)), 300, 300);
+
+            playerCell.add(new TiledMapTileLayer.Cell());
+            playerCell.get(i).setTile(new StaticTiledMapTile(playerTextures[0][0]));
+            playerDiedCell.setTile(new StaticTiledMapTile(playerTextures[0][1]));
+            playerWonCell.setTile(new StaticTiledMapTile(playerTextures[0][2]));
+        }
     }
 
     @Override
@@ -141,8 +150,6 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     @Override
     public boolean keyUp(int keycode){
-
-        playerLayer.setCell(playerXPosition(game.getPlayers().get(0)),playerYPosition(game.getPlayers().get(0)),null);
 
         if(keycode == Input.Keys.UP){
             //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
@@ -193,7 +200,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                     setGameState(State.STOPPED);
                 }
             } else{
-                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell);
+                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(i));
             }
         }
         /*        else if(flagLayer.getCell(playerXPosition(players.get(0)),playerYPosition(players.get(0))) != null){*/

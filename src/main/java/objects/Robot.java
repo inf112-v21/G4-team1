@@ -7,6 +7,7 @@ import Cards.TurningCard;
 import Game.Game;
 import Multiplayer.Client;
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.Application;
 
 import java.util.ArrayList;
 
@@ -48,9 +49,9 @@ public class Robot extends Vector2 implements IObject{
         setPosition(x,y);
     }
 
-    public void IntializeClient(Game game) {
+    public void IntializeClient(Game game, Application application) {
         this.game = game;
-        client = new Client(game, this);
+        client = new Client(game, this, application);
     }
 
     @Override

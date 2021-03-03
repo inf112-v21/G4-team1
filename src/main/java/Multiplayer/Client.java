@@ -2,6 +2,7 @@ package Multiplayer;
 
 import Game.Game;
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.Application;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -18,9 +19,11 @@ public class Client {
     Socket socket;
     IO.Options options;
     Game game_;
+    Application application;
 
-    public Client(Game game, Robot robot) {
+    public Client(Game game, Robot robot, Application application) {
         this.game_ = game;
+        this.application = application;
 
         uri = URI.create("http://ec2-3-140-185-175.us-east-2.compute.amazonaws.com/");
         options = IO.Options.builder().build();
@@ -55,6 +58,7 @@ public class Client {
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
                 id = objectList[0]+"";
+                System.out.println("KVA STÅR HERE: " + id);
                 Robot robot = new Robot(0,0, game_);
                 robot.setId(id);
                 game_.AddPlayer(robot);
