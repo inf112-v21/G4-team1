@@ -5,6 +5,8 @@ import objects.Flag;
 import objects.Robot;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import Cards.*;
 
 public class Game {
@@ -30,6 +32,7 @@ public class Game {
     public void playGame() {
         while (playing) {
             drawStep();
+            printCardsToTerminal();
             playTurn();
             checkIfWinner();
             discardStep();
@@ -40,11 +43,48 @@ public class Game {
         for (Robot rob : players) {
             rob.drawHand(deck);
         }
+
     }
 
     public void discardStep(){
         for (Robot rob : players) {
             rob.discardHand(deck);
+        }
+    }
+
+    public void printCardsToTerminal() {
+        ArrayList<ICards> cardsToPrint = new ArrayList<>();
+        ArrayList<ICards> cardDeck = deck.getCardDeck();
+
+        for(int i = 0; i<9; i++){
+            cardsToPrint.add(cardDeck.get(i));
+        }
+
+        int counter = 1;
+
+        for (ICards cards : cardsToPrint) {
+            System.out.println(counter + ": " + cards);
+            counter++;
+        }
+        System.out.println("Choose five of these cards using 1-9 on your keyboard");
+        chooseCards(cardsToPrint);
+    }
+
+    public void chooseCards(ArrayList<ICards> cardsToPrint){
+        ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (chosenCardsFromNineDeck.size()<5){
+            System.out.println("Enter a number between 1-9");
+            ICards chosenCard = cardsToPrint.get(scanner.nextInt());
+
+            if(!chosenCardsFromNineDeck.contains(chosenCard)){
+                chosenCardsFromNineDeck.add(chosenCard);
+                players.get(0).chooseCard(chosenCard);
+            }
+            else{
+                System.out.println("This card is already chosen, chose a new");
+            }
         }
     }
 

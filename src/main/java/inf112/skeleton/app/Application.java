@@ -9,12 +9,18 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
@@ -26,6 +32,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     private TiledMap map;
     private TmxMapLoader mapLoader;
+    private Stage stage;
 
     private TiledMapTileLayer baseLayer;
     private TiledMapTileLayer holeLayer;
@@ -38,8 +45,10 @@ public class Application extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerDiedCell;
     private TiledMapTileLayer.Cell playerWonCell;
+
     private ArrayList<Robot> players = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
+
     private Game game;
     public enum State
     {
@@ -60,6 +69,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("assets/RoboRallyTile.tmx");
         camera = new OrthographicCamera();
+
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
@@ -157,7 +167,6 @@ public class Application extends InputAdapter implements ApplicationListener {
     public void draw(){
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
 
         renderer.render();
     }

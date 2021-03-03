@@ -284,10 +284,13 @@ public class Robot extends Vector2 implements IObject{
         }
     }
 
+    public ArrayList<ICards> getHand(){
+        return hand;
+    }
+
     public void chooseCard(ICards card){
         chosenCards.add(card);
     }
-
 
     public void discardHand(Deck deck){
         for (ICards i: hand){
