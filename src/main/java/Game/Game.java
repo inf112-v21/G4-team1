@@ -62,7 +62,7 @@ public class Game {
 
     public boolean checkIfWinner(){
         for(Robot player : players){
-            if(player.getLastFlag().equals(finalFlag())){
+            if(player.getVisitedFlags().size() == flags.size()){
                 System.out.println("you win!");
                 playing = false;
                 return true;
@@ -76,23 +76,11 @@ public class Game {
      * If flag equals the final flag and robot has visited all previous flags,
      * player wins and the game is done
      */
-    public void registerFlag(Flag flag) {
 
 
 
 
-//        for(Robot rob : players)
-//            for(Flag flag : flags){
-//                if (rob.getX() == (flag.getX()) && rob.getY() == (flag.getY()))
-//                    if(rob.getLastFlag().equals(flags.get(flags.indexOf(flag)-1)) || flags.indexOf(flag) == 0){
-//                        rob.registerFlag(flag);
-//                        if(flag.equals(finalflag())) {
-                            //System.out.println(rob.getName + "is the winner!");
-//                            playing = false;
-//                        }
-//                    }
-//                }
-            }
+
 
 
 

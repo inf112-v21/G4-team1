@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
+    ArrayList<Flag> visitedFlags = new ArrayList<>();
     Flag lastFlag = null;
     int damageTokens;
     ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
@@ -198,10 +199,15 @@ public class Robot extends Vector2 implements IObject{
             return;
         }
         lastFlag = flag;
+        visitedFlags.add(flag);
     }
 
     public Flag getLastFlag(){
         return lastFlag;
+    }
+
+    public ArrayList<Flag> getVisitedFlags() {
+        return visitedFlags;
     }
 
     public ICards getFirstCard(){
