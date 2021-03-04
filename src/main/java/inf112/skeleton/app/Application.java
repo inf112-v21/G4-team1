@@ -108,7 +108,6 @@ public class Application extends InputAdapter implements ApplicationListener {
         renderer.setView(camera);
 
         Gdx.input.setInputProcessor(this);
-
     }
 
     public void SetPlayerSkin(String playerSkinPath) {

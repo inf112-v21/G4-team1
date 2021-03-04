@@ -80,7 +80,7 @@ public class Game {
         int counter = 1;
 
         for (ICards cards : cardsToPrint) {
-            System.out.println(counter + ": " + cards);
+            System.out.println(counter + ": " + cards.getDisplayText());
             counter++;
         }
         System.out.println("Choose five of these cards using 1-9 on your keyboard");

@@ -26,8 +26,7 @@ public class TurningCard implements ICards{
     @Override
     public String getDisplayText() {
         String returnMessage = "";
-        if (isUturn){
-            returnMessage += "Uturn";
+        if (isUturn){ returnMessage += "Uturn";
         }
         else if (turnRight){
             returnMessage += "Turn right";
@@ -35,7 +34,6 @@ public class TurningCard implements ICards{
         else{
             returnMessage += "Turn left";
         }
-        returnMessage += "\nPriority: " + getPriority();
-        return returnMessage;
+        return String.format("%-15s %s %d", returnMessage, "Priority: ", getPriority());
     }
 }
