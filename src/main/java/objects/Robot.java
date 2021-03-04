@@ -145,7 +145,8 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public boolean CheckIfOutOfBounds(Vector2 position) {
-        if (position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10) {
+        if (position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10
+        ) {
             return true;
         }
         return false;

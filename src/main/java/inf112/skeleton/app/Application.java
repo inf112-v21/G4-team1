@@ -157,7 +157,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
      */
     public boolean keyUp(int keycode){
-        if (game.isPlaying()){
+        //if (game.isPlaying()){
 
             if(keycode == Input.Keys.UP){
                 //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
@@ -185,7 +185,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                 return true;
             }
 
-        }
+        //}
         if(keycode == Input.Keys.ENTER){
             game.startGame();
         }
