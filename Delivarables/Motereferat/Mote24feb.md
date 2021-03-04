@@ -8,4 +8,4 @@ Muntlig Gjennomgang av oblig 2 kravene. Går igjennom punktlig og diskuterer hve
 
 Ulrik tildelt rolle som møtereferater. Asgeir foreløpig ingen tildelt rolle pga ingen oppmøte ennå.
 
-Diskusjon om hva alle i gruppe holder på med/delegering av oppgaver. Felleskoding, snakk om problemer som oppstår
+Diskusjon om hva alle i gruppe holder på med/delegering av oppgaver. Felleskoding, snakk om problemer som oppstår.
