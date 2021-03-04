@@ -9,25 +9,18 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -75,7 +68,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         flags.add(flag2);
 
         game = new Game(players, flags, this);
-        players.get(0).IntializeClient(game, this);
+        players.get(0).InitializeClient(game, this);
 
         String playerSkinPath = "assets/player.png";
 

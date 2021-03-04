@@ -15,8 +15,8 @@ public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     ArrayList<Flag> visitedFlags = new ArrayList<>();
     int damageTokens;
-    ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
-    ArrayList<ICards> chosenCardsFromHand = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
+    ArrayList<ICards> hand = new ArrayList<>(); //Containing all 9 cards in
+    ArrayList<ICards> chosenCardsFromHand = new ArrayList<>(); //The cards the player has chosen, same card can be in both lists
     String dir = "E";
     Client client;
     String id;
@@ -48,7 +48,7 @@ public class Robot extends Vector2 implements IObject{
         setPosition(x,y);
     }
 
-    public void IntializeClient(Game game, Application application) {
+    public void InitializeClient(Game game, Application application) {
         this.game = game;
         client = new Client(game, this, application);
     }
@@ -58,8 +58,6 @@ public class Robot extends Vector2 implements IObject{
 
         if (game != null) {
             game.getApplication().getPlayerLayer().setCell(Math.round(getX()), Math.round(getY()), null);
-        } else {
-
         }
 
         this.set(x,y);
@@ -116,16 +114,16 @@ public class Robot extends Vector2 implements IObject{
         }
 
         // The position the robot moves to each loop
-        Vector2 newPosition = new Vector2(0,0);
+        Vector2 newPosition;
         // The position the robot will push another robot to each loop. It's the position two steps ahead, instead of 1 step ahead.
-        Vector2 pushPositon = new Vector2(0, 0);
+        Vector2 pushPosition;
 
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
             if(CheckIfOutOfBounds(newPosition)) {
                 return;
             }
-            pushPositon = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
+            pushPosition = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
             switch (checkIfPositionIsClear(newPosition)) {
                 case 0:
                     // Position was clear
@@ -135,7 +133,7 @@ public class Robot extends Vector2 implements IObject{
                     // Position blocked by a robot
                     for (Robot robot : game.getPlayers()) {
                         if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
-                            pushRobot(robot.getId(), new Vector2(0,0), pushPositon, dir_);
+                            pushRobot(robot.getId(), pushPosition, dir_);
                         }
                     }
                     setPosition(newPosition.x, newPosition.y);
@@ -145,11 +143,7 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public boolean CheckIfOutOfBounds(Vector2 position) {
-        if (position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10
-        ) {
-            return true;
-        }
-        return false;
+        return position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10;
     }
 
     // TODO
@@ -171,11 +165,8 @@ public class Robot extends Vector2 implements IObject{
     // TODO
     /**
      * Push robot at position
-     * @param position
      */
-    public void pushRobot(String id, Vector2 position, Vector2 newPosition, String dir) {
-        // VIKTIG!!!!!!!
-        // Eg vett denna gir error i ny og ne, men ignorer da for no. Funke ikkje med try catch plaster ein gong, må gi error for at da skal funka...
+    public void pushRobot(String id, Vector2 newPosition, String dir) {
         client.MoveClientBasedOnCard(id, 1, dir);
 
         for (Robot robot : game.getPlayers()) {
@@ -219,7 +210,7 @@ public class Robot extends Vector2 implements IObject{
      * @param direction
      */
     public void setDirection(String direction) {
-        if ((direction == "N") || (direction == "E") || (direction == "S") || (direction == "W")) {
+        if ((direction.equals("N")) || (direction.equals("E")) || (direction.equals("S")) || (direction.equals("W"))) {
             dir = direction;
         }
 
@@ -230,17 +221,19 @@ public class Robot extends Vector2 implements IObject{
      */
     public void turnLeft(){
 
-        if (dir == "N"){
-            dir = "W";
-        }
-        else if (dir == "E"){
-            dir = "N";
-        }
-        else if (dir == "S"){
-            dir = "E";
-        }
-        else if (dir == "W"){
-            dir = "S";
+        switch (dir) {
+            case "N":
+                dir = "W";
+                break;
+            case "E":
+                dir = "N";
+                break;
+            case "S":
+                dir = "E";
+                break;
+            case "W":
+                dir = "S";
+                break;
         }
     }
 
@@ -248,17 +241,19 @@ public class Robot extends Vector2 implements IObject{
      * Turns robot right
      */
     public void turnRight(){
-        if (dir == "N"){
-            dir = "E";
-        }
-        else if (dir == "E"){
-            dir = "S";
-        }
-        else if (dir == "S"){
-            dir = "W";
-        }
-        else if (dir == "W"){
-            dir = "N";
+        switch (dir) {
+            case "N":
+                dir = "E";
+                break;
+            case "E":
+                dir = "S";
+                break;
+            case "S":
+                dir = "W";
+                break;
+            case "W":
+                dir = "N";
+                break;
         }
     }
 
@@ -273,7 +268,7 @@ public class Robot extends Vector2 implements IObject{
     /**
      *
      * @param flag
-     * adds flag to visitedflags if it is not already visited.
+     * adds flag to visitedFlags if it is not already visited.
      */
     public void registerFlag(Flag flag){
         if(visitedFlags.contains(flag)){
@@ -286,6 +281,10 @@ public class Robot extends Vector2 implements IObject{
         return visitedFlags;
     }
 
+    /**
+     * To be used in next iteration of the project
+     * @return
+     */
     public ICards getFirstCard(){
         return chosenCardsFromHand.get(0);
     }
@@ -302,6 +301,10 @@ public class Robot extends Vector2 implements IObject{
         }
     }
 
+    /**
+     * To be used in next iteration of the project
+     * @return
+     */
     public ArrayList<ICards> getHand(){
         return hand;
     }
@@ -326,6 +329,10 @@ public class Robot extends Vector2 implements IObject{
         this.id = id;
     }
 
+    /**
+     * To be used in next iteration of the project
+     * @return
+     */
     public Game getGame() {
         return game;
     }
