@@ -21,9 +21,11 @@ public class Client {
     IO.Options options;
     Game game_;
     Application application;
+    Robot robot;
 
     public Client(Game game, Robot robot, Application application) {
         this.game_ = game;
+        this.robot = robot;
         this.application = application;
 
         uri = URI.create("http://ec2-3-140-185-175.us-east-2.compute.amazonaws.com/");
@@ -42,7 +44,6 @@ public class Client {
                         id = result[i];
                         robot.setId(result[i]);
                     } else {
-                        System.out.println("PROPPING UP NEW ROBOT AT " +result[i+1]+","+result[i+2]);
                         Robot robot = new Robot((int)Float.parseFloat(result[i+1]),(int)Float.parseFloat(result[i+2]), game);
                         robot.setId(result[i]);
                         game_.AddPlayer(robot);
@@ -91,6 +92,22 @@ public class Client {
                 for (Robot robot : game.getPlayers()) {
                     if (Integer.parseInt(robot.getId()) == Integer.parseInt(result[0])) {
                         robot.setPosition(Float.parseFloat(result[1]), Float.parseFloat(result[2]));
+                    }
+                }
+            }
+        });
+
+        socket.on("disconnected", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String result = objectList[0]+"";
+                System.out.println("DISCONNECT EVENT FROM " + result);
+                for (int i = game.getPlayers().size() - 1; i >= 0; i--) {
+                    if (game.getPlayers().get(i).getId().equals(result)) {
+                        // Visually removes player
+                        game.getApplication().getPlayerLayer().setCell(Math.round(game.getPlayers().get(i).getX()), Math.round(game.getPlayers().get(i).getY()), null);
+                        game.getPlayers().remove(i);
                     }
                 }
             }
