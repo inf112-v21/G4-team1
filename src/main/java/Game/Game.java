@@ -31,8 +31,7 @@ public class Game {
      */
     public void startGame() {
         for (Robot i: players){
-            i.setPosition(0,0);
-
+            //i.setPosition(0,0);
         }
         playGame();
     }
@@ -91,7 +90,7 @@ public class Game {
         ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        while (chosenCardsFromNineDeck.size()<5){
+        while (chosenCardsFromNineDeck.size()<1){
             System.out.println("Enter a number between 1-9");
             ICards chosenCard = cardsToPrint.get(scanner.nextInt());
 
@@ -107,6 +106,7 @@ public class Game {
 
     public void playTurn(){
         for (int i = 0; i < players.get(0).getChosenCards().size(); i++) {
+            System.out.println("iiiiiiiiiiiiiiiiiiii " + i);
             players.get(0).moveBasedOnNextCard();
         }
         /*for(Robot Rob : players){
