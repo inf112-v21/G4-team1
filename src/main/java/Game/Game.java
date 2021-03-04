@@ -41,13 +41,19 @@ public class Game {
      * the games turn order
      */
     public void playGame() {
-        while (playing) {
+        drawStep();
+        printCardsToTerminal();
+        playTurn();
+        //checkIfWinner();
+        //discardStep();
+        /*while (playing) {
             drawStep();
-            printCardsToTerminal();
-            playTurn();
+            //printCardsToTerminal();
+            //playTurn();
             checkIfWinner();
             discardStep();
-        }
+            System.out.println("TEST");
+        }*/
     }
 
     public void drawStep(){
@@ -100,7 +106,10 @@ public class Game {
     }
 
     public void playTurn(){
-        for(Robot Rob : players){
+        for (int i = 0; i < players.get(0).getChosenCards().size(); i++) {
+            players.get(0).moveBasedOnNextCard();
+        }
+        /*for(Robot Rob : players){
             ICards card = Rob.getFirstCard();
             if(card.getClass() == MovementCard.class){
                 //Rob.move(((MovementCard) card).getDistance());
@@ -109,7 +118,7 @@ public class Game {
                 if(!((TurningCard) card).getDirection()) Rob.turnLeft();
                 if(((TurningCard) card).getDirection()) Rob.turnRight();
             }
-        }
+        }*/
 
     }
 

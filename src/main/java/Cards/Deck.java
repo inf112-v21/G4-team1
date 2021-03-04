@@ -9,6 +9,7 @@ public class Deck {
 
     public Deck(){
         cardDeck = new ArrayList<ICards>();
+        discardPile = new ArrayList<ICards>();
 
         //18 move 1 cards
         AddMovementCardsToDeck(18, 1);

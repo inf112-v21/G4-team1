@@ -318,4 +318,8 @@ public class Robot extends Vector2 implements IObject{
     public Game getGame() {
         return game;
     }
+
+    public ArrayList<ICards> getChosenCards() {
+        return chosenCards;
+    }
 }
