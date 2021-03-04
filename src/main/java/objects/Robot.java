@@ -219,6 +219,7 @@ public class Robot extends Vector2 implements IObject{
      * Turns robot in left
      */
     public void turnLeft(){
+
         if (dir == "N"){
             dir = "W";
         }

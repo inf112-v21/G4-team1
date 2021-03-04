@@ -176,6 +176,9 @@ public class Application extends InputAdapter implements ApplicationListener {
             game.getPlayers().get(0).moveBasedOnNextCard();
             return true;
         }
+        if(keycode == Input.Keys.ENTER){
+            game.startGame();
+        }
         return false;
     }
 

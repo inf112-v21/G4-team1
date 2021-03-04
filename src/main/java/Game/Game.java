@@ -27,6 +27,17 @@ public class Game {
     }
 
     /**
+     * Resets all players position and starts the game
+     */
+    public void startGame() {
+        for (Robot i: players){
+            i.setPosition(0,0);
+
+        }
+        playGame();
+    }
+
+    /**
      * the games turn order
      */
     public void playGame() {
@@ -139,4 +150,6 @@ public class Game {
     public Application getApplication() {
         return application;
     }
+
+
 }
