@@ -23,6 +23,10 @@ public class TurningCard implements ICards{
         return isUturn;
     }
 
+    /**
+     *
+     * @return A formatted message for console-print
+     */
     @Override
     public String getDisplayText() {
         String returnMessage = "";
