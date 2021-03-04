@@ -109,19 +109,12 @@ public class Game {
         for (int i = 0; i < players.get(0).getChosenCards().size(); i++) {
             players.get(0).moveBasedOnNextCard();
         }
-        /*for(Robot Rob : players){
-            ICards card = Rob.getFirstCard();
-            if(card.getClass() == MovementCard.class){
-                //Rob.move(((MovementCard) card).getDistance());
-            }
-            if(card.getClass() == TurningCard.class){
-                if(!((TurningCard) card).getDirection()) Rob.turnLeft();
-                if(((TurningCard) card).getDirection()) Rob.turnRight();
-            }
-        }*/
-
     }
 
+    /**
+     * returns true if any players have visited all the flags,
+     * false otherwise
+     */
     public boolean checkIfWinner(){
         for(Robot player : players){
             if(player.getVisitedFlags().size() == flags.size()){
@@ -132,17 +125,6 @@ public class Game {
         }
         return false;
     }
-
-    /**
-     * Checks if robot position equals flag position
-     * If flag equals the final flag and robot has visited all previous flags,
-     * player wins and the game is done
-     */
-
-
-
-
-
 
     public Flag finalFlag(){
        return flags.get(flags.size()-1);
