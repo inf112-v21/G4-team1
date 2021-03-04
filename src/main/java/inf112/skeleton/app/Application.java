@@ -198,7 +198,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-
+        renderer.render();
     }
     /**
     Updates the game board, checks if any players are on flag or hole tiles.

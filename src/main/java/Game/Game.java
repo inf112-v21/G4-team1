@@ -93,7 +93,7 @@ public class Game {
 
         while (chosenCardsFromNineDeck.size()<5){
             System.out.println("Enter a number between 1-9");
-            ICards chosenCard = cardsToPrint.get(scanner.nextInt());
+            ICards chosenCard = cardsToPrint.get(scanner.nextInt()-1);
 
             if(!chosenCardsFromNineDeck.contains(chosenCard)){
                 chosenCardsFromNineDeck.add(chosenCard);
