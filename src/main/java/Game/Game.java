@@ -90,12 +90,19 @@ public class Game {
 
     public void chooseCards(ArrayList<ICards> cardsToPrint){
         ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
+
 
         while (chosenCardsFromNineDeck.size()<5){
             System.out.println("Enter a number between 1-9");
-            ICards chosenCard = cardsToPrint.get(scanner.nextInt()-1);
-
+            Scanner scanner = new Scanner(System.in);
+            if(!scanner.hasNextInt()){
+                continue;
+            }
+            int number = scanner.nextInt();
+            if(!(number > 0 && number < 10)){
+                continue;
+            }
+            ICards chosenCard = cardsToPrint.get(number-1);
             if(!chosenCardsFromNineDeck.contains(chosenCard)){
                 chosenCardsFromNineDeck.add(chosenCard);
                 players.get(0).chooseCard(chosenCard);
