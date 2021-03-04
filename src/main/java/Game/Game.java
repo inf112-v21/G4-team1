@@ -70,6 +70,11 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * Gets 9 random cards from the deck and prints cards to the terminal
+     * Also runs chooseCards
+     */
     public void printCardsToTerminal() {
         ArrayList<ICards> cardsToPrint = new ArrayList<>();
         ArrayList<ICards> cardDeck = deck.getCardDeck();
@@ -84,10 +89,16 @@ public class Game {
             System.out.println(counter + ": " + cards.getDisplayText());
             counter++;
         }
-        System.out.println("Choose five of these cards using 1-9 on your keyboard");
+        System.out.println("\n" +"Choose five of these cards using 1-9 on your keyboard");
         chooseCards(cardsToPrint);
     }
 
+    /**
+     * User picks 5 out of 9 cards for their hand
+     * Cannot choose the same card more than once
+     * Sends a card that is chosen to the robot class
+     * @param cardsToPrint 9 cards to choose from
+     */
     public void chooseCards(ArrayList<ICards> cardsToPrint){
         ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
 
@@ -105,7 +116,7 @@ public class Game {
             ICards chosenCard = cardsToPrint.get(number-1);
             if(!chosenCardsFromNineDeck.contains(chosenCard)){
                 chosenCardsFromNineDeck.add(chosenCard);
-                players.get(0).chooseCard(chosenCard);
+                players.get(0).addCardToHand(chosenCard);
             }
             else{
                 System.out.println("This card is already chosen, chose a new");
@@ -114,7 +125,7 @@ public class Game {
     }
 
     public void playTurn(){
-        for (int i = 0; i < players.get(0).getChosenCards().size(); i++) {
+        for (int i = 0; i < players.get(0).getChosenCardsFromHand().size(); i++) {
             players.get(0).moveBasedOnNextCard();
         }
     }
