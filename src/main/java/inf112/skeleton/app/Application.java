@@ -131,6 +131,11 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     @Override
+    /**
+    Runs the game, cheks if its running, paused or finished,
+    Updates the board if the game is running. Calls draw function which calls the render
+    function again.
+     */
     public void render() {
 
         switch(state){
@@ -148,6 +153,9 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     @Override
+    /**
+    Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
+     */
     public boolean keyUp(int keycode){
         if (game.isPlaying()){
 
@@ -193,9 +201,13 @@ public class Application extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
-    }
 
+    }
+    /**
+    Updates the game board, checks if any players are on flag or hole tiles.
+    If a players stands on a flag tiles, it calls checkIfWinner in game to see if the game is done
+    Sets gamestate to stopped if checkifwinner is true.
+     */
     public void update() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (holeLayer.getCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i))) != null) {
@@ -240,6 +252,11 @@ public class Application extends InputAdapter implements ApplicationListener {
     public int flagYPosition(Flag flag){
         return Math.round(flag.getY());
     }
+
+    /**
+    Checks if a player is on a flag tile, registers flag for player if it is on the right order
+    for flags, and player has all previous flags, or if the flag is the first flag.
+     */
     public boolean playerOnFlag() {
         for (Flag flag : flags) {
                 if(players.get(0).getVisitedFlags().contains(flag)) continue;
