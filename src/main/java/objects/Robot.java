@@ -300,6 +300,7 @@ public class Robot extends Vector2 implements IObject{
         chosenCards.add(card);
     }
 
+
     public void discardHand(Deck deck){
         for (ICards i: hand){
             deck.discardCard(i);
