@@ -15,11 +15,20 @@
 **Programmerere:** Ulrik, Kristian, Nathaniel, Anders, Asgeir
 
 Rollene i teamet fungerer greit. Men det har blitt gjort endringer siden oblig1. På grunn av at vi alle har forskjellig erfaring slik at noen er bedre på visse ting og dermed fullføre oppgaven mer effektivt. Rollene sier noe om hvilke oppgaver man blir tildelt. F.eks nettverksansvarlig får hovedansvar for det som har med multiplayeren å gjøre osv.
-Det var vanskelig å tildele roller i starten men det lønner seg når man skal organisere arbeidet og at det er litt struktur på hvem som holder på med hva istedenfor at det blir tilfeldig. Gruppedynamikken er god og vi har flytende kommunikasjon under møtene. Vi har ikke opplevd store problemer med prosjektet selv om vi alle har forskjellig erfaring. Hvis det er problemer med noe blir det tatt opp med en gang slik at det ikke bygger seg opp.
+Det var vanskelig å tildele roller i starten men det lønner seg når man skal organisere arbeidet og at det er litt struktur på hvem som holder på med hva istedenfor at det blir kaos. 
 
-Til nå har vi greid å oppfylle alle Mvp kravene. (..prosjektmetodikk..)
+Gruppedynamikken er god og vi har flytende kommunikasjon under møtene. Vi har ikke opplevd store problemer med prosjektet selv om vi alle har forskjellig erfaring. Hvis det er problemer med noe blir det tatt opp med en gang slik at det ikke bygger seg opp.
 
+###Prosjektstruktur
+Til nå har vi greid å oppfylle alle Mvp kravene samt begynt å jobbe litt med mer utfyllende spill logikk. 
+Vi bruker project board til å se hva som holdes på med og hva som har blitt gjort. 
+Hvis det kommer noen spørsmål har vi laget en egen discord slik at kommukasjonen ikke stopper opp mellom møtene.
+I tilleg brukes codewithme hvis flere programmerer på samme ting for å unngå kluss.
 
+Til nå har dette fungert greit. Det eneste problemet var at vi hadde lite planlagte møtetider. 
+Dette ble tatt opp på ett av møtene og vi har nå møtetid mandag i tilleg til den obligatoriske på onsdager (+fredag hvis det trengs).
+
+#####ProjectBoard
 
 ![img.png](img.png)
 Utklipp av project board under utviklingen. Oppgaver som ikke er selvinlysende er forklart med komentar som dukker opp når du klikker på den.
