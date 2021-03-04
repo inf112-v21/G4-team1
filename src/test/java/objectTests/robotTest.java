@@ -71,19 +71,19 @@ public class robotTest {
         robot.setDirection("N");
 
         // Checks if robot moves 1 up
-        robot.chooseCard(new MovementCard(1,0));
+        robot.addCardToHand(new MovementCard(1,0));
         robot.moveBasedOnNextCard();
         assertEquals(1, robot.getY(), 0.1);
 
         // Checks if robot turns 1 time to the right
-        robot.chooseCard(new TurningCard(true, false, 0));
+        robot.addCardToHand(new TurningCard(true, false, 0));
         robot.moveBasedOnNextCard();
         assertEquals("E", robot.getDir());
 
         // Checks if robot can do a sequence of cards
-        robot.chooseCard(new MovementCard(2,0));
-        robot.chooseCard(new TurningCard(true, false, 0));
-        robot.chooseCard(new MovementCard(3,0));
+        robot.addCardToHand(new MovementCard(2,0));
+        robot.addCardToHand(new TurningCard(true, false, 0));
+        robot.addCardToHand(new MovementCard(3,0));
 
         Vector2 originalPosition = new Vector2(robot.getX(), robot.getY());
         robot.moveBasedOnNextCard();

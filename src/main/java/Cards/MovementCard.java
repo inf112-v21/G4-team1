@@ -17,6 +17,10 @@ public class MovementCard implements ICards{
         return distance;
     }
 
+    /**
+     *
+     * @return A formatted message for console-print
+     */
     @Override
     public String getDisplayText() {
         return String.format("%-2s %-10d %s %d","Move",getDistance(),"Priority: ",getPriority());

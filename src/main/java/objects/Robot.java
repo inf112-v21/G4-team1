@@ -17,7 +17,7 @@ public class Robot extends Vector2 implements IObject{
     Flag lastFlag = null;
     int damageTokens;
     ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
-    ArrayList<ICards> chosenCards = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
+    ArrayList<ICards> chosenCardsFromHand = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
     String dir = "E";
     Client client;
     String id;
@@ -277,12 +277,12 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public ICards getFirstCard(){
-        return chosenCards.get(0);
+        return chosenCardsFromHand.get(0);
     }
 
     public ICards drawAndDiscardFirstCardInList(){
-        ICards card = chosenCards.get(0);
-        chosenCards.remove(0);
+        ICards card = chosenCardsFromHand.get(0);
+        chosenCardsFromHand.remove(0);
         return card;
     }
 
@@ -296,8 +296,8 @@ public class Robot extends Vector2 implements IObject{
         return hand;
     }
 
-    public void chooseCard(ICards card){
-        chosenCards.add(card);
+    public void addCardToHand(ICards card){
+        chosenCardsFromHand.add(card);
     }
 
     public void discardHand(Deck deck){
@@ -319,7 +319,7 @@ public class Robot extends Vector2 implements IObject{
         return game;
     }
 
-    public ArrayList<ICards> getChosenCards() {
-        return chosenCards;
+    public ArrayList<ICards> getChosenCardsFromHand() {
+        return chosenCardsFromHand;
     }
 }

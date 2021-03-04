@@ -9,25 +9,18 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -152,25 +145,25 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         if(keycode == Input.Keys.UP){
             //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
-            game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
             game.getPlayers().get(0).setDirection("N");
             game.getPlayers().get(0).moveBasedOnNextCard();
             return true;
         }
         else if(keycode == Input.Keys.DOWN){
-            game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
             game.getPlayers().get(0).setDirection("S");
             game.getPlayers().get(0).moveBasedOnNextCard();
             return true;
         }
         else if(keycode == Input.Keys.LEFT){
-            game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
             game.getPlayers().get(0).setDirection("W");
             game.getPlayers().get(0).moveBasedOnNextCard();
             return true;
         }
         else if(keycode == Input.Keys.RIGHT){
-            game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
             game.getPlayers().get(0).setDirection("E");
             game.getPlayers().get(0).moveBasedOnNextCard();
             return true;
