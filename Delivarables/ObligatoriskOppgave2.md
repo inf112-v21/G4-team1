@@ -48,6 +48,12 @@ når spiller(1) beveger seg fra felt (0,0) til (0,1)
 
 så vises det samme for spiller(2)
 
+**Arbeidsoppgaver:**
+- Få til å koble flere spillere sammen
+- La spillere se hverandre på brettet
+- Lage logikk i programmet registrere vinneren
+
+
 **Mvp krav 7:** Som kort vil jeg kunne bli delt ut til spilleren, slik at de har mulighet til å velge meg.
 
 **Akseptansekriterier:**
@@ -59,6 +65,12 @@ man har startet et spill
 når programmeringsfasen begynner
 
 så skal spiller bli delt ut 9 kort
+
+**Arbeidsoppgaver**
+- Lage en klasse for bevegelseskort
+- Lage en funksjon som blander bevegelseskortene
+- Lage logikk som deler ut 9 tilfeldige kort hver programmeringsrunde
+
 
 **Mvp krav 8:**
 Som spiller vil jeg ha muligheten til å velge 5 kort, slik at jeg kan planlegge runden min.
@@ -76,6 +88,12 @@ spiller har valgt 4 kort
 når spiller velger kort 5
 
 så kan ikke spiller velge flere kort før neste programmeringsfase
+
+**Arbeidsoppgaver**
+- Lage en funskjon som lagrer valgte kort
+- Vise kort til brukeren
+- Lage logikk slik at man ikke man velge det samme kortet flere ganger
+- Lage logikk slik at man ikke kan velge mer enn 5 kort
 
 **Mvp krav 9:**
 
@@ -97,3 +115,6 @@ når programmeringsfasen er over
 
 så skal robot til spiller først bevege seg to fram og så snu til venstre.
 
+**Arbeidsoppgaver**
+- Lage logikk slik at robot beveger seg i henhold til valgte kort
+- Få lagt in priority slik at port med høyest prioritet blir valgt først
