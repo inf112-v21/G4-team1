@@ -19,7 +19,7 @@ public class Game {
 
     public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist, Application application) {
         this.application = application;
-        playing = true;
+
         players = playerlist;
         flags = flaglist;
         numberOfFlags = flags.size();
@@ -30,10 +30,9 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
-        for (Robot i: players){
-            i.setPosition(0,0);
-
-        }
+        playing = true;
+        players.get(0).setPosition(0,0);
+        application.render();
         playGame();
     }
 
@@ -41,6 +40,7 @@ public class Game {
      * the games turn order
      */
     public void playGame() {
+
         drawStep();
         printCardsToTerminal();
         playTurn();
@@ -60,6 +60,7 @@ public class Game {
         for (Robot rob : players) {
             rob.drawHand(deck);
         }
+
 
     }
 
@@ -122,6 +123,7 @@ public class Game {
                 playing = false;
                 return true;
             }
+            application.render();
         }
         return false;
     }
@@ -143,4 +145,7 @@ public class Game {
     }
 
 
+    public boolean isPlaying() {
+        return playing;
+    }
 }
