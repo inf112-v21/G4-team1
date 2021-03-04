@@ -9,18 +9,25 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Application extends InputAdapter implements ApplicationListener {
     private SpriteBatch batch;
@@ -124,6 +131,11 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     @Override
+    /**
+    Runs the game, cheks if its running, paused or finished,
+    Updates the board if the game is running. Calls draw function which calls the render
+    function again.
+     */
     public void render() {
 
         switch(state){
@@ -141,32 +153,38 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     @Override
+    /**
+    Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
+     */
     public boolean keyUp(int keycode){
+        if (game.isPlaying()){
 
-        if(keycode == Input.Keys.UP){
-            //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("N");
-            game.getPlayers().get(0).moveBasedOnNextCard();
-            return true;
-        }
-        else if(keycode == Input.Keys.DOWN){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("S");
-            game.getPlayers().get(0).moveBasedOnNextCard();
-            return true;
-        }
-        else if(keycode == Input.Keys.LEFT){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("W");
-            game.getPlayers().get(0).moveBasedOnNextCard();
-            return true;
-        }
-        else if(keycode == Input.Keys.RIGHT){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("E");
-            game.getPlayers().get(0).moveBasedOnNextCard();
-            return true;
+            if(keycode == Input.Keys.UP){
+                //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
+                game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("N");
+                game.getPlayers().get(0).moveBasedOnNextCard();
+                return true;
+            }
+            else if(keycode == Input.Keys.DOWN){
+                game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("S");
+                game.getPlayers().get(0).moveBasedOnNextCard();
+                return true;
+            }
+            else if(keycode == Input.Keys.LEFT){
+                game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("W");
+                game.getPlayers().get(0).moveBasedOnNextCard();
+                return true;
+            }
+            else if(keycode == Input.Keys.RIGHT){
+                game.getPlayers().get(0).chooseCard(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("E");
+                game.getPlayers().get(0).moveBasedOnNextCard();
+                return true;
+            }
+
         }
         if(keycode == Input.Keys.ENTER){
             game.startGame();
@@ -185,7 +203,11 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         renderer.render();
     }
-
+    /**
+    Updates the game board, checks if any players are on flag or hole tiles.
+    If a players stands on a flag tiles, it calls checkIfWinner in game to see if the game is done
+    Sets gamestate to stopped if checkifwinner is true.
+     */
     public void update() {
         for (int i = 0; i < game.getPlayers().size(); i++) {
             if (holeLayer.getCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i))) != null) {
@@ -230,6 +252,11 @@ public class Application extends InputAdapter implements ApplicationListener {
     public int flagYPosition(Flag flag){
         return Math.round(flag.getY());
     }
+
+    /**
+    Checks if a player is on a flag tile, registers flag for player if it is on the right order
+    for flags, and player has all previous flags, or if the flag is the first flag.
+     */
     public boolean playerOnFlag() {
         for (Flag flag : flags) {
                 if(players.get(0).getVisitedFlags().contains(flag)) continue;

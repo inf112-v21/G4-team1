@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     ArrayList<Flag> visitedFlags = new ArrayList<>();
-    Flag lastFlag = null;
     int damageTokens;
     ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
     ArrayList<ICards> chosenCardsFromHand = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
@@ -123,6 +122,9 @@ public class Robot extends Vector2 implements IObject{
 
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
+            if(CheckIfOutOfBounds(newPosition)) {
+                return;
+            }
             pushPositon = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
             switch (checkIfPositionIsClear(newPosition)) {
                 case 0:
@@ -140,6 +142,13 @@ public class Robot extends Vector2 implements IObject{
                     break;
             }
         }
+    }
+
+    public boolean CheckIfOutOfBounds(Vector2 position) {
+        if (position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10) {
+            return true;
+        }
+        return false;
     }
 
     // TODO
@@ -260,16 +269,16 @@ public class Robot extends Vector2 implements IObject{
         return dir;
     }
 
+    /**
+     *
+     * @param flag
+     * adds flag to visitedflags if it is not already visited.
+     */
     public void registerFlag(Flag flag){
-        if(flag.equals(getLastFlag())){
+        if(visitedFlags.contains(flag)){
             return;
         }
-        lastFlag = flag;
         visitedFlags.add(flag);
-    }
-
-    public Flag getLastFlag(){
-        return lastFlag;
     }
 
     public ArrayList<Flag> getVisitedFlags() {
@@ -299,6 +308,7 @@ public class Robot extends Vector2 implements IObject{
     public void addCardToHand(ICards card){
         chosenCardsFromHand.add(card);
     }
+
 
     public void discardHand(Deck deck){
         for (ICards i: hand){

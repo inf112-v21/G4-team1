@@ -19,7 +19,7 @@ public class Game {
 
     public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist, Application application) {
         this.application = application;
-        playing = true;
+
         players = playerlist;
         flags = flaglist;
         numberOfFlags = flags.size();
@@ -30,10 +30,9 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
-        for (Robot i: players){
-            i.setPosition(0,0);
-
-        }
+        playing = true;
+        players.get(0).setPosition(0,0);
+        application.render();
         playGame();
     }
 
@@ -41,6 +40,7 @@ public class Game {
      * the games turn order
      */
     public void playGame() {
+
         drawStep();
         printCardsToTerminal();
         playTurn();
@@ -60,6 +60,7 @@ public class Game {
         for (Robot rob : players) {
             rob.drawHand(deck);
         }
+
 
     }
 
@@ -104,7 +105,7 @@ public class Game {
 
         while (chosenCardsFromNineDeck.size()<5){
             System.out.println("Enter a number between 1-9");
-            ICards chosenCard = cardsToPrint.get(scanner.nextInt());
+            ICards chosenCard = cardsToPrint.get(scanner.nextInt()-1);
 
             if(!chosenCardsFromNineDeck.contains(chosenCard)){
                 chosenCardsFromNineDeck.add(chosenCard);
@@ -120,19 +121,12 @@ public class Game {
         for (int i = 0; i < players.get(0).getChosenCardsFromHand().size(); i++) {
             players.get(0).moveBasedOnNextCard();
         }
-        /*for(Robot Rob : players){
-            ICards card = Rob.getFirstCard();
-            if(card.getClass() == MovementCard.class){
-                //Rob.move(((MovementCard) card).getDistance());
-            }
-            if(card.getClass() == TurningCard.class){
-                if(!((TurningCard) card).getDirection()) Rob.turnLeft();
-                if(((TurningCard) card).getDirection()) Rob.turnRight();
-            }
-        }*/
-
     }
 
+    /**
+     * returns true if any players have visited all the flags,
+     * false otherwise
+     */
     public boolean checkIfWinner(){
         for(Robot player : players){
             if(player.getVisitedFlags().size() == flags.size()){
@@ -140,20 +134,10 @@ public class Game {
                 playing = false;
                 return true;
             }
+            application.render();
         }
         return false;
     }
-
-    /**
-     * Checks if robot position equals flag position
-     * If flag equals the final flag and robot has visited all previous flags,
-     * player wins and the game is done
-     */
-
-
-
-
-
 
     public Flag finalFlag(){
        return flags.get(flags.size()-1);
@@ -172,4 +156,7 @@ public class Game {
     }
 
 
+    public boolean isPlaying() {
+        return playing;
+    }
 }
