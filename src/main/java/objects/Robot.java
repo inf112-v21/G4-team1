@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
     ArrayList<Flag> visitedFlags = new ArrayList<>();
-    Flag lastFlag = null;
     int damageTokens;
     ArrayList<ICards> hand = new ArrayList<ICards>(); //Containing all 9 cards in
     ArrayList<ICards> chosenCards = new ArrayList<ICards>(); //The cards the player has chosen, same card can be in both lists
@@ -270,16 +269,16 @@ public class Robot extends Vector2 implements IObject{
         return dir;
     }
 
+    /**
+     *
+     * @param flag
+     * adds flag to visitedflags if it is not already visited.
+     */
     public void registerFlag(Flag flag){
-        if(flag.equals(getLastFlag())){
+        if(visitedFlags.contains(flag)){
             return;
         }
-        lastFlag = flag;
         visitedFlags.add(flag);
-    }
-
-    public Flag getLastFlag(){
-        return lastFlag;
     }
 
     public ArrayList<Flag> getVisitedFlags() {
@@ -309,6 +308,7 @@ public class Robot extends Vector2 implements IObject{
     public void chooseCard(ICards card){
         chosenCards.add(card);
     }
+
 
     public void discardHand(Deck deck){
         for (ICards i: hand){
