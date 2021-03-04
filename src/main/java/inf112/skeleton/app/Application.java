@@ -240,16 +240,19 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
     public boolean playerOnFlag() {
         for (Flag flag : flags) {
-            if ((playerXPosition(game.getPlayers().get(0)) == flagXPosition(flag)) && (playerYPosition(game.getPlayers().get(0)) == flagYPosition(flag))) {
-                playerLayer.setCell(playerXPosition(game.getPlayers().get(0)), playerYPosition(game.getPlayers().get(0)), playerWonCell);
-                game.getPlayers().get(0).registerFlag(flag);
-
-                return true;
+                if(players.get(0).getVisitedFlags().contains(flag)) continue;
+                if(flags.get(0).equals(flag) || players.get(0).getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
+                    if ((playerXPosition(players.get(0)) == flagXPosition(flag)) && (playerYPosition(players.get(0)) == flagYPosition(flag))) {
+                        playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerWonCell);
+                        players.get(0).registerFlag(flag);
+                        return true;
+                    }
+                }
             }
-
+            return false;
         }
-        return false;
-    }
+
+
 
     public void AddPlayer(Robot robot) {
         game.getPlayers().get(0).add(robot);
