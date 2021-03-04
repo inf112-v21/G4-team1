@@ -1,5 +1,6 @@
 package Multiplayer;
 
+import Cards.MovementCard;
 import Game.Game;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
@@ -41,7 +42,8 @@ public class Client {
                         id = result[i];
                         robot.setId(result[i]);
                     } else {
-                        Robot robot = new Robot(Integer.parseInt(result[i+1]),Integer.parseInt(result[i+2]), game);
+                        System.out.println("PROPPING UP NEW ROBOT AT " +result[i+1]+","+result[i+2]);
+                        Robot robot = new Robot((int)Float.parseFloat(result[i+1]),(int)Float.parseFloat(result[i+2]), game);
                         robot.setId(result[i]);
                         game_.AddPlayer(robot);
                         i += 2;
@@ -68,6 +70,19 @@ public class Client {
             }
         });
 
+        socket.on("moveClientBasedOnCard", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String[] result = (objectList[0]+"").split(",");
+                for (Robot robot : game.getPlayers()) {
+                    if (Integer.parseInt(robot.getId()) == Integer.parseInt(result[0])) {
+                        robot.moveBasedOnCard(new MovementCard(Integer.parseInt(result[1]), 999), result[2]);
+                    }
+                }
+            }
+        });
+
         socket.on("updateClientPosition", new Emitter.Listener() {
             @Override
             public void call(Object... objects) {
@@ -80,6 +95,11 @@ public class Client {
                 }
             }
         });
+    }
+
+    public void MoveClientBasedOnCard(String id, int tiles, String dir) {
+        System.out.println("MOVE: " + id + "," + tiles + "," + dir);
+        socket.emit("moveClientBasedOnCard", id + "," + tiles + "," + dir);
     }
 
     public void UpdateClientPosition(Vector2 position, String id) {

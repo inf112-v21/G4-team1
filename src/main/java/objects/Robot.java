@@ -98,10 +98,10 @@ public class Robot extends Vector2 implements IObject{
      * moves x tiles in the direction the robot is facing
      * @param tiles number of tiles it moves
      */
-    public void move(int tiles){
+    public void move(int tiles, String dir_, Boolean broadcast){
         Vector2 moveDirection = new Vector2(0,0);
 
-        switch (dir) {
+        switch (dir_) {
             case "N":
                 moveDirection.y = 1;
                 break;
@@ -131,10 +131,9 @@ public class Robot extends Vector2 implements IObject{
                     break;
                 case 1:
                     // Position blocked by a robot
-                    System.out.println("POSITION BLOCKED BY ROBOT");
                     for (Robot robot : game.getPlayers()) {
                         if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
-                            pushRobot(robot.getId(), new Vector2(0,0), pushPositon);
+                            pushRobot(robot.getId(), new Vector2(0,0), pushPositon, dir_);
                         }
                     }
                     setPosition(newPosition.x, newPosition.y);
@@ -164,8 +163,11 @@ public class Robot extends Vector2 implements IObject{
      * Push robot at position
      * @param position
      */
-    public void pushRobot(String id, Vector2 position, Vector2 newPosition) {
-        client.UpdateClientPosition(newPosition, id);
+    public void pushRobot(String id, Vector2 position, Vector2 newPosition, String dir) {
+        // VIKTIG!!!!!!!
+        // Eg vett denna gir error i ny og ne, men ignorer da for no. Funke ikkje med try catch plaster ein gong, må gi error for at da skal funka...
+        client.MoveClientBasedOnCard(id, 1, dir);
+
         for (Robot robot : game.getPlayers()) {
             if (robot.getId().equals(id)) {
                 robot.setPosition(newPosition.x, newPosition.y);
@@ -178,7 +180,11 @@ public class Robot extends Vector2 implements IObject{
      * @param movementCard Moves robot x tiles according to card
      */
     public void moveBasedOnCard(MovementCard movementCard) {
-        move(movementCard.getDistance());
+        move(movementCard.getDistance(), getDir(), true);
+    }
+
+    public void moveBasedOnCard(MovementCard movementCard, String dir) {
+        move(movementCard.getDistance(), dir, false);
     }
 
     /**

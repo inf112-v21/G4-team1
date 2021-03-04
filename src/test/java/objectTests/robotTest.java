@@ -52,13 +52,13 @@ public class robotTest {
         // Checks vertical movement
         float initialYCoordinate = robot.getY();
         robot.setDirection("N");
-        robot.move(3);
+        robot.move(3, robot.getDir(), false);
         assertEquals(initialYCoordinate + 3, robot.getY(), 0.1);
 
         // Check horisontal movement
         float initialXCoordinate = robot.getX();
         robot.setDirection("W");
-        robot.move(3);
+        robot.move(3, robot.getDir(), false);
         assertEquals(initialXCoordinate + -3, robot.getX(), 0.1);
     }
 

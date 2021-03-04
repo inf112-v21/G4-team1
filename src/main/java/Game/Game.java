@@ -92,7 +92,7 @@ public class Game {
         for(Robot Rob : players){
             ICards card = Rob.getFirstCard();
             if(card.getClass() == MovementCard.class){
-                Rob.move(((MovementCard) card).getDistance());
+                //Rob.move(((MovementCard) card).getDistance());
             }
             if(card.getClass() == TurningCard.class){
                 if(!((TurningCard) card).getDirection()) Rob.turnLeft();
