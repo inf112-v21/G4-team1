@@ -25,4 +25,4 @@ The game is over when the first robot visits all the flags. During the game, the
 * when every player has played 5 cards, they will be executed
 
 ####Known bugs:
-* Starting the game by pressing Enter crashes the game
+* Starting the game by pressing Enter crashes the application
