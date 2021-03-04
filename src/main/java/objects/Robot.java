@@ -85,8 +85,10 @@ public class Robot extends Vector2 implements IObject{
     public void moveBasedOnNextCard(){
         ICards card = drawAndDiscardFirstCardInList();
         if (card.getClass() == MovementCard.class) {
+            MovementCard card_ = (MovementCard) card;
             moveBasedOnCard((MovementCard) card);
         } else {
+            TurningCard card_ = (TurningCard) card;
             turnBasedOnCard((TurningCard) card);
         }
     }
@@ -97,7 +99,6 @@ public class Robot extends Vector2 implements IObject{
      */
     public void move(int tiles, String dir_, Boolean broadcast){
         Vector2 moveDirection = new Vector2(0,0);
-
         switch (dir_) {
             case "N":
                 moveDirection.y = 1;
@@ -113,6 +114,13 @@ public class Robot extends Vector2 implements IObject{
                 break;
         }
 
+        // Switches move direction for backwards cards.
+        if (tiles == -1) {
+            moveDirection.x *= -1;
+            moveDirection.y *= -1;
+            tiles = 1;
+        }
+
         // The position the robot moves to each loop
         Vector2 newPosition;
         // The position the robot will push another robot to each loop. It's the position two steps ahead, instead of 1 step ahead.
@@ -120,24 +128,23 @@ public class Robot extends Vector2 implements IObject{
 
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
-            if(CheckIfOutOfBounds(newPosition)) {
-                return;
-            }
             pushPosition = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
-            switch (checkIfPositionIsClear(newPosition)) {
-                case 0:
-                    // Position was clear
-                    setPosition(newPosition.x, newPosition.y);
-                    break;
-                case 1:
-                    // Position blocked by a robot
-                    for (Robot robot : game.getPlayers()) {
-                        if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
-                            pushRobot(robot.getId(), pushPosition, dir_);
+            if(!CheckIfOutOfBounds(newPosition)) {
+                switch (checkIfPositionIsClear(newPosition)) {
+                    case 0:
+                        // Position was clear
+                        setPosition(newPosition.x, newPosition.y);
+                        break;
+                    case 1:
+                        // Position blocked by a robot
+                        for (Robot robot : game.getPlayers()) {
+                            if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
+                                pushRobot(robot.getId(), pushPosition, dir_);
+                            }
                         }
-                    }
-                    setPosition(newPosition.x, newPosition.y);
-                    break;
+                        setPosition(newPosition.x, newPosition.y);
+                        break;
+            }
             }
         }
     }
