@@ -180,7 +180,9 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         //}
         if(keycode == Input.Keys.ENTER){
-            game.startGame();
+            if(!game.isPlaying()) {
+                game.startGame();
+            }
         }
         return false;
     }
@@ -196,6 +198,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         renderer.render();
     }
+
     /**
     Updates the game board, checks if any players are on flag or hole tiles.
     If a players stands on a flag tiles, it calls checkIfWinner in game to see if the game is done
@@ -263,7 +266,6 @@ public class Application extends InputAdapter implements ApplicationListener {
             }
             return false;
         }
-
 
 
     public void AddPlayer(Robot robot) {
