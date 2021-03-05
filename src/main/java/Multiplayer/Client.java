@@ -52,7 +52,8 @@ public class Client {
                 }
                 // Tell the server our location
                 //UpdateClientPosition(new Vector2(robot.getX(), robot.getY()));
-
+                Vector2 pos = FindClearPosition();
+                robot.setPosition(pos.x, pos.y);
             }
         });
 
@@ -61,7 +62,6 @@ public class Client {
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
                 id = objectList[0]+"";
-                System.out.println("KVA STÅR HERE: " + id);
                 Robot robot = new Robot(0,0, game_);
                 robot.setId(id);
                 game_.AddPlayer(robot);
@@ -102,7 +102,6 @@ public class Client {
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
                 String result = objectList[0]+"";
-                System.out.println("DISCONNECT EVENT FROM " + result);
                 for (int i = game.getPlayers().size() - 1; i >= 0; i--) {
                     if (game.getPlayers().get(i).getId().equals(result)) {
                         // Visually removes player
@@ -114,8 +113,22 @@ public class Client {
         });
     }
 
+    public Vector2 FindClearPosition() {
+        for (int i = 0; i < 10; i++) {
+            Vector2 pos = new Vector2(i, 0);
+            boolean positionClear = true;
+            for (Robot rob : game_.getPlayers()) {
+                System.out.println((rob.getX() == pos.x) +" | " + (rob.getY() == pos.y) + " | " + !rob.getId().equals(id));
+                if (rob.getX() == pos.x && rob.getY() == pos.y) {
+                    if (!rob.getId().equals(id)) { positionClear = false; }
+                }
+            }
+            if (positionClear) { return pos; }
+        }
+        return new Vector2(0,0);
+    }
+
     public void MoveClientBasedOnCard(String id, int tiles, String dir) {
-        System.out.println("MOVE: " + id + "," + tiles + "," + dir);
         socket.emit("moveClientBasedOnCard", id + "," + tiles + "," + dir);
     }
 

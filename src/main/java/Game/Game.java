@@ -16,6 +16,7 @@ public class Game {
     ArrayList<Flag> flags;
     Deck deck;
     Application application;
+    boolean isCurrentlyPlayingARound = false;
 
     public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist, Application application) {
         this.application = application;
@@ -31,7 +32,7 @@ public class Game {
      */
     public void startGame() {
         playing = true;
-        players.get(0).setPosition(0,0);
+        //players.get(0).setPosition(0,0);
         application.render();
         playGame();
     }
@@ -40,10 +41,11 @@ public class Game {
      * the games turn order
      */
     public void playGame() {
-
-        drawStep();
-        printCardsToTerminal();
-        playTurn();
+        if (!isCurrentlyPlayingARound) {
+            drawStep();
+            printCardsToTerminal();
+        }
+        //playTurn();
         //checkIfWinner();
         //discardStep();
         /*while (playing) {
@@ -76,6 +78,8 @@ public class Game {
      * Also runs chooseCards
      */
     public void printCardsToTerminal() {
+        isCurrentlyPlayingARound = true;
+        System.out.flush();
         ArrayList<ICards> cardsToPrint = new ArrayList<>();
         ArrayList<ICards> cardDeck = deck.getCardDeck();
 
@@ -90,7 +94,19 @@ public class Game {
             counter++;
         }
         System.out.println("\n" +"Choose five of these cards using 1-9 on your keyboard");
-        chooseCards(cardsToPrint);
+
+        // Separate thread to take input
+        Thread one = new Thread() {
+            public void run() {
+                try {
+                    chooseCards(cardsToPrint);
+                } catch(Exception v) {
+                    System.out.println(v);
+                }
+            }
+        };
+
+        one.start();
     }
 
     /**
@@ -101,7 +117,6 @@ public class Game {
      */
     public void chooseCards(ArrayList<ICards> cardsToPrint){
         ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
-
 
         while (chosenCardsFromNineDeck.size()<5){
             System.out.println("Enter a number between 1-9");
@@ -122,12 +137,24 @@ public class Game {
                 System.out.println("This card is already chosen, chose a new");
             }
         }
+
+        playTurn();
     }
 
     public void playTurn(){
-        for (int i = 0; i < players.get(0).getChosenCardsFromHand().size(); i++) {
+        int amountOfCards = players.get(0).getChosenCardsFromHand().size();
+        for (int i = 0; i < amountOfCards; i++) {
             players.get(0).moveBasedOnNextCard();
+            try
+            {
+                Thread.sleep(500);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         }
+        isCurrentlyPlayingARound = false;
     }
 
     /**
