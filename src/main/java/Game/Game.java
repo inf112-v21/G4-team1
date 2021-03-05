@@ -18,11 +18,11 @@ public class Game {
     Application application;
     boolean isCurrentlyPlayingARound = false;
 
-    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flaglist, Application application) {
+    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flagList, Application application) {
         this.application = application;
 
         players = playerlist;
-        flags = flaglist;
+        flags = flagList;
         numberOfFlags = flags.size();
         deck = new Deck();
     }
@@ -44,10 +44,11 @@ public class Game {
         if (!isCurrentlyPlayingARound) {
             drawStep();
             printCardsToTerminal();
+            discardStep();
         }
+        //The following methods will be implemented in the final version, they are currently removed to achieve MVP with less bugs
         //playTurn();
         //checkIfWinner();
-        //discardStep();
         /*while (playing) {
             drawStep();
             //printCardsToTerminal();
@@ -67,9 +68,9 @@ public class Game {
     }
 
     public void discardStep(){
-        for (Robot rob : players) {
-            rob.discardHand(deck);
-        }
+
+        players.get(0).discardHand(deck);
+
     }
 
     /**

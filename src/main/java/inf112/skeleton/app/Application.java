@@ -72,14 +72,6 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         String playerSkinPath = "assets/player.png";
 
-        /*switch (game.getPlayers().get(0).getId()) {
-            case "1":
-                playerSkinPath = "assets/player.png";
-                break;
-            case "2":
-                playerSkinPath = "assets/player2.png";
-                break;
-        }*/
 
         batch = new SpriteBatch();
 
@@ -121,9 +113,6 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public void dispose() {
         batch.dispose();
-        renderer.dispose();
-        Gdx.app.exit();
-        System.exit(0);
     }
 
     @Override
@@ -143,7 +132,6 @@ public class Application extends InputAdapter implements ApplicationListener {
             case STOPPED:
                 System.out.println("The game is over");
                 Gdx.app.exit();
-                System.exit(0);
         }
         draw();
 
@@ -154,37 +142,38 @@ public class Application extends InputAdapter implements ApplicationListener {
     Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
      */
     public boolean keyUp(int keycode){
-        //if (game.isPlaying()){
 
-            if(keycode == Input.Keys.UP){
-                //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("N");
-                game.getPlayers().get(0).moveBasedOnNextCard(false);
-                return true;
-            }
-            else if(keycode == Input.Keys.DOWN){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("S");
-                game.getPlayers().get(0).moveBasedOnNextCard(false);
-                return true;
-            }
-            else if(keycode == Input.Keys.LEFT){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("W");
-                game.getPlayers().get(0).moveBasedOnNextCard(false);
-                return true;
-            }
-            else if(keycode == Input.Keys.RIGHT){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("E");
-                game.getPlayers().get(0).moveBasedOnNextCard(false);
-                return true;
-            }
 
-        //}
+        if(keycode == Input.Keys.UP){
+            //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("N");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.DOWN){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("S");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.LEFT){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("W");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.RIGHT){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("E");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+
         if(keycode == Input.Keys.ENTER){
-            game.startGame();
+            if(!game.isPlaying()) {
+                game.startGame();
+            }
         }
         return false;
     }
@@ -200,6 +189,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         renderer.render();
     }
+
     /**
     Updates the game board, checks if any players are on flag or hole tiles.
     If a players stands on a flag tiles, it calls checkIfWinner in game to see if the game is done
@@ -215,23 +205,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                 }
             } else{
                 if (game.getPlayers().get(i).getId() != null) {
-                    // Rotation doesn't work yet
-                    int rotation = 0;
-                    switch (game.getPlayers().get(i).getDir()) {
-                        case "N":
-                            rotation = 0;
-                            break;
-                        case "E":
-                            rotation = 90;
-                            break;
-                        case "S":
-                            rotation = 180;
-                            break;
-                        case "W":
-                            rotation = 270;
-                            break;
-                    }
-                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1).setRotation(rotation));
+                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1));
                 }
             }
         }
@@ -283,6 +257,11 @@ public class Application extends InputAdapter implements ApplicationListener {
             }
             return false;
         }
+
+
+    public void AddPlayer(Robot robot) {
+        game.getPlayers().get(0).add(robot);
+    }
 
     public TiledMapTileLayer getPlayerLayer() {
         return playerLayer;

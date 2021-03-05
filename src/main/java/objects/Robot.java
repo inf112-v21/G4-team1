@@ -28,10 +28,7 @@ public class Robot extends Vector2 implements IObject{
      * Integrate with server
      */
 
-    /** TODO SERVER INTEGRATION
-     *
-     *
-     */
+
 
     public Robot(int x, int y){
         lifeTokens = 3;
@@ -174,14 +171,12 @@ public class Robot extends Vector2 implements IObject{
         return position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10;
     }
 
-    // TODO
     /**
      * Check if position is clear
      * @param position
      * @return 0 means position is clear, 1 means position has a robot
      */
     public int checkIfPositionIsClear(Vector2 position) {
-        // Check if a robot is in the way
         for (Robot robot : game.getPlayers()) {
             if (robot.getX() == position.x && robot.getY() == position.y) {
                 return 1;
@@ -190,7 +185,7 @@ public class Robot extends Vector2 implements IObject{
         return 0;
     }
 
-    // TODO
+
     /**
      * Push robot at position
      */
@@ -236,7 +231,7 @@ public class Robot extends Vector2 implements IObject{
 
     /**
      *
-     * @param direction
+     * @param direction the direction it should face
      */
     public void setDirection(String direction) {
         if ((direction.equals("N")) || (direction.equals("E")) || (direction.equals("S")) || (direction.equals("W"))) {
@@ -330,10 +325,7 @@ public class Robot extends Vector2 implements IObject{
         }
     }
 
-    /**
-     * To be used in next iteration of the project
-     * @return
-     */
+
     public ArrayList<ICards> getHand(){
         return hand;
     }
