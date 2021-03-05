@@ -72,14 +72,6 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         String playerSkinPath = "assets/player.png";
 
-        /*switch (game.getPlayers().get(0).getId()) {
-            case "1":
-                playerSkinPath = "assets/player.png";
-                break;
-            case "2":
-                playerSkinPath = "assets/player2.png";
-                break;
-        }*/
 
         batch = new SpriteBatch();
 
@@ -150,35 +142,34 @@ public class Application extends InputAdapter implements ApplicationListener {
     Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
      */
     public boolean keyUp(int keycode){
-        //if (game.isPlaying()){
 
-            if(keycode == Input.Keys.UP){
-                //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("N");
-                game.getPlayers().get(0).moveBasedOnNextCard();
-                return true;
-            }
-            else if(keycode == Input.Keys.DOWN){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("S");
-                game.getPlayers().get(0).moveBasedOnNextCard();
-                return true;
-            }
-            else if(keycode == Input.Keys.LEFT){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("W");
-                game.getPlayers().get(0).moveBasedOnNextCard();
-                return true;
-            }
-            else if(keycode == Input.Keys.RIGHT){
-                game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-                game.getPlayers().get(0).setDirection("E");
-                game.getPlayers().get(0).moveBasedOnNextCard();
-                return true;
-            }
 
-        //}
+        if(keycode == Input.Keys.UP){
+            //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("N");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.DOWN){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("S");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.LEFT){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("W");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+        else if(keycode == Input.Keys.RIGHT){
+            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
+            game.getPlayers().get(0).setDirection("E");
+            game.getPlayers().get(0).moveBasedOnNextCard();
+            return true;
+        }
+
         if(keycode == Input.Keys.ENTER){
             if(!game.isPlaying()) {
                 game.startGame();
