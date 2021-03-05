@@ -59,6 +59,8 @@ så vises det samme for spiller(2)
 
 **Tester:**
 
+For å teste flerspiller-kravet, brukte vi en enkel manuell test. To eller flere spillere kobler seg på serveren (kjører main). Her kan en fort se at at flere spillere har koblet til ettersom spillerkarakteren blir nummerert. Da er det lett å skille mellom de ulike spillerene og en kan se at flere spillere er på samtidig.
+
 **Arbeidsoppgaver:**
 - Få til å koble flere spillere sammen enten ved hjelp av p2p, eller server-client system
 - La spillere se hverandre på brettet
@@ -66,7 +68,7 @@ så vises det samme for spiller(2)
 
 
 ####Mvp krav 7:
-Som spiller vil jeg få utdelt, slik at jeg har mulighet til å spille de.
+Som spiller vil jeg få utdelt kort, slik at jeg har mulighet til å spille de.
 
 **Akseptansekriterier:**
 
@@ -86,6 +88,13 @@ så skal spiller bli delt ut 9 kort
 
 **Tester:**
 
+Til dette kravet er det brukt manuelle tester.
+
+For denne iterasjonen av programmet blir terminalen brukt for å printe ut kortene på String-format.
+
+For å teste at alle 9 kortene viser, kjører en først main. Da vil spill-vinduet komme opp. Når viduet er lastet inn bruker en Enter-knappen på tastaturet. Da vil det bli printet ut 9 kort til terminalen.
+
+Kortene er formatert for lesbarhet, noe som gjør det lett å se at alle 9 kortene blir printet ut slik at spilleren kan velge mellom de.
 
 ####Mvp krav 8:
 Som spiller vil jeg ha muligheten til å velge 5 kort, slik at jeg kan planlegge runden min.
@@ -112,9 +121,24 @@ så kan ikke spiller velge flere kort før neste programmeringsfase
 
 **Tester:**
 
+For å velge kort i denne iterasjonen bruker en 1-9 på tastaturet. 
+
+Etter at kortene er blitt delt ut kommer det en forklarende tekst for hvordan man velger kortene.
+
+Først ble det testet om en kom videre til neste kortvalg etter at en har valgt et kort. Etter et kort ble valgt, kom det opp en ny "velgkort"-linje så da kunne vi se at dette funket.
+
+Neste test gikk ut på å sjekke om en ble hindret i å velge samme kortet to ganger (eks. trykke 1 på to ulike "velgkort"-linjer).
+Når samme kortet ble valgt to ganger, kom en melding om at kortet var allerede valgt, og en måtte velge på nytt, testen passerer.
+
+For neste test ville vi se at en bruker fikk valgt fem kort og ikke færre. Dette ble gjort ved at spilleren valgte fem ulike kort, og ikke ble stoppet før det.
+Dette funket, testen passerer.
+
+For siste test ville vi se at en bare fikk valgt fem kort og ikke flere. Dette ble testet ved å velge fem ulike kort.
+Etter det femte kortet har blitt valgt burde ikke brukeren få opp en ny kortvelger-linje. Det skjer ikke, testen passerer.
+
 ####Mvp krav 9:
 
-Som robot vil jeg ha muligheten til å bevege med i henhold til valgte kort, slik at jeg kan vinne spillet.
+Som robot vil jeg ha muligheten til å bevege meg i henhold til valgte kort, slik at jeg kan vinne spillet.
 
 **Akseptansekriterier:**
 
@@ -138,6 +162,16 @@ så skal robot til spiller først bevege seg to fram og så snu til venstre.
 
 **Tester:**
 
+Ettersom denne iterasjonen av programmet ikke roterer spill-karakteren er det ikke alt som kan testet på i dette mvp-kravet.
+Kortene som omhandler rotering av spilleren vil ikke være mulig å teste rent visuellt (slik som blir gjort med resten av dette mvp kravet).
+
+For å kunne teste rotasjonskortene blir det skrevet tekst som beskriver bevegelsen til roboten (printer til terminal).
+Her er det blitt testet om kort som feks. "Turn Left" sammsvarer med "Turned to the left...". Dette virker bra, så testen passerer. 
+
+For move-kortene er det lettere å teste rent visuellt. For å teste disse kortene velger vi bare move-kort så det er lett å telle om alle kortene blir tatt i bruk.
+Si at en har fem move1-kort etter hverandre, så vil roboten flytte fem brikker. 
+Vi valgte fem move-kort og telte opp på forhånd hvor mange ruter den burde bevege seg. Så sammenligent vi det med hvor mange ruter roboten faktisk flyttet seg.
+Disse sammsvarte, så testen passerer. 
 ###Vår prioritering:
 Vi har ikke endret eller tilpasset MVP kravene fra første innlevering, da vi syntes de passet bra og var gjennomførbare.
 Vi har hatt stor fokus på å få til multiplayer tidlig i denne innleveringen, fordi vi anntok at dette kom til å ta lengst tid.

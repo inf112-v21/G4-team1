@@ -2,7 +2,9 @@ package objectTests;
 
 import Cards.MovementCard;
 import Cards.TurningCard;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
+import objects.Flag;
 import objects.Robot;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,6 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 public class robotTest {
     Robot robot;
+    Game game;
+
     @BeforeAll
     public void setUP(){
 
