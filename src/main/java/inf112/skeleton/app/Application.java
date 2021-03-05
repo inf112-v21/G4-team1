@@ -121,6 +121,9 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public void dispose() {
         batch.dispose();
+        renderer.dispose();
+        Gdx.app.exit();
+        System.exit(0);
     }
 
     @Override
@@ -140,6 +143,7 @@ public class Application extends InputAdapter implements ApplicationListener {
             case STOPPED:
                 System.out.println("The game is over");
                 Gdx.app.exit();
+                System.exit(0);
         }
         draw();
 
@@ -156,25 +160,25 @@ public class Application extends InputAdapter implements ApplicationListener {
                 //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
                 game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
                 game.getPlayers().get(0).setDirection("N");
-                game.getPlayers().get(0).moveBasedOnNextCard();
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
                 return true;
             }
             else if(keycode == Input.Keys.DOWN){
                 game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
                 game.getPlayers().get(0).setDirection("S");
-                game.getPlayers().get(0).moveBasedOnNextCard();
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
                 return true;
             }
             else if(keycode == Input.Keys.LEFT){
                 game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
                 game.getPlayers().get(0).setDirection("W");
-                game.getPlayers().get(0).moveBasedOnNextCard();
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
                 return true;
             }
             else if(keycode == Input.Keys.RIGHT){
                 game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
                 game.getPlayers().get(0).setDirection("E");
-                game.getPlayers().get(0).moveBasedOnNextCard();
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
                 return true;
             }
 
@@ -211,7 +215,23 @@ public class Application extends InputAdapter implements ApplicationListener {
                 }
             } else{
                 if (game.getPlayers().get(i).getId() != null) {
-                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1));
+                    // Rotation doesn't work yet
+                    int rotation = 0;
+                    switch (game.getPlayers().get(i).getDir()) {
+                        case "N":
+                            rotation = 0;
+                            break;
+                        case "E":
+                            rotation = 90;
+                            break;
+                        case "S":
+                            rotation = 180;
+                            break;
+                        case "W":
+                            rotation = 270;
+                            break;
+                    }
+                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1).setRotation(rotation));
                 }
             }
         }
@@ -263,12 +283,6 @@ public class Application extends InputAdapter implements ApplicationListener {
             }
             return false;
         }
-
-
-
-    public void AddPlayer(Robot robot) {
-        game.getPlayers().get(0).add(robot);
-    }
 
     public TiledMapTileLayer getPlayerLayer() {
         return playerLayer;

@@ -82,14 +82,18 @@ public class Robot extends Vector2 implements IObject{
      * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
      * It will discard the used card from the current cards list.
      */
-    public void moveBasedOnNextCard(){
+    public void moveBasedOnNextCard(boolean animate){
         ICards card = drawAndDiscardFirstCardInList();
         if (card.getClass() == MovementCard.class) {
             MovementCard card_ = (MovementCard) card;
-            moveBasedOnCard((MovementCard) card);
+            System.out.println("Moving " + card_.getDistance() + " tiles in direction " + getDir());
+            moveBasedOnCard((MovementCard) card, animate);
         } else {
             TurningCard card_ = (TurningCard) card;
             turnBasedOnCard((TurningCard) card);
+            if (card_.isUturn()) { System.out.println("Uturned, new direction is " + getDir()); }
+            else if (card_.getDirection()) { System.out.println("Turned to the right, new direction is " + getDir()); }
+            else { System.out.println("Turned to the left, new direction is " + getDir()); }
         }
     }
 
@@ -97,7 +101,7 @@ public class Robot extends Vector2 implements IObject{
      * moves x tiles in the direction the robot is facing
      * @param tiles number of tiles it moves
      */
-    public void move(int tiles, String dir_, Boolean broadcast){
+    public void move(int tiles, String dir_, Boolean animate){
         Vector2 moveDirection = new Vector2(0,0);
         switch (dir_) {
             case "N":
@@ -137,6 +141,16 @@ public class Robot extends Vector2 implements IObject{
                         break;
                     case 1:
                         // Position blocked by a robot
+                        Vector2 tempPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
+                        for (int j = 0; j < 100; j++) {
+                            tempPosition = new Vector2(newPosition.x + (moveDirection.x * j), newPosition.y + (moveDirection.y * j));
+                            if (CheckIfOutOfBounds(tempPosition)) {
+                                return;
+                            }
+                            if (checkIfPositionIsClear(tempPosition) != 1) {
+                                break;
+                            }
+                        }
                         for (Robot robot : game.getPlayers()) {
                             if (robot.getX() == newPosition.x && robot.getY() == newPosition.y) {
                                 pushRobot(robot.getId(), pushPosition, dir_);
@@ -145,6 +159,13 @@ public class Robot extends Vector2 implements IObject{
                         setPosition(newPosition.x, newPosition.y);
                         break;
             }
+            }
+            if (animate) {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
     }
@@ -187,12 +208,12 @@ public class Robot extends Vector2 implements IObject{
      * Moves robot according to one of the given cards
      * @param movementCard Moves robot x tiles according to card
      */
-    public void moveBasedOnCard(MovementCard movementCard) {
-        move(movementCard.getDistance(), getDir(), true);
+    public void moveBasedOnCard(MovementCard movementCard, Boolean animate) {
+        move(movementCard.getDistance(), getDir(), animate);
     }
 
     public void moveBasedOnCard(MovementCard movementCard, String dir) {
-        move(movementCard.getDistance(), dir, false);
+        move(movementCard.getDistance(), dir, true);
     }
 
     /**
@@ -200,11 +221,12 @@ public class Robot extends Vector2 implements IObject{
      * @param turnCard Turns robot according to card
      */
     public void turnBasedOnCard(TurningCard turnCard) {
-        if (turnCard.getDirection())
+        if (turnCard.isUturn()) {
             turnRight();
+            turnRight();
+        }
         else {
-            if (turnCard.isUturn()) {
-                turnRight();
+            if (turnCard.getDirection()) {
                 turnRight();
             } else {
                 turnLeft();

@@ -144,15 +144,15 @@ public class Game {
     public void playTurn(){
         int amountOfCards = players.get(0).getChosenCardsFromHand().size();
         for (int i = 0; i < amountOfCards; i++) {
-            players.get(0).moveBasedOnNextCard();
-            try
+            players.get(0).moveBasedOnNextCard(true);
+            /*try
             {
-                Thread.sleep(500);
+                Thread.sleep(1500);
             }
             catch(InterruptedException ex)
             {
                 Thread.currentThread().interrupt();
-            }
+            }*/
         }
         isCurrentlyPlayingARound = false;
     }
