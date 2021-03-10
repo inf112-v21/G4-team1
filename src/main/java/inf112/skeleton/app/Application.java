@@ -199,16 +199,21 @@ public class Application extends InputAdapter implements ApplicationListener {
     Sets gamestate to stopped if checkifwinner is true.
      */
     public void update() {
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            if (holeLayer.getCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i))) != null) {
-                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i)), playerDiedCell);
-            } else if(playerOnFlag()){
+        for (Robot player : game.getPlayers()) {
+            if (playerInPit(player)) {
+                playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
+                player.loseLife();
+                if(player.getLifeTokens() == 0){
+                    System.out.println("You are dead");
+                }
+                player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
+            } else if(playerOnFlag(player)){
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
                 }
             } else{
-                if (game.getPlayers().get(i).getId() != null) {
-                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1));
+                if (player.getId() != null) {
+                    playerLayer.setCell(playerXPosition(player),playerYPosition(player),playerCell.get(Integer.parseInt(player.getId()) - 1));
                 }
             }
         }
@@ -247,19 +252,23 @@ public class Application extends InputAdapter implements ApplicationListener {
     Checks if a player is on a flag tile, registers flag for player if it is on the right order
     for flags, and player has all previous flags, or if the flag is the first flag.
      */
-    public boolean playerOnFlag() {
+    public boolean playerOnFlag(Robot player) {
         for (Flag flag : flags) {
-                if(players.get(0).getVisitedFlags().contains(flag)) continue;
-                if(flags.get(0).equals(flag) || players.get(0).getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
-                    if ((playerXPosition(players.get(0)) == flagXPosition(flag)) && (playerYPosition(players.get(0)) == flagYPosition(flag))) {
-                        playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerWonCell);
-                        players.get(0).registerFlag(flag);
+                if(player.getVisitedFlags().contains(flag)) continue;
+                if(flags.get(0).equals(flag) || player.getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
+                    if ((playerXPosition(player) == flagXPosition(flag)) && (playerYPosition(player) == flagYPosition(flag))) {
+                        playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerWonCell);
+                        player.registerFlag(flag);
                         return true;
                     }
                 }
             }
             return false;
         }
+
+    public boolean playerInPit(Robot player) {
+        return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
+    }
 
 
     public void AddPlayer(Robot robot) {

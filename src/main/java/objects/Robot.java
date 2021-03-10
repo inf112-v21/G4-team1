@@ -21,6 +21,8 @@ public class Robot extends Vector2 implements IObject{
     Client client;
     String id;
     Game game;
+    int respawnPositionX;
+    int respawnPositionY;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -35,6 +37,8 @@ public class Robot extends Vector2 implements IObject{
         damageTokens = 0;
 
        setPosition(x,y);
+       respawnPositionX = x;
+       respawnPositionY = y;
     }
 
     public Robot(int x, int y, Game game){
@@ -361,4 +365,12 @@ public class Robot extends Vector2 implements IObject{
     public ArrayList<ICards> getChosenCardsFromHand() {
         return chosenCardsFromHand;
     }
+
+    public void loseLife(){ lifeTokens--; }
+
+    public int getRespawnPositionX() { return respawnPositionX; }
+
+    public int getRespawnPositionY() { return respawnPositionY; }
+
+    public int getLifeTokens(){ return lifeTokens; }
 }
