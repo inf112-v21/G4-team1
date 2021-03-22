@@ -8,4 +8,10 @@ public interface ICards {
      */
     public String getDisplayText();
 
+    /**
+     *
+     * @return a simple card name that the server can easily read
+     */
+    public String getSimpleCardName();
+
 }

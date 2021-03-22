@@ -25,4 +25,9 @@ public class MovementCard implements ICards{
     public String getDisplayText() {
         return String.format("%-2s %-10d %s %d","Move",getDistance(),"Priority: ",getPriority());
     }
+
+    @Override
+    public String getSimpleCardName() {
+        return "M" + distance + getPriority();
+    }
 }

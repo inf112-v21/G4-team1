@@ -40,4 +40,15 @@ public class TurningCard implements ICards{
         }
         return String.format("%-15s %s %d", returnMessage, "Priority: ", getPriority());
     }
+
+    @Override
+    public String getSimpleCardName() {
+        if (isUturn()){
+            return "U" + getPriority();
+        }
+        else if (turnRight){
+            return "R" + getPriority();
+        }
+        else return "L" + getPriority();
+    }
 }
