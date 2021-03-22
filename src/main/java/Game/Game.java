@@ -70,9 +70,17 @@ public class Game {
             hands += rob.getId();
             hands += ",";
             rob.drawHand(deck);
+            for(ICards card : rob.getHand()){
+                hands += card.getSimpleCardName();
+                hands += ",";
+            }
         }
-
-
+        currentHands = hands;
+        for (Robot rob : players){
+            if(rob.isServer()){
+                rob.getClient().emitCards(hands);
+            }
+        }
     }
 
     public void discardStep(){
@@ -114,7 +122,11 @@ public class Game {
     public boolean checkIfWinner(){
         for(Robot player : players){
             if(player.getVisitedFlags().size() == flags.size()){
-                System.out.println("you win!");
+                String WinString = "";
+                WinString += "Player ";
+                WinString += player.getId();
+                WinString += " Wins!";
+                System.out.println(WinString);
                 playing = false;
                 return true;
             }

@@ -22,6 +22,7 @@ public class Robot extends Vector2 implements IObject{
     Client client;
     String id;
     Game game;
+    boolean isServer = true;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -422,5 +423,13 @@ public class Robot extends Vector2 implements IObject{
 
     public ArrayList<ICards> getChosenCardsFromHand() {
         return chosenCardsFromHand;
+    }
+
+    public boolean isServer(){
+        return isServer;
+    }
+
+    public Client getClient(){
+        return client;
     }
 }
