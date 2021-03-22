@@ -36,7 +36,16 @@ public class Game {
         playing = true;
         //players.get(0).setPosition(0,0);
         application.render();
-        playGame();
+
+        // Pla
+        //playGame();
+        System.out.println("HERE1 " + players.get(0).isServer());
+        System.out.println("ROBOT LENGTH: " + players.size());
+        if (players.get(0).isServer()) {
+            System.out.println("HERE2");
+            playGame();
+            System.out.println("HERE3");
+        }
     }
 
 
@@ -47,6 +56,7 @@ public class Game {
 
         while (playing) {
             drawStep();
+            return;
             //printCardsToTerminal();
             //playTurn();
             //checkIfWinner();

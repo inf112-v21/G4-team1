@@ -403,6 +403,13 @@ public class Robot extends Vector2 implements IObject{
 
     public void setId(String id) {
         this.id = id;
+        System.out.println(client.getId() + " | <-------");
+        if (client.getId() == "1") {
+            isServer = true;
+        }
+        else {
+            isServer = true;
+        }
     }
 
     /**
