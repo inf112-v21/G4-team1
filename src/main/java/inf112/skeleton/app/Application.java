@@ -200,11 +200,16 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     public void update() {
         for (Robot player : game.getPlayers()) {
+            if(player.getLifeTokens() == 0){
+                player.setPosition(-5, -5);
+                continue;
+            }
             if (playerInPit(player)) {
                 playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
                 player.loseLife();
                 if(player.getLifeTokens() == 0){
                     System.out.println("You are dead");
+                    player.setPosition(-5, -5);
                 }
                 player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
             } else if(playerOnFlag(player)){
