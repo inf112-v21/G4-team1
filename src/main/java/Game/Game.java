@@ -18,7 +18,6 @@ public class Game {
     ArrayList<Flag> flags;
     Deck deck;
     Application application;
-    boolean isCurrentlyPlayingARound = false;
     String currentHands;
 
     public Game(ArrayList<Robot> playerList, ArrayList<Flag> flagList, Application application) {
@@ -36,10 +35,13 @@ public class Game {
      */
     public void startGame() {
         playing = true;
-        //players.get(0).setPosition(0,0);
+        //TODO bestemme en startsposisjon som ikke er 0,0 (default)
+        for (Robot rob: players){
+            rob.setPosition(rob.getStartPositionX(), rob.getStartPositionY());
+        }
         application.render();
 
-        // Pla
+
         //playGame();
         System.out.println("HERE1 " + players.get(0).isServer());
         System.out.println("ROBOT LENGTH: " + players.size());

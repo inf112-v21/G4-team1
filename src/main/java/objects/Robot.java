@@ -23,6 +23,8 @@ public class Robot extends Vector2 implements IObject{
     String id;
     Game game;
     boolean isServer = true;
+    float startPosX = 0;
+    float startPosY = 0;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -76,6 +78,11 @@ public class Robot extends Vector2 implements IObject{
     @Override
     public float getY() {
         return this.y;
+    }
+
+    public void setStartPosition(float x, float y){
+        startPosX = x;
+        startPosY = y;
     }
 
     /**
@@ -432,5 +439,13 @@ public class Robot extends Vector2 implements IObject{
 
     public Client getClient(){
         return client;
+    }
+
+    public float getStartPositionX() {
+        return startPosX;
+    }
+
+    public float getStartPositionY() {
+        return startPosY;
     }
 }
