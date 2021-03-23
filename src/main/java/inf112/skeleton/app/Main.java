@@ -12,7 +12,5 @@ public class Main {
         cfg.setWindowedMode(1000, 1000);
 
         new Lwjgl3Application(new Application(), cfg);
-
-
     }
 }
