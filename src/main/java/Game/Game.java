@@ -63,11 +63,13 @@ public class Game {
             for (int i = 0; i<5; i++){
                 playTurn();
             }
-            checkIfWinner();
             discardStep();
         }
     }
 
+    /**
+     * Gives each player a hand
+     */
     public void drawStep(){
         String hands = "";
         for (Robot rob : players) {
@@ -88,6 +90,9 @@ public class Game {
         }
     }
 
+    /**
+     * Discards each players hand
+     */
     public void discardStep(){
         for (Robot rob : players) {
             rob.discardHand(deck);
