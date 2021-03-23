@@ -51,4 +51,9 @@ public class TurningCard implements ICards{
         }
         else return "L" + getPriority();
     }
+
+    @Override
+    public int getPrio() {
+        return priority;
+    }
 }

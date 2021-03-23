@@ -81,6 +81,7 @@ public class Robot extends Vector2 implements IObject{
     /**
      * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
      * It will discard the used card from the current cards list.
+     * @param animate
      */
     public void moveBasedOnNextCard(boolean animate){
         ICards card = drawAndDiscardFirstCardInList();

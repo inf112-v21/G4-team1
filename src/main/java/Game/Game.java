@@ -5,6 +5,8 @@ import objects.Flag;
 import objects.Robot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import Cards.*;
@@ -56,11 +58,11 @@ public class Game {
 
         while (playing) {
             drawStep();
-            return;
-            //printCardsToTerminal();
-            //playTurn();
-            //checkIfWinner();
-            //discardStep();
+            for (int i = 0; i<5; i++){
+                playTurn();
+            }
+            checkIfWinner();
+            discardStep();
         }
     }
 
@@ -79,6 +81,7 @@ public class Game {
         for (Robot rob : players){
             if(rob.isServer()){
                 rob.getClient().emitCards(hands);
+                //TODO @Asgeir Robot.printCardsToTerminal() burde bli kallt her en plass
             }
         }
     }
@@ -89,29 +92,34 @@ public class Game {
         }
     }
 
+    /**
+     * Plays the next card for each robot in order of their priority
+     * Then checks if anyone has won
+     */
     public void playTurn(){
         ArrayList<ICards> cards = new ArrayList();
         for (int i = 0; i < 5; i++){
-            for(Robot j : players){
-                cards. add(j.getFirstCard());
+            for(Robot rob : players){
+                cards.add(rob.getFirstCard());
             }
-            //TODO
-        }
+            //Sorts every players card so the one with highest priority goes first
+            Collections.sort(cards, (c1, c2) -> {
+                if (c1.getPrio() > c2.getPrio()) return -1;
+                if (c1.getPrio() < c2.getPrio()) return 1;
+                return 0;
+            });
 
-        for (Robot i : players) {
-            int amountOfCards = i.getChosenCardsFromHand().size();
-            for (int j = 0; j < amountOfCards; j++) {
-                i.moveBasedOnNextCard(true);
-                application.render();
-            try
-            {
-                Thread.sleep(1500);
+            for (ICards c: cards){
+                ArrayList<Robot> playersCopy = players;
+                for (Robot rob: playersCopy){
+                    if (rob.getFirstCard().equals(c)){
+                        rob.moveBasedOnNextCard(true);
+                        playersCopy.remove(rob);
+                        break;
+                    }
+                }
             }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }
-            }
+            checkIfWinner();
         }
     }
 

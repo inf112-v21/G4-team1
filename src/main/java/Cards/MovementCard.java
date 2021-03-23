@@ -30,4 +30,9 @@ public class MovementCard implements ICards{
     public String getSimpleCardName() {
         return "M" + distance + getPriority();
     }
+
+    @Override
+    public int getPrio() {
+        return priority;
+    }
 }

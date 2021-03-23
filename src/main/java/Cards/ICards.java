@@ -14,4 +14,6 @@ public interface ICards {
      */
     public String getSimpleCardName();
 
+    public int getPrio();
+
 }
