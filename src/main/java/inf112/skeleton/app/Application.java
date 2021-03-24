@@ -127,7 +127,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     @Override
     /**
-    Runs the game, cheks if its running, paused or finished,
+    Runs the game, checks if its running, paused or finished,
     Updates the board if the game is running. Calls draw function which calls the render
     function again.
      */
@@ -211,19 +211,21 @@ public class Application extends InputAdapter implements ApplicationListener {
                 player.setPosition(-5, -5);
                 continue;
             }
+
             if (playerInPit(player)) {
                 playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
                 player.loseLife();
-                if(player.getLifeTokens() == 0){
-                    System.out.println("You are dead");
-                    player.setPosition(-5, -5);
-                }
+                playerDeadCheck(player);
                 player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
-            } else if(playerOnFlag(player)){
+            }
+
+            else if(playerOnFlag(player)){
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
                 }
-            } else{
+            }
+
+            else{
                 if (player.getId() != null) {
                     playerLayer.setCell(playerXPosition(player),playerYPosition(player),playerCell.get(Integer.parseInt(player.getId()) - 1));
                 }
@@ -282,6 +284,16 @@ public class Application extends InputAdapter implements ApplicationListener {
         return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
     }
 
+    public boolean playerOnFlag2(Robot player){
+        return (flagLayer.getCell(playerXPosition(player),playerYPosition(player)) != null);
+    }
+
+    public void playerDeadCheck(Robot player){
+        if(player.getLifeTokens() == 0){
+            System.out.println("You are dead");
+            player.setPosition(-5, -5);
+        }
+    }
 
     public void AddPlayer(Robot robot) {
         game.getPlayers().get(0).add(robot);
