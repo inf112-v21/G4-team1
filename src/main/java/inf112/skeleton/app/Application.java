@@ -86,15 +86,14 @@ public class Application extends InputAdapter implements ApplicationListener {
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("HoleLayer");
         flagLayer = (TiledMapTileLayer) map.getLayers().get("FlagLayer");
-        playerLayer = (TiledMapTileLayer) map.getLayers().get("PlayerLayer");
         wallsLayer = (TiledMapTileLayer) map.getLayers().get("WallsLayer");
-        startPositionsLayer = (TiledMapTileLayer) map.getLayers().get("startPositionsLayer");
-        conveyorBeltLayer = (TiledMapTileLayer) map.getLayers().get("conveyorBeltLayer");
-
+        startPositionsLayer = (TiledMapTileLayer) map.getLayers().get("StartPositionsLayer");
+        conveyorBeltLayer = (TiledMapTileLayer) map.getLayers().get("ConveyorBeltLayer");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("PlayerLayer");
 
         SetPlayerSkin(playerSkinPath);
 
-        camera.setToOrtho(false,11,11);
+        camera.setToOrtho(false,16,12);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
