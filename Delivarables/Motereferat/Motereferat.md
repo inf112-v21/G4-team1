@@ -63,7 +63,7 @@ Innser at vi glemte å legge til klassediagrammet vi hadde lagt.
 Fordeler oppgaver til de som ikke har det på project board.
 Ser litt på nullpoint exceptions som ble kastet av 2 tester i roboTest. 
 
-##Møtereferat 2/22/2021
+##Møtereferat 3/22/2021
 
 Medlemmer i møte: Kristian, Ulrik, Nathaniel, Anders, Asgeir
 
@@ -71,4 +71,9 @@ Kort gjennomgang om hva som skal gjøres. Asgeir forklarer hvordan serveren fung
 Arbeid på game klassen og bruk av codewithme. Anders tar opp muligheten for at det blir enda et møte på torsdag for å få full kontroll på at alt er som det skal før innleveringen.
 Enighet om dette.
 
+##Møtereferat 3/24/2021
 
+Medlemmer i møte: Kristian, Nathaniel, Anders
+
+Ble enige om at GUI blir fokus til neste innlevering siden rundelogikk tok mer tid enn antatt.
+Vi har laget et større kart med startposisjoner som er pushet til master.
