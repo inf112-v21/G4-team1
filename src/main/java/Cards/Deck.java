@@ -78,6 +78,10 @@ public class Deck {
             }
             shuffle();
         }
+        if (cardDeck.isEmpty()){
+            System.out.println("Tomt deck");
+            return null;
+        }
         return cardDeck.remove(0);
     }
 

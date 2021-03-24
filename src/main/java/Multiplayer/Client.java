@@ -1,6 +1,8 @@
 package Multiplayer;
 
+import Cards.ICards;
 import Cards.MovementCard;
+import Cards.TurningCard;
 import Game.Game;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
@@ -10,7 +12,9 @@ import io.socket.emitter.Emitter;
 import objects.Robot;
 import org.lwjgl.system.CallbackI;
 
+import java.lang.reflect.Array;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Client {
@@ -42,6 +46,7 @@ public class Client {
                 for (int i = 0; i < result.length; i++) {
                     if (i == 0) {
                         id = result[i];
+                        System.out.println("Du er spiller nr: " + id);
                         robot.setId(result[i]);
                     } else {
                         Robot robot = new Robot((int)Float.parseFloat(result[i+1]),(int)Float.parseFloat(result[i+2]), game);
@@ -111,6 +116,54 @@ public class Client {
                 }
             }
         });
+
+        socket.on("emitCards", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String[] result = (objectList[0]+"").split(",");
+                ArrayList<String> simpleCardNames = new ArrayList<String>();
+                for (int i = 0; i < result.length; i++) {
+                    if (result[i] == id) {
+                        // Get the 9 next elements of the result array, which is the 9 cards
+                        for (int j = 1; j < 10; i++) {
+                            simpleCardNames.add(result[i+j]);
+                        }
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
+        ArrayList<ICards> iCardsArrayList = new ArrayList<ICards>();
+        for (String s : cards) {
+            switch (s.charAt(0)) {
+                case 'M':
+                    if (s.charAt(1) == '-') {
+                        iCardsArrayList.add(new MovementCard(s.charAt(2), Integer.parseInt(s.substring(3, s.length() - 1))));
+                    } else {
+                        iCardsArrayList.add(new MovementCard(s.charAt(1), Integer.parseInt(s.substring(2, s.length() - 1))));
+                    }
+                    break;
+                case 'R':
+                    iCardsArrayList.add(new TurningCard(true, false, Integer.parseInt(s.substring(1, s.length() - 1))));
+                    break;
+                case 'L':
+                    iCardsArrayList.add(new TurningCard(false, false, Integer.parseInt(s.substring(1, s.length() - 1))));
+                    break;
+                case 'U':
+                    iCardsArrayList.add(new TurningCard(true, true, Integer.parseInt(s.substring(1, s.length() - 1))));
+                    break;
+            }
+        }
+
+        // DEBUG CARDS
+        for (ICards cards1 : iCardsArrayList) {
+            System.out.println("CARD: " + cards1.getDisplayText());
+        }
+        return iCardsArrayList;
     }
 
     public Vector2 FindClearPosition() {
@@ -134,6 +187,10 @@ public class Client {
 
     public void UpdateClientPosition(Vector2 position, String id) {
         socket.emit("updateClientPosition", id + "," + position.x + "," + position.y);
+    }
+
+    public void emitCards(String cards) {
+        socket.emit("emitCards", cards);
     }
 
     public String getId() {

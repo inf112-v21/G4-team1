@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Robot extends Vector2 implements IObject{
     int lifeTokens;
@@ -23,6 +24,10 @@ public class Robot extends Vector2 implements IObject{
     Game game;
     int respawnPositionX;
     int respawnPositionY;
+
+    boolean isServer = true;
+    float startPosX = 0;
+    float startPosY = 0;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -40,6 +45,7 @@ public class Robot extends Vector2 implements IObject{
        respawnPositionX = x;
        respawnPositionY = y;
     }
+
 
     public Robot(int x, int y, Game game){
         this.game = game;
@@ -79,9 +85,15 @@ public class Robot extends Vector2 implements IObject{
         return this.y;
     }
 
+    public void setStartPosition(float x, float y){
+        startPosX = x;
+        startPosY = y;
+    }
+
     /**
      * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
      * It will discard the used card from the current cards list.
+     * @param animate
      */
     public void moveBasedOnNextCard(boolean animate){
         ICards card = drawAndDiscardFirstCardInList();
@@ -317,9 +329,7 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public ICards drawAndDiscardFirstCardInList(){
-        ICards card = chosenCardsFromHand.get(0);
-        chosenCardsFromHand.remove(0);
-        return card;
+        return chosenCardsFromHand.remove(0);
     }
 
     public void drawHand(Deck deck){
@@ -333,7 +343,7 @@ public class Robot extends Vector2 implements IObject{
         return hand;
     }
 
-    public void addCardToHand(ICards card){
+    public void chooseCardFromHand(ICards card){
         chosenCardsFromHand.add(card);
     }
 
@@ -345,12 +355,74 @@ public class Robot extends Vector2 implements IObject{
         hand.clear();
     }
 
+    /**
+     * Gets 9 random cards from the deck and prints cards to the terminal
+     * Also runs chooseCards
+     */
+    public void printCardsToTerminal() {
+        System.out.flush();
+        ArrayList<ICards> cardsToPrint = getHand();
+
+        int counter = 1;
+
+        for (ICards cards : cardsToPrint) {
+            System.out.println(counter + ": " + cards.getDisplayText());
+            counter++;
+        }
+        System.out.println("\n" +"Choose five of these cards using 1-9 on your keyboard");
+
+        // Separate thread to take input
+        Thread one = new Thread(() -> {
+            try {
+                chooseCards(cardsToPrint);
+            } catch(Exception v) {
+                System.out.println(v);
+            }
+        });
+
+        one.start();
+    }
+
+    /**
+     * User picks 5 out of 9 cards for their hand
+     * Cannot choose the same card more than once
+     * Sends a card that is chosen to the robot class
+     * @param cardsToPrint 9 cards to choose from
+     */
+    public void chooseCards(ArrayList<ICards> cardsToPrint){
+        while (chosenCardsFromHand.size()<5){
+            System.out.println("Enter a number between 1-9");
+            Scanner scanner = new Scanner(System.in);
+            if(!scanner.hasNextInt()){
+                continue;
+            }
+            int number = scanner.nextInt();
+            if(!(number > 0 && number < 10)){
+                continue;
+            }
+            ICards chosenCard = cardsToPrint.get(number-1);
+            if(!chosenCardsFromHand.contains(chosenCard)){
+                chooseCardFromHand(chosenCard);
+            }
+            else{
+                System.out.println("This card is already chosen, chose a new");
+            }
+        }
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+        System.out.println(client.getId() + " | <-------");
+        if (client.getId() == "1") {
+            isServer = true;
+        }
+        else {
+            isServer = true;
+        }
     }
 
     /**
@@ -372,4 +444,20 @@ public class Robot extends Vector2 implements IObject{
     public int getRespawnPositionY() { return respawnPositionY; }
 
     public int getLifeTokens(){ return lifeTokens; }
+
+    public boolean isServer(){
+        return isServer;
+    }
+
+    public Client getClient(){
+        return client;
+    }
+
+    public float getStartPositionX() {
+        return startPosX;
+    }
+
+    public float getStartPositionY() {
+        return startPosY;
+    }
 }
