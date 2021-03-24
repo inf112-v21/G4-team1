@@ -32,6 +32,9 @@ public class Application extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer holeLayer;
     private TiledMapTileLayer flagLayer;
     private TiledMapTileLayer playerLayer;
+    private TiledMapTileLayer wallsLayer;
+    private TiledMapTileLayer startPositionsLayer;
+    private TiledMapTileLayer conveyorBeltLayer;
 
     private OrthographicCamera camera;
     private OrthogonalTiledMapRenderer renderer;
@@ -60,6 +63,7 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     @Override
     public void create() {
+
         Robot player1 = new Robot(0,0);
         Flag flag1 = new Flag(3,3);
         Flag flag2 = new Flag(6,6);
@@ -76,17 +80,20 @@ public class Application extends InputAdapter implements ApplicationListener {
         batch = new SpriteBatch();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("assets/RoboRallyTile.tmx");
+        map = mapLoader.load("assets/RoboRallyTile2.tmx");
         camera = new OrthographicCamera();
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
-        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
-        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
-        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
+        holeLayer = (TiledMapTileLayer) map.getLayers().get("HoleLayer");
+        flagLayer = (TiledMapTileLayer) map.getLayers().get("FlagLayer");
+        wallsLayer = (TiledMapTileLayer) map.getLayers().get("WallsLayer");
+        startPositionsLayer = (TiledMapTileLayer) map.getLayers().get("StartPositionsLayer");
+        conveyorBeltLayer = (TiledMapTileLayer) map.getLayers().get("ConveyorBeltLayer");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("PlayerLayer");
 
         SetPlayerSkin(playerSkinPath);
 
-        camera.setToOrtho(false,11,11);
+        camera.setToOrtho(false,16,12);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
