@@ -32,6 +32,9 @@ public class Application extends InputAdapter implements ApplicationListener {
     private TiledMapTileLayer holeLayer;
     private TiledMapTileLayer flagLayer;
     private TiledMapTileLayer playerLayer;
+    private TiledMapTileLayer wallsLayer;
+    private TiledMapTileLayer startPositionsLayer;
+    private TiledMapTileLayer conveyorBeltLayer;
 
     private OrthographicCamera camera;
     private OrthogonalTiledMapRenderer renderer;
@@ -60,6 +63,7 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     @Override
     public void create() {
+
         Robot player1 = new Robot(0,0);
         Flag flag1 = new Flag(3,3);
         Flag flag2 = new Flag(6,6);
@@ -76,17 +80,20 @@ public class Application extends InputAdapter implements ApplicationListener {
         batch = new SpriteBatch();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("assets/RoboRallyTile.tmx");
+        map = mapLoader.load("assets/RoboRallyTile2.tmx");
         camera = new OrthographicCamera();
 
         baseLayer = (TiledMapTileLayer) map.getLayers().get("BaseLayer");
-        holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
-        flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
-        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
+        holeLayer = (TiledMapTileLayer) map.getLayers().get("HoleLayer");
+        flagLayer = (TiledMapTileLayer) map.getLayers().get("FlagLayer");
+        wallsLayer = (TiledMapTileLayer) map.getLayers().get("WallsLayer");
+        startPositionsLayer = (TiledMapTileLayer) map.getLayers().get("StartPositionsLayer");
+        conveyorBeltLayer = (TiledMapTileLayer) map.getLayers().get("ConveyorBeltLayer");
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("PlayerLayer");
 
         SetPlayerSkin(playerSkinPath);
 
-        camera.setToOrtho(false,11,11);
+        camera.setToOrtho(false,16,12);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
@@ -199,16 +206,26 @@ public class Application extends InputAdapter implements ApplicationListener {
     Sets gamestate to stopped if checkifwinner is true.
      */
     public void update() {
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            if (holeLayer.getCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i))) != null) {
-                playerLayer.setCell(playerXPosition(game.getPlayers().get(i)), playerYPosition(game.getPlayers().get(i)), playerDiedCell);
-            } else if(playerOnFlag()){
+        for (Robot player : game.getPlayers()) {
+            if(player.getLifeTokens() == 0){
+                player.setPosition(-5, -5);
+                continue;
+            }
+            if (playerInPit(player)) {
+                playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
+                player.loseLife();
+                if(player.getLifeTokens() == 0){
+                    System.out.println("You are dead");
+                    player.setPosition(-5, -5);
+                }
+                player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
+            } else if(playerOnFlag(player)){
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
                 }
             } else{
-                if (game.getPlayers().get(i).getId() != null) {
-                    playerLayer.setCell(playerXPosition(game.getPlayers().get(i)),playerYPosition(game.getPlayers().get(i)),playerCell.get(Integer.parseInt(game.getPlayers().get(i).getId()) - 1));
+                if (player.getId() != null) {
+                    playerLayer.setCell(playerXPosition(player),playerYPosition(player),playerCell.get(Integer.parseInt(player.getId()) - 1));
                 }
             }
         }
@@ -247,19 +264,23 @@ public class Application extends InputAdapter implements ApplicationListener {
     Checks if a player is on a flag tile, registers flag for player if it is on the right order
     for flags, and player has all previous flags, or if the flag is the first flag.
      */
-    public boolean playerOnFlag() {
+    public boolean playerOnFlag(Robot player) {
         for (Flag flag : flags) {
-                if(players.get(0).getVisitedFlags().contains(flag)) continue;
-                if(flags.get(0).equals(flag) || players.get(0).getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
-                    if ((playerXPosition(players.get(0)) == flagXPosition(flag)) && (playerYPosition(players.get(0)) == flagYPosition(flag))) {
-                        playerLayer.setCell(playerXPosition(players.get(0)), playerYPosition(players.get(0)), playerWonCell);
-                        players.get(0).registerFlag(flag);
+                if(player.getVisitedFlags().contains(flag)) continue;
+                if(flags.get(0).equals(flag) || player.getVisitedFlags().contains(flags.get(flags.indexOf(flag)-1))){
+                    if ((playerXPosition(player) == flagXPosition(flag)) && (playerYPosition(player) == flagYPosition(flag))) {
+                        playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerWonCell);
+                        player.registerFlag(flag);
                         return true;
                     }
                 }
             }
             return false;
         }
+
+    public boolean playerInPit(Robot player) {
+        return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
+    }
 
 
     public void AddPlayer(Robot robot) {

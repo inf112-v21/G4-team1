@@ -22,6 +22,9 @@ public class Robot extends Vector2 implements IObject{
     Client client;
     String id;
     Game game;
+    int respawnPositionX;
+    int respawnPositionY;
+
     boolean isServer = true;
     float startPosX = 0;
     float startPosY = 0;
@@ -39,6 +42,8 @@ public class Robot extends Vector2 implements IObject{
         damageTokens = 0;
 
        setPosition(x,y);
+       respawnPositionX = x;
+       respawnPositionY = y;
     }
 
 
@@ -179,9 +184,8 @@ public class Robot extends Vector2 implements IObject{
     }
 
     public boolean CheckIfOutOfBounds(Vector2 position) {
-        return position.x < 0 || position.x > 10 || position.y < 0 || position.y > 10;
+        return position.x < 0 || position.x > 15 || position.y < 0 || position.y > 11;
     }
-
     /**
      * Check if position is clear
      * @param position
@@ -432,6 +436,14 @@ public class Robot extends Vector2 implements IObject{
     public ArrayList<ICards> getChosenCardsFromHand() {
         return chosenCardsFromHand;
     }
+
+    public void loseLife(){ lifeTokens--; }
+
+    public int getRespawnPositionX() { return respawnPositionX; }
+
+    public int getRespawnPositionY() { return respawnPositionY; }
+
+    public int getLifeTokens(){ return lifeTokens; }
 
     public boolean isServer(){
         return isServer;
