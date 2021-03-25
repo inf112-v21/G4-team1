@@ -19,6 +19,7 @@ import objects.Flag;
 import objects.Robot;
 import Game.Game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -73,6 +74,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         flags.add(flag1);
         flags.add(flag2);
 
+
         game = new Game(players, flags, this);
         players.get(0).InitializeClient(game, this);
 
@@ -100,7 +102,6 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
         renderer.setView(camera);
-
         Gdx.input.setInputProcessor(this);
     }
 
@@ -286,6 +287,20 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     public boolean playerInPit(Robot player) {
         return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
+    }
+
+    public ArrayList<Integer> getStartpositions(){
+        ArrayList<Integer> startPositions = new ArrayList<Integer>();
+
+        for(int x = 0; x<= 15; x++){
+            for(int y = 0; y<=11;y++){
+                if(startPositionsLayer.getCell(x,y) != null){
+                    startPositions.add(x);
+                    startPositions.add(y);
+                }
+            }
+        }
+        return startPositions;
     }
 
 
