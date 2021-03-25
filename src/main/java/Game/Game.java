@@ -19,6 +19,7 @@ public class Game {
     Deck deck;
     Application application;
     String currentHands;
+    ArrayList<Integer> startPositions;
 
     public Game(ArrayList<Robot> playerList, ArrayList<Flag> flagList, Application application) {
         this.application = application;
@@ -27,17 +28,24 @@ public class Game {
         flags = flagList;
         numberOfFlags = flags.size();
         deck = new Deck();
-
     }
 
     /**
      * Resets all players position and starts the game
      */
     public void startGame() {
+        startPositions = application.getStartpositions();
         playing = true;
         //TODO bestemme en startsposisjon som ikke er 0,0 (default)
+        int count = 0;
         for (Robot rob: players){
-            rob.setPosition(rob.getStartPositionX(), rob.getStartPositionY());
+            rob.setPosition(startPositions.get(count), startPositions.get(count+1));
+            rob.setRespawnPositionX(count);
+            rob.setRespawnPositionY(count+1);
+            count += 2;
+            System.out.println(startPositions);
+            System.out.println("x: " + rob.getX());
+            System.out.println("y: " + rob.getY());
         }
         application.render();
 

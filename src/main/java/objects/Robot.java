@@ -464,8 +464,13 @@ public class Robot extends Vector2 implements IObject{
         return startPosX;
     }
 
-    public float getStartPositionY() {
-        return startPosY;
+    public float getStartPositionY() { return startPosY; }
+
+    public void setRespawnPositionX(int x){
+        respawnPositionY = x;
+    }
+    public void setRespawnPositionY(int y){
+        respawnPositionY = y;
     }
 
     public void setHand(ArrayList<ICards> hand_) {
