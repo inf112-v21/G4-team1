@@ -76,7 +76,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         players.add(player1);
 
 
-        game = new Game(players, flags, this);
+        game = new Game(players, this);
         players.get(0).InitializeClient(game, this);
 
         String playerSkinPath = "assets/player.png";

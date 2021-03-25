@@ -439,11 +439,9 @@ public class Robot extends Vector2 implements IObject{
         return chosenCardsFromHand;
     }
 
-    public void loseLife(){ lifeTokens--; }
-
-    public int getRespawnPositionX() { return respawnPositionX; }
-
-    public int getRespawnPositionY() { return respawnPositionY; }
+    public void loseLife(){
+        lifeTokens--;
+    }
 
     public int getLifeTokens(){ return lifeTokens; }
 
