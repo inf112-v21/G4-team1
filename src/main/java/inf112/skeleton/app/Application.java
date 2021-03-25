@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
+import com.badlogic.gdx.math.Vector2;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -49,6 +50,9 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player1.png", "assets/player2.png", "assets/player3.png", "assets/player4.png", "assets/player5.png", "assets/player6.png"));
 
+    private int mapWidth;
+    private int mapHeight;
+
     private Game game;
     public enum State
     {
@@ -64,6 +68,9 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     @Override
     public void create() {
+
+        mapWidth = 16;
+        mapHeight = 12;
 
         Robot player1 = new Robot(0,0);
         players.add(player1);
@@ -91,7 +98,9 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         SetPlayerSkin(playerSkinPath);
 
-        camera.setToOrtho(false,16,12);
+
+
+        camera.setToOrtho(false,mapWidth,mapHeight);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);

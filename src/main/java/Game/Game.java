@@ -35,6 +35,12 @@ public class Game {
     public void startGame() {
         startPositions = application.getEntities(application.getStartPositionLayer());
         playing = true;
+
+
+        ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
+        flags = sortFlags(entitiesList);
+
+
         //TODO bestemme en startsposisjon som ikke er 0,0 (default)
         int count = 0;
         for (Robot rob: players){
@@ -183,6 +189,26 @@ public class Game {
         return application;
     }
 
+    public ArrayList<Flag> sortFlags(ArrayList<Vector2> flagList){
+        ArrayList<Flag> sortedFlags = new ArrayList<>();
+
+        for(Vector2 v : flagList){
+            //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
+            sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
+        }
+        //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
+/*        Collections.sort(sortedFlags, (c1, c2) -> {
+            //Sorts the flags according to their tile value
+            int id1 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
+            int id2 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
+            if (id1 > id2) return 1;
+            if (id1 < id2) return -1;
+            return 0;
+        });
+        */
+        numberOfFlags = sortedFlags.size();
+        return sortedFlags;
+    }
 
     public boolean isPlaying() {
         return playing;
