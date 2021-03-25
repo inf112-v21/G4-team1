@@ -48,7 +48,7 @@ public class Game {
             rob.setStartPosX(startPositions.get(count).x);
             rob.setStartPosY(startPositions.get(count).y);
             count++;
-            rob.getClient().getApplication().toggleArrowKeys();
+
         }
         application.render();
 
