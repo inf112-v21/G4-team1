@@ -66,11 +66,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     public void create() {
 
         Robot player1 = new Robot(0,0);
-        Flag flag1 = new Flag(3,3);
-        Flag flag2 = new Flag(6,6);
         players.add(player1);
-        flags.add(flag1);
-        flags.add(flag2);
 
 
         game = new Game(players, flags, this);
@@ -219,7 +215,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                     System.out.println("You are dead");
                     player.setPosition(-5, -5);
                 }
-                player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
+                player.setPosition(player.getStartPositionX(), player.getStartPositionY());
             } else if(playerOnFlag(player)){
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
@@ -283,18 +279,17 @@ public class Application extends InputAdapter implements ApplicationListener {
         return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
     }
 
-    public ArrayList<Integer> getStartpositions(){
-        ArrayList<Integer> startPositions = new ArrayList<Integer>();
-
-        for(int x = 0; x<= 15; x++){
-            for(int y = 0; y<=11;y++){
-                if(startPositionsLayer.getCell(x,y) != null){
-                    startPositions.add(x);
-                    startPositions.add(y);
+    public ArrayList<Vector2> getEntities(TiledMapTileLayer layer){
+        ArrayList<Vector2> entities = new ArrayList<Vector2>();
+        for(int x = 0; x < mapWidth; x++){
+            for(int y = 0; y < mapHeight;y++){
+                if(layer.getCell(x,y) != null){
+                    Vector2 pos = new Vector2(x,y);
+                    entities.add(pos);
                 }
             }
         }
-        return startPositions;
+        return entities;
     }
 
 
@@ -304,5 +299,13 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     public TiledMapTileLayer getPlayerLayer() {
         return playerLayer;
+    }
+
+    public TiledMapTileLayer getStartPositionLayer() {
+        return startPositionsLayer;
+    }
+
+    public TiledMapTileLayer getFlagLayer() {
+        return flagLayer;
     }
 }
