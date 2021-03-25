@@ -71,9 +71,9 @@ public class Game {
         while (playing) {
             drawStep();
             for (int i = 0; i<5; i++){
-                //playTurn();
+                playTurn();
             }
-            //discardStep();
+            discardStep();
             return;
         }
     }
