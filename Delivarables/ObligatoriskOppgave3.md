@@ -33,3 +33,60 @@ Ekstramøte vi har satt opp på mandag har bra oppmøte og vi opprettholder fort
 I møter hender det ofte at vi hjelper hverandre med forskjellige problemer vi har.
 I mellom møter er det ikke uvanlig at en eller to i gruppen møter i discord for å teste noe. 
 Arbeidet fordeles forholdsvis jevnt og alle behandles med like stor grad av respekt og er villig til å gi litt av seg selv.
+
+
+**Brukerhistorie 1:**
+Som spiller vil jeg kunne gå i hull, slik at jeg kan miste liv.
+
+**Akseptansekriterier:**
+
+Gitt at
+
+spiller er på posisjon (0,0)
+
+Hull er på posisjon (0,1)
+
+når spiller beveger seg fra (0,0) til (0,1)
+
+så skal spiller miste 1 liv.
+
+**Arbeidsoppgaver:**
+- Lage funksjon som lagrer posisjon på hull
+- Lage logikk som fjerner 1 liv fra spiller som går på hull
+
+**Brukerhistorie 2:**
+Som spiller vil jeg kunne dø av å gå i hull, slik at jeg kan tape.
+
+**Akseptansekriterier:**
+
+Gitt at
+
+spiller har 3 liv
+
+det er et hull på posisjon (x,y)
+
+når spiller går i hullet (x,y) 3 ganger
+
+så skal spiller fjernes fra brettet
+
+**Arbeidsoppgaver:**
+- Lagre funksjon som oppdaterer spiller sine liv.
+- Lage logikk som fjerner spiller fra brettet når han har 0 liv.
+
+**Brukerhistorie 3:**
+Som spiller vil jeg kunne ha en meny når jeg starter programmet, slik at jeg kan velge når jeg vil starte spillet.
+
+**Akseptansekriterier:**
+
+Gitt at spiller starter programmet
+
+så skal en meny vises.
+
+når spiller velger "start spill"
+
+så skal spillet starte.
+
+**Arbeidsoppgaver:**
+- Lage en meny til RoboRalley.
+- Lage metode som registrerer valg og gjennomfører det.
+
