@@ -46,6 +46,8 @@ public class Application extends InputAdapter implements ApplicationListener {
     private ArrayList<Robot> players = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
 
+    private boolean arrowKeysEnabled = true;
+
     private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player1.png", "assets/player2.png", "assets/player3.png", "assets/player4.png", "assets/player5.png", "assets/player6.png"));
 
     private Game game;
@@ -186,6 +188,10 @@ public class Application extends InputAdapter implements ApplicationListener {
             }
         }
         return false;
+    }
+
+    public void toggleArrowKeys(){
+        arrowKeysEnabled = !arrowKeysEnabled;
     }
 
     @Override

@@ -38,6 +38,7 @@ public class Game {
         //TODO bestemme en startsposisjon som ikke er 0,0 (default)
         for (Robot rob: players){
             rob.setPosition(rob.getStartPositionX(), rob.getStartPositionY());
+            rob.getClient().getApplication().toggleArrowKeys();
         }
         application.render();
 
