@@ -126,20 +126,25 @@ public class Client {
                 ArrayList<String> simpleCardNames = new ArrayList<String>();
                 int robotIterator = 0;
                 for (int i = 0; i < result.length; i++) {
-                    if (result[i].equals(game.getPlayers().get(robotIterator))) {
+                    if (result[i].equals(game.getPlayers().get(robotIterator).getId())) {
                         simpleCardNames = new ArrayList<>();
                         // Get the 9 next elements of the result array, which is the 9 cards
                         for (int j = 1; j < 10; j++) {
-                            System.out.println("Exctracting card: " + result[(i+j)]);
                             simpleCardNames.add(result[(i+j)]);
                         }
                         game.getPlayers().get(robotIterator).setHand(simpleCardNamesToICards(simpleCardNames));
+                        robotIterator++;
+                        if (robotIterator >= game.getPlayers().size()); {
+                            i = result.length;
+                        }
                     }
                 }
-                for (ICards card : game.getPlayers().get(0).getHand()) {
-                    System.out.println("CARD: " + card.getSimpleCardName());
+
+                System.out.println("TEST TEST TEST TEST");
+                for (Robot rob : game.getPlayers()) {
+                    System.out.println(rob.getHand());
                 }
-                robot.printCardsToTerminal();
+                game.getPlayers().get(0).printCardsToTerminal();
             }
         });
     }
