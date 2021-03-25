@@ -1,5 +1,6 @@
 package Game;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
 import objects.Flag;
 import objects.Robot;
@@ -19,14 +20,12 @@ public class Game {
     Deck deck;
     Application application;
     String currentHands;
-    ArrayList<Integer> startPositions;
+    ArrayList<Vector2> startPositions;
 
-    public Game(ArrayList<Robot> playerList, ArrayList<Flag> flagList, Application application) {
+    public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
 
         players = playerList;
-        flags = flagList;
-        numberOfFlags = flags.size();
         deck = new Deck();
     }
 
@@ -34,18 +33,22 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
-        startPositions = application.getStartpositions();
+        startPositions = application.getEntities(application.getStartPositionLayer());
         playing = true;
+
+
+        ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
+        flags = sortFlags(entitiesList);
+
+
         //TODO bestemme en startsposisjon som ikke er 0,0 (default)
         int count = 0;
         for (Robot rob: players){
-            rob.setPosition(startPositions.get(count), startPositions.get(count+1));
-            rob.setRespawnPositionX(count);
-            rob.setRespawnPositionY(count+1);
-            count += 2;
-            System.out.println(startPositions);
-            System.out.println("x: " + rob.getX());
-            System.out.println("y: " + rob.getY());
+            rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
+            rob.setStartPosX(startPositions.get(count).x);
+            rob.setStartPosY(startPositions.get(count).y);
+            count++;
+
         }
         application.render();
 
@@ -69,9 +72,9 @@ public class Game {
         while (playing) {
             drawStep();
             for (int i = 0; i<5; i++){
-                //playTurn();
+                playTurn();
             }
-            //discardStep();
+            discardStep();
             return;
         }
     }
@@ -187,8 +190,30 @@ public class Game {
         return application;
     }
 
+    public ArrayList<Flag> sortFlags(ArrayList<Vector2> flagList){
+        ArrayList<Flag> sortedFlags = new ArrayList<>();
+
+        for(Vector2 v : flagList){
+            //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
+            sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
+        }
+        //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
+/*        Collections.sort(sortedFlags, (c1, c2) -> {
+            //Sorts the flags according to their tile value
+            int id1 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
+            int id2 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
+            if (id1 > id2) return 1;
+            if (id1 < id2) return -1;
+            return 0;
+        });
+        */
+        numberOfFlags = sortedFlags.size();
+        return sortedFlags;
+    }
 
     public boolean isPlaying() {
         return playing;
     }
+
+
 }

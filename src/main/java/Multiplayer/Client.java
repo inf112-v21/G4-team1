@@ -213,4 +213,8 @@ public class Client {
     public void setId(String id) {
         this.id = id;
     }
+
+    public Application getApplication(){
+        return application;
+    }
 }
