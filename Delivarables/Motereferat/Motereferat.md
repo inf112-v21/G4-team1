@@ -77,3 +77,14 @@ Medlemmer i møte: Kristian, Nathaniel, Anders
 
 Ble enige om at GUI blir fokus til neste innlevering siden rundelogikk tok mer tid enn antatt.
 Vi har laget et større kart med startposisjoner som er pushet til master.
+
+##Møtereferat 3/25/2021
+
+Medlemmer i møte: Kristian, Ulrik, Nathaniel, Anders, Asgeir
+
+Tar opp det som skal prioriteres før innleveringen i morgen. 
+Arbeid med rundelogikken.
+Mål å bli ferdig med alt i dag så det slipper å bli kaotisk i morgen.
+Lang arbeidsøkt
+
+

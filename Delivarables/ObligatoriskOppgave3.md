@@ -35,7 +35,7 @@ I mellom møter er det ikke uvanlig at en eller to i gruppen møter i discord fo
 Arbeidet fordeles forholdsvis jevnt og alle behandles med like stor grad av respekt og er villig til å gi litt av seg selv.
 
 
-**Brukerhistorie 1:**
+**Brukerhistorie LifeTokens:**
 Som spiller vil jeg kunne gå i hull, slik at jeg kan miste liv.
 
 **Akseptansekriterier:**
@@ -54,7 +54,7 @@ så skal spiller miste 1 liv.
 - Lage funksjon som lagrer posisjon på hull
 - Lage logikk som fjerner 1 liv fra spiller som går på hull
 
-**Brukerhistorie 2:**
+**Brukerhistorie Death:**
 Som spiller vil jeg kunne dø av å gå i hull, slik at jeg kan tape.
 
 **Akseptansekriterier:**
@@ -73,12 +73,14 @@ så skal spiller fjernes fra brettet
 - Lagre funksjon som oppdaterer spiller sine liv.
 - Lage logikk som fjerner spiller fra brettet når han har 0 liv.
 
-**Brukerhistorie 3:**
+**Brukerhistorie Meny:**
 Som spiller vil jeg kunne ha en meny når jeg starter programmet, slik at jeg kan velge når jeg vil starte spillet.
 
 **Akseptansekriterier:**
 
-Gitt at spiller starter programmet
+Gitt at 
+
+spiller starter programmet
 
 så skal en meny vises.
 
@@ -90,3 +92,37 @@ så skal spillet starte.
 - Lage en meny til RoboRalley.
 - Lage metode som registrerer valg og gjennomfører det.
 
+**Brukerhistorie Rotering:**
+Som spiller vil jeg kunne se at jeg roterer meg i henhold til kortene, slik at jeg kan se hvilken retning jeg peker.
+
+**Akseptansekriterier:**
+
+Gitt at 
+
+spiller kan visuelt se brikken sin peke i retning North.
+
+spiller velger kort "turn right" i programmeringsfasen
+
+når kort "turn right" blir spilt
+
+så skal spiller visuelt se brikke peke i retning East.
+
+ **Arbeidsoppgaver:**
+- Knytte spiller retning (N,E,S,W) til det respektive bildet som peker den retningen.
+- Lage logikk som holder kontroll på spiller sin retning.
+
+**Brukerhistorie Kort i Gui:**
+Som spiller vil jeg kunne se kortene jeg kan velge, slik at det blir mer intuitivt
+
+**Akseptansekriterier:**
+
+Gitt at
+
+spiller har startet spillet
+
+når programmeringsfasen starter
+
+så skal spiller vises 9 kort å velge mellom
+
+**Arbeidsoppgaver:**
+-Knytte kortene i deck klassen til bilder av kortene i assets
