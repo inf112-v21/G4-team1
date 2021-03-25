@@ -61,9 +61,10 @@ public class Game {
         while (playing) {
             drawStep();
             for (int i = 0; i<5; i++){
-                playTurn();
+                //playTurn();
             }
-            discardStep();
+            //discardStep();
+            return;
         }
     }
 
@@ -84,8 +85,20 @@ public class Game {
         currentHands = hands;
         for (Robot rob : players){
             if(rob.isServer()){
-                rob.getClient().emitCards(hands);
+                try {
+                    // This removes the last character from the string
+                    hands = hands.substring(0, hands.length() - 1);
+                    rob.getClient().emitCards(hands);
+                } catch (Exception e) {
+
+                }
                 //TODO @Asgeir Robot.printCardsToTerminal() burde bli kallt her en plass
+                /*String[] list = hands.split(",");
+                ArrayList<String> list_ = new ArrayList<>();
+                for(String s : list) {
+                    list_.add(s);
+                }
+                players.get(0).setHand(players.get(0).getClient().simpleCardNamesToICards(list_));*/
             }
         }
     }
