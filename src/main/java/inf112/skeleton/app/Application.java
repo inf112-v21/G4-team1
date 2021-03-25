@@ -187,9 +187,10 @@ public class Application extends InputAdapter implements ApplicationListener {
         }
 
         if(keycode == Input.Keys.ENTER){
+            if(game.getPlayers().get(0).isServer()){
             if(!game.isPlaying()) {
                 game.startGame();
-            }
+            }}
         }
         return false;
     }
