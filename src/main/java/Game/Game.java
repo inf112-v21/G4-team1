@@ -48,6 +48,7 @@ public class Game {
             rob.setStartPosX(startPositions.get(count).x);
             rob.setStartPosY(startPositions.get(count).y);
             count++;
+            rob.getClient().getApplication().toggleArrowKeys();
         }
         application.render();
 
@@ -71,9 +72,9 @@ public class Game {
         while (playing) {
             drawStep();
             for (int i = 0; i<5; i++){
-                //playTurn();
+                playTurn();
             }
-            //discardStep();
+            discardStep();
             return;
         }
     }
