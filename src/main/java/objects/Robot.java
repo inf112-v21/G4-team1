@@ -22,9 +22,6 @@ public class Robot extends Vector2 implements IObject{
     Client client;
     String id;
     Game game;
-    int respawnPositionX;
-    int respawnPositionY;
-
     boolean isServer = true;
     float startPosX = 0;
     float startPosY = 0;
@@ -42,8 +39,6 @@ public class Robot extends Vector2 implements IObject{
         damageTokens = 0;
 
        setPosition(x,y);
-       respawnPositionX = x;
-       respawnPositionY = y;
     }
 
 
@@ -416,12 +411,19 @@ public class Robot extends Vector2 implements IObject{
 
     public void setId(String id) {
         this.id = id;
-        System.out.println(client.getId() + " | <-------");
-        if (client.getId() == "1") {
-            isServer = true;
+        try {
+            System.out.println("clientID: " + client.getId());
+            System.out.println("type: " + client.getId().getClass().getName());
+            System.out.println("1: " + client.getId());
+            System.out.println("type: " + "1".getClass().getName());
+            if (client.getId() == "1") {
+                isServer = true;
+            } else {
+                isServer = true;
+            }
         }
-        else {
-            isServer = true;
+        catch (Exception e) {
+
         }
     }
 
@@ -437,11 +439,9 @@ public class Robot extends Vector2 implements IObject{
         return chosenCardsFromHand;
     }
 
-    public void loseLife(){ lifeTokens--; }
-
-    public int getRespawnPositionX() { return respawnPositionX; }
-
-    public int getRespawnPositionY() { return respawnPositionY; }
+    public void loseLife(){
+        lifeTokens--;
+    }
 
     public int getLifeTokens(){ return lifeTokens; }
 
@@ -459,10 +459,14 @@ public class Robot extends Vector2 implements IObject{
 
     public float getStartPositionY() { return startPosY; }
 
-    public void setRespawnPositionX(int x){
-        respawnPositionY = x;
+    public void setStartPosX(float x){
+        startPosX = x;
     }
-    public void setRespawnPositionY(int y){
-        respawnPositionY = y;
+    public void setStartPosY(float y){
+        startPosY = y;
+    }
+
+    public void setHand(ArrayList<ICards> hand_) {
+        hand = hand_;
     }
 }

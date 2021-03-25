@@ -16,15 +16,16 @@ The game is over when the first robot visits all the flags. During the game, the
 
 
 ####How to play the game:
-* Clone the latest version of the program 
-* Open the program in your editor
+* Clone the latest version 
+* Open it in your editor
 * Run Main.java
-* To play multiplayer, have other people do the same, and you will automatically connect to one another
-* When everyone is in, press Enter to start 
+* To play multiplayer, have other people do the same, and you will automatically connect to eachother
+* When everyone is in, press Enter to start (currently not working)
 * To play a card write the corresponding number (1-9)
-* When every player has played 5 cards, the cards will be executed
+* when every player has played 5 cards, they will be executed
 
 ####Known bugs:
 * pushRobot will sometimes give an error, but works most times (Important: must give error to work)
-* It is possible that two cards can be equal, which can lead to bugs if a player has chosen two identical cards after one another.
+* Pushing player(2) into wall will render them invisible and player(1) replaces their position. Player(2) becomes visible if they move again.
 * If multiple players press enter to start the first programming phase game movement becomes buggy and will eventually crash.
+* List of flags is not sorted correctly, so the order you have to visit them is not accurate
