@@ -34,6 +34,9 @@ I møter hender det ofte at vi hjelper hverandre med forskjellige problemer vi h
 I mellom møter er det ikke uvanlig at en eller to i gruppen møter i discord for å teste noe. 
 Arbeidet fordeles forholdsvis jevnt og alle behandles med like stor grad av respekt og er villig til å gi litt av seg selv.
 
+###Oppdatert Project Board:
+![img_1.png](projectBoardOblig3.png)
+###Brukerhistorier:
 
 **Brukerhistorie LifeTokens:**
 Som spiller vil jeg kunne gå i hull, slik at jeg kan miste liv.
@@ -48,14 +51,17 @@ Hull er på posisjon (0,1)
 
 når spiller beveger seg fra (0,0) til (0,1)
 
-så skal spiller miste 1 liv.
+så skal spiller miste 1 liv og returneres til startposisjonen.
 
 **Arbeidsoppgaver:**
 - Lage funksjon som lagrer posisjon på hull
 - Lage logikk som fjerner 1 liv fra spiller som går på hull
+- Oppdatere Robot.java posisjon når spiller mister 1 liv
+
+
 
 **Brukerhistorie Death:**
-Som spiller vil jeg kunne dø av å gå i hull, slik at jeg kan tape.
+Som spiller vil jeg kunne dø av å gå i hull, slik at spillet ikke blir for lett.
 
 **Akseptansekriterier:**
 
@@ -73,8 +79,21 @@ så skal spiller fjernes fra brettet
 - Lagre funksjon som oppdaterer spiller sine liv.
 - Lage logikk som fjerner spiller fra brettet når han har 0 liv.
 
-**Brukerhistorie Meny:**
-Som spiller vil jeg kunne ha en meny når jeg starter programmet, slik at jeg kan velge når jeg vil starte spillet.
+**Manuell test:**
+Spiller skal forsvinne fra brett når han har 0 liv.
+
+Forutsetning: Spiller må kunne gå i hull og miste liv
+
+Test steg:
+- start programmet
+- gå i hull tre ganger
+
+Forventet resultat: Spiller forsvinner fra brettet
+
+
+
+**Brukerhistorie Meny:(ikke ferdig implementert)**
+Som spiller vil jeg se en meny når jeg starter programmet, slik at jeg kan velge når jeg vil starte spillet.
 
 **Akseptansekriterier:**
 
@@ -82,7 +101,7 @@ Gitt at
 
 spiller starter programmet
 
-så skal en meny vises.
+så skal en meny vises
 
 når spiller velger "start spill"
 
@@ -92,8 +111,8 @@ så skal spillet starte.
 - Lage en meny til RoboRalley.
 - Lage metode som registrerer valg og gjennomfører det.
 
-**Brukerhistorie Rotering:**
-Som spiller vil jeg kunne se at jeg roterer meg i henhold til kortene, slik at jeg kan se hvilken retning jeg peker.
+**Brukerhistorie Rotering:(ikke helt implementert)**
+Som spiller vil jeg kunne se at jeg roterer meg, slik at spillet blir lettere å forstå.
 
 **Akseptansekriterier:**
 
@@ -111,8 +130,24 @@ så skal spiller visuelt se brikke peke i retning East.
 - Knytte spiller retning (N,E,S,W) til det respektive bildet som peker den retningen.
 - Lage logikk som holder kontroll på spiller sin retning.
 
+**Manuell test:**
+Spiller skal kunne rotere seg i spillet og se det
+
+Forutsetning: spiller må kunne velge å rotere seg
+
+Test steg:
+
+- start spillet
+- trykk enter
+- vent til programmeringsfasen
+- velg et roteringskort
+- fullfør programmeringsfasen
+
+Forventet resultat: Spiller roteres i henhold til kortet
+
+
 **Brukerhistorie Kort i Gui:**
-Som spiller vil jeg kunne se kortene jeg kan velge, slik at det blir mer intuitivt
+Som spiller vil jeg kunne se kortene jeg kan velge mellom, slik at spillet blir mer intuitivt
 
 **Akseptansekriterier:**
 
@@ -126,3 +161,18 @@ så skal spiller vises 9 kort å velge mellom
 
 **Arbeidsoppgaver:**
 -Knytte kortene i deck klassen til bilder av kortene i assets
+
+**Manuell test:**
+Spiller skal kunne se kortene han kan velge
+
+Forutsetning: Spiller blir delt ut 9 kort
+
+Test steg:
+- start spillet
+- trykk enter
+- vent til programmeringsfasen
+
+Forventet resultat: Spiller kan se 9 kort visuelt i Gui'en
+
+
+
