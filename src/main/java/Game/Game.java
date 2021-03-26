@@ -41,7 +41,6 @@ public class Game {
         flags = sortFlags(entitiesList);
 
 
-        //TODO bestemme en startsposisjon som ikke er 0,0 (default)
         int count = 0;
         for (Robot rob: players){
             rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
@@ -103,12 +102,6 @@ public class Game {
                 } catch (Exception e) {
 
                 }
-                /*String[] list = hands.split(",");
-                ArrayList<String> list_ = new ArrayList<>();
-                for(String s : list) {
-                    list_.add(s);
-                }
-                players.get(0).setHand(players.get(0).getClient().simpleCardNamesToICards(list_));*/
             }
         }
     }

@@ -121,7 +121,6 @@ public class Client {
             @Override
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
-                //String[] result = "1,M264,R10,R95,R7,M184,M185,R2,R42,M154,2,U9,R48,M127,U76,L42,M192,L17,M158,L49".split(",");
                 String[] result = (objectList[0]+"").split(",");
                 ArrayList<String> simpleCardNames = new ArrayList<String>();
                 int robotIterator = 0;

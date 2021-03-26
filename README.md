@@ -20,7 +20,7 @@ The game is over when the first robot visits all the flags. During the game, the
 * Open it in your editor
 * Run Main.java
 * To play multiplayer, have other people do the same, and you will automatically connect to eachother
-* When everyone is in, press Enter to start (currently not working)
+* When everyone is in, the server-client presses enter to start the game for everyone (server-client has ID 1 in console)
 * To play a card write the corresponding number (1-9)
 * when every player has played 5 cards, they will be executed
 
