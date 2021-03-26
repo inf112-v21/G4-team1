@@ -1,6 +1,8 @@
 package Multiplayer;
 
+import Cards.ICards;
 import Cards.MovementCard;
+import Cards.TurningCard;
 import Game.Game;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
@@ -10,7 +12,9 @@ import io.socket.emitter.Emitter;
 import objects.Robot;
 import org.lwjgl.system.CallbackI;
 
+import java.lang.reflect.Array;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Client {
@@ -42,6 +46,7 @@ public class Client {
                 for (int i = 0; i < result.length; i++) {
                     if (i == 0) {
                         id = result[i];
+                        System.out.println("Du er spiller nr: " + id);
                         robot.setId(result[i]);
                     } else {
                         Robot robot = new Robot((int)Float.parseFloat(result[i+1]),(int)Float.parseFloat(result[i+2]), game);
@@ -111,6 +116,67 @@ public class Client {
                 }
             }
         });
+
+        socket.on("emitCards", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                //String[] result = "1,M264,R10,R95,R7,M184,M185,R2,R42,M154,2,U9,R48,M127,U76,L42,M192,L17,M158,L49".split(",");
+                String[] result = (objectList[0]+"").split(",");
+                ArrayList<String> simpleCardNames = new ArrayList<String>();
+                int robotIterator = 0;
+                for (int i = 0; i < result.length; i++) {
+                    if (result[i].equals(game.getPlayers().get(robotIterator).getId())) {
+                        simpleCardNames = new ArrayList<>();
+                        // Get the 9 next elements of the result array, which is the 9 cards
+                        for (int j = 1; j < 10; j++) {
+                            simpleCardNames.add(result[(i+j)]);
+                        }
+                        game.getPlayers().get(robotIterator).setHand(simpleCardNamesToICards(simpleCardNames));
+                        robotIterator++;
+                        if (robotIterator >= game.getPlayers().size()); {
+                            i = result.length;
+                        }
+                    }
+                }
+
+                System.out.println("TEST TEST TEST TEST");
+                for (Robot rob : game.getPlayers()) {
+                    System.out.println(rob.getHand());
+                }
+                game.getPlayers().get(0).printCardsToTerminal();
+            }
+        });
+    }
+
+    public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
+        System.out.println("CARDS: " + cards);
+        ArrayList<ICards> iCardsArrayList = new ArrayList<ICards>();
+        int iterator = 0;
+        for (String s : cards) {
+            switch (s.charAt(0)) {
+                case 'M':
+                    if (s.charAt(1) == '-') {
+                        iCardsArrayList.add(new MovementCard(s.charAt(2), Integer.parseInt(s.substring(3, s.length()))));
+                    } else {
+                        iCardsArrayList.add(new MovementCard(s.charAt(1), Integer.parseInt(s.substring(2, s.length()))));
+                    }
+                    break;
+                case 'R':
+                    iCardsArrayList.add(new TurningCard(true, false, Integer.parseInt(s.substring(1, s.length()))));
+                    break;
+                case 'L':
+                    iCardsArrayList.add(new TurningCard(false, false, Integer.parseInt(s.substring(1, s.length()))));
+                    break;
+                case 'U':
+                    iCardsArrayList.add(new TurningCard(true, true, Integer.parseInt(s.substring(1, s.length()))));
+                    break;
+            }
+            iterator++;
+        }
+
+        // DEBUG CARDS
+        return iCardsArrayList;
     }
 
     public Vector2 FindClearPosition() {
@@ -136,11 +202,19 @@ public class Client {
         socket.emit("updateClientPosition", id + "," + position.x + "," + position.y);
     }
 
+    public void emitCards(String cards) {
+        socket.emit("emitCards", cards);
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Application getApplication(){
+        return application;
     }
 }

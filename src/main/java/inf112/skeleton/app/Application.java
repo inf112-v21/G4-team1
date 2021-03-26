@@ -18,7 +18,9 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import objects.Flag;
 import objects.Robot;
 import Game.Game;
+import com.badlogic.gdx.math.Vector2;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,7 +48,12 @@ public class Application extends InputAdapter implements ApplicationListener {
     private ArrayList<Robot> players = new ArrayList<>();
     private ArrayList<Flag> flags = new ArrayList<>();
 
+    private boolean arrowKeysEnabled = true;
+
     private ArrayList<String> playerSkinPaths = new ArrayList<>(Arrays.asList("assets/player1.png", "assets/player2.png", "assets/player3.png", "assets/player4.png", "assets/player5.png", "assets/player6.png"));
+
+    private int mapWidth;
+    private int mapHeight;
 
     private Game game;
     public enum State
@@ -64,14 +71,14 @@ public class Application extends InputAdapter implements ApplicationListener {
     @Override
     public void create() {
 
-        Robot player1 = new Robot(0,0);
-        Flag flag1 = new Flag(3,3);
-        Flag flag2 = new Flag(6,6);
-        players.add(player1);
-        flags.add(flag1);
-        flags.add(flag2);
+        mapWidth = 16;
+        mapHeight = 12;
 
-        game = new Game(players, flags, this);
+        Robot player1 = new Robot(0,0);
+        players.add(player1);
+
+
+        game = new Game(players, this);
         players.get(0).InitializeClient(game, this);
 
         String playerSkinPath = "assets/player.png";
@@ -93,12 +100,13 @@ public class Application extends InputAdapter implements ApplicationListener {
 
         SetPlayerSkin(playerSkinPath);
 
-        camera.setToOrtho(false,16,12);
+
+
+        camera.setToOrtho(false,mapWidth,mapHeight);
         camera.update();
 
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
         renderer.setView(camera);
-
         Gdx.input.setInputProcessor(this);
     }
 
@@ -153,39 +161,42 @@ public class Application extends InputAdapter implements ApplicationListener {
      */
     public boolean keyUp(int keycode){
 
-
-        if(keycode == Input.Keys.UP){
-            //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("N");
-            game.getPlayers().get(0).moveBasedOnNextCard(false);
-            return true;
-        }
-        else if(keycode == Input.Keys.DOWN){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("S");
-            game.getPlayers().get(0).moveBasedOnNextCard(false);
-            return true;
-        }
-        else if(keycode == Input.Keys.LEFT){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("W");
-            game.getPlayers().get(0).moveBasedOnNextCard(false);
-            return true;
-        }
-        else if(keycode == Input.Keys.RIGHT){
-            game.getPlayers().get(0).addCardToHand(new MovementCard(1, 0));
-            game.getPlayers().get(0).setDirection("E");
-            game.getPlayers().get(0).moveBasedOnNextCard(false);
-            return true;
+        if (arrowKeysEnabled) {
+            if (keycode == Input.Keys.UP) {
+                //game.getPlayers().get(0).setPosition(game.getPlayers().get(0).getX(), game.getPlayers().get(0).getY() + 1);
+                game.getPlayers().get(0).chooseCardFromHand(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("N");
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
+                return true;
+            } else if (keycode == Input.Keys.DOWN) {
+                game.getPlayers().get(0).chooseCardFromHand(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("S");
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
+                return true;
+            } else if (keycode == Input.Keys.LEFT) {
+                game.getPlayers().get(0).chooseCardFromHand(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("W");
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
+                return true;
+            } else if (keycode == Input.Keys.RIGHT) {
+                game.getPlayers().get(0).chooseCardFromHand(new MovementCard(1, 0));
+                game.getPlayers().get(0).setDirection("E");
+                game.getPlayers().get(0).moveBasedOnNextCard(false);
+                return true;
+            }
         }
 
         if(keycode == Input.Keys.ENTER){
+            if(game.getPlayers().get(0).isServer()){
             if(!game.isPlaying()) {
                 game.startGame();
-            }
+            }}
         }
         return false;
+    }
+
+    public void toggleArrowKeys(){
+        arrowKeysEnabled = !arrowKeysEnabled;
     }
 
     @Override
@@ -215,11 +226,13 @@ public class Application extends InputAdapter implements ApplicationListener {
             if (playerInPit(player)) {
                 playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
                 player.loseLife();
-                playerDeadCheck(player);
-                player.setPosition(player.getRespawnPositionX(), player.getRespawnPositionY());
-            }
 
-            else if(playerOnFlag(player)){
+                if(player.getLifeTokens() == 0){
+                    System.out.println("You are dead");
+                    player.setPosition(-5, -5);
+                }
+                player.setPosition(player.getStartPositionX(), player.getStartPositionY());
+            } else if(playerOnFlag(player)){
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
                 }
@@ -284,16 +297,20 @@ public class Application extends InputAdapter implements ApplicationListener {
         return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
     }
 
-    public boolean playerOnFlag2(Robot player){
-        return (flagLayer.getCell(playerXPosition(player),playerYPosition(player)) != null);
+
+    public ArrayList<Vector2> getEntities(TiledMapTileLayer layer){
+        ArrayList<Vector2> entities = new ArrayList<Vector2>();
+        for(int x = 0; x < mapWidth; x++){
+            for(int y = 0; y < mapHeight;y++){
+                if(layer.getCell(x,y) != null){
+                    Vector2 pos = new Vector2(x,y);
+                    entities.add(pos);
+                }
+            }
+        }
+        return entities;
     }
 
-    public void playerDeadCheck(Robot player){
-        if(player.getLifeTokens() == 0){
-            System.out.println("You are dead");
-            player.setPosition(-5, -5);
-        }
-    }
 
     public void AddPlayer(Robot robot) {
         game.getPlayers().get(0).add(robot);
@@ -301,5 +318,13 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     public TiledMapTileLayer getPlayerLayer() {
         return playerLayer;
+    }
+
+    public TiledMapTileLayer getStartPositionLayer() {
+        return startPositionsLayer;
+    }
+
+    public TiledMapTileLayer getFlagLayer() {
+        return flagLayer;
     }
 }

@@ -4,7 +4,6 @@ import Cards.MovementCard;
 import Cards.TurningCard;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
-import objects.Flag;
 import objects.Robot;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -75,19 +74,19 @@ public class robotTest {
         robot.setDirection("N");
 
         // Checks if robot moves 1 up
-        robot.addCardToHand(new MovementCard(1,0));
+        robot.chooseCardFromHand(new MovementCard(1,0));
         robot.moveBasedOnNextCard(true);
         assertEquals(1, robot.getY(), 0.1);
 
         // Checks if robot turns 1 time to the right
-        robot.addCardToHand(new TurningCard(true, false, 0));
+        robot.chooseCardFromHand(new TurningCard(true, false, 0));
         robot.moveBasedOnNextCard(true);
         assertEquals("E", robot.getDir());
 
         // Checks if robot can do a sequence of cards
-        robot.addCardToHand(new MovementCard(2,0));
-        robot.addCardToHand(new TurningCard(true, false, 0));
-        robot.addCardToHand(new MovementCard(3,0));
+        robot.chooseCardFromHand(new MovementCard(2,0));
+        robot.chooseCardFromHand(new TurningCard(true, false, 0));
+        robot.chooseCardFromHand(new MovementCard(3,0));
 
         Vector2 originalPosition = new Vector2(robot.getX(), robot.getY());
         robot.moveBasedOnNextCard(true);

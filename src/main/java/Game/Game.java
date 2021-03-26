@@ -1,10 +1,13 @@
 package Game;
 
+import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
 import objects.Flag;
 import objects.Robot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import Cards.*;
@@ -16,14 +19,13 @@ public class Game {
     ArrayList<Flag> flags;
     Deck deck;
     Application application;
-    boolean isCurrentlyPlayingARound = false;
+    String currentHands;
+    ArrayList<Vector2> startPositions;
 
-    public Game(ArrayList<Robot> playerlist, ArrayList<Flag> flagList, Application application) {
+    public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
 
-        players = playerlist;
-        flags = flagList;
-        numberOfFlags = flags.size();
+        players = playerList;
         deck = new Deck();
     }
 
@@ -31,131 +33,125 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
+        startPositions = application.getEntities(application.getStartPositionLayer());
         playing = true;
-        //players.get(0).setPosition(0,0);
+
+
+        ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
+        flags = sortFlags(entitiesList);
+
+
+        //TODO bestemme en startsposisjon som ikke er 0,0 (default)
+        int count = 0;
+        for (Robot rob: players){
+            rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
+            rob.setStartPosX(startPositions.get(count).x);
+            rob.setStartPosY(startPositions.get(count).y);
+            count++;
+
+        }
         application.render();
-        playGame();
+
+
+        //playGame();
+        System.out.println("HERE1 " + players.get(0).isServer());
+        System.out.println("ROBOT LENGTH: " + players.size());
+        if (players.get(0).isServer()) {
+            System.out.println("HERE2");
+            playGame();
+            System.out.println("HERE3");
+        }
     }
+
 
     /**
      * the games turn order
      */
     public void playGame() {
-        if (!isCurrentlyPlayingARound) {
+
+        while (playing) {
             drawStep();
-            printCardsToTerminal();
+            for (int i = 0; i<5; i++){
+                playTurn();
+            }
             discardStep();
+            return;
         }
-        //The following methods will be implemented in the final version, they are currently removed to achieve MVP with less bugs
-        //playTurn();
-        //checkIfWinner();
-        /*while (playing) {
-            drawStep();
-            //printCardsToTerminal();
-            //playTurn();
-            checkIfWinner();
-            discardStep();
-            System.out.println("TEST");
-        }*/
-    }
-
-    public void drawStep(){
-        for (Robot rob : players) {
-            rob.drawHand(deck);
-        }
-
-
-    }
-
-    public void discardStep(){
-
-        players.get(0).discardHand(deck);
-
     }
 
     /**
-     *
-     * Gets 9 random cards from the deck and prints cards to the terminal
-     * Also runs chooseCards
+     * Gives each player a hand
      */
-    public void printCardsToTerminal() {
-        isCurrentlyPlayingARound = true;
-        System.out.flush();
-        ArrayList<ICards> cardsToPrint = new ArrayList<>();
-        ArrayList<ICards> cardDeck = deck.getCardDeck();
-
-        for(int i = 0; i<9; i++){
-            cardsToPrint.add(cardDeck.get(i));
+    public void drawStep(){
+        String hands = "";
+        for (Robot rob : players) {
+            hands += rob.getId();
+            hands += ",";
+            rob.drawHand(deck);
+            for(ICards card : rob.getHand()){
+                hands += card.getSimpleCardName();
+                hands += ",";
+            }
         }
-
-        int counter = 1;
-
-        for (ICards cards : cardsToPrint) {
-            System.out.println(counter + ": " + cards.getDisplayText());
-            counter++;
-        }
-        System.out.println("\n" +"Choose five of these cards using 1-9 on your keyboard");
-
-        // Separate thread to take input
-        Thread one = new Thread() {
-            public void run() {
+        currentHands = hands;
+        for (Robot rob : players){
+            if(rob.isServer()){
                 try {
-                    chooseCards(cardsToPrint);
-                } catch(Exception v) {
-                    System.out.println(v);
+                    // This removes the last character from the string
+                    hands = hands.substring(0, hands.length() - 1);
+                    rob.getClient().emitCards(hands);
+                } catch (Exception e) {
+
+                }
+                //TODO @Asgeir Robot.printCardsToTerminal() burde bli kallt her en plass
+                /*String[] list = hands.split(",");
+                ArrayList<String> list_ = new ArrayList<>();
+                for(String s : list) {
+                    list_.add(s);
+                }
+                players.get(0).setHand(players.get(0).getClient().simpleCardNamesToICards(list_));*/
+            }
+        }
+    }
+
+    /**
+     * Discards each players hand
+     */
+    public void discardStep(){
+        for (Robot rob : players) {
+            rob.discardHand(deck);
+        }
+    }
+
+    /**
+     * Plays the next card for each robot in order of their priority
+     * Then checks if anyone has won
+     */
+    public void playTurn(){
+        ArrayList<ICards> cards = new ArrayList();
+        for (int i = 0; i < 5; i++){
+            for(Robot rob : players){
+                cards.add(rob.getFirstCard());
+            }
+            //Sorts every players card so the one with highest priority goes first
+            Collections.sort(cards, (c1, c2) -> {
+                if (c1.getPrio() > c2.getPrio()) return -1;
+                if (c1.getPrio() < c2.getPrio()) return 1;
+                return 0;
+            });
+
+            for (ICards c: cards){
+                ArrayList<Robot> playersCopy = players;
+                for (Robot rob: playersCopy){
+                    if (rob.getFirstCard().equals(c)){
+                        rob.moveBasedOnNextCard(true);
+                        playersCopy.remove(rob);
+                        break;
+                    }
                 }
             }
-        };
-
-        one.start();
-    }
-
-    /**
-     * User picks 5 out of 9 cards for their hand
-     * Cannot choose the same card more than once
-     * Sends a card that is chosen to the robot class
-     * @param cardsToPrint 9 cards to choose from
-     */
-    public void chooseCards(ArrayList<ICards> cardsToPrint){
-        ArrayList<ICards> chosenCardsFromNineDeck = new ArrayList<>();
-
-        while (chosenCardsFromNineDeck.size()<5){
-            System.out.println("Enter a number between 1-9");
-            Scanner scanner = new Scanner(System.in);
-            if(!scanner.hasNextInt()){
-                continue;
-            }
-            int number = scanner.nextInt();
-            if(!(number > 0 && number < 10)){
-                continue;
-            }
-            ICards chosenCard = cardsToPrint.get(number-1);
-            if(!chosenCardsFromNineDeck.contains(chosenCard)){
-                chosenCardsFromNineDeck.add(chosenCard);
-                players.get(0).addCardToHand(chosenCard);
-            }
-            else{
-                System.out.println("This card is already chosen, chose a new");
-            }
+            checkIfWinner();
         }
-
-        playTurn();
-    }
-
-    public void playTurn(){
-        int amountOfCards = players.get(0).getChosenCardsFromHand().size();
-        for (int i = 0; i < amountOfCards; i++) {
-            players.get(0).moveBasedOnNextCard(true);
-            /*try
-            {
-                Thread.sleep(1500);
-            }
-            catch(InterruptedException ex)
-            {
-                Thread.currentThread().interrupt();
-            }*/
-        }
-        isCurrentlyPlayingARound = false;
     }
 
     /**
@@ -165,7 +161,11 @@ public class Game {
     public boolean checkIfWinner(){
         for(Robot player : players){
             if(player.getVisitedFlags().size() == flags.size()){
-                System.out.println("you win!");
+                String WinString = "";
+                WinString += "Player ";
+                WinString += player.getId();
+                WinString += " Wins!";
+                System.out.println(WinString);
                 playing = false;
                 return true;
             }
@@ -190,8 +190,30 @@ public class Game {
         return application;
     }
 
+    public ArrayList<Flag> sortFlags(ArrayList<Vector2> flagList){
+        ArrayList<Flag> sortedFlags = new ArrayList<>();
+
+        for(Vector2 v : flagList){
+            //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
+            sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
+        }
+        //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
+/*        Collections.sort(sortedFlags, (c1, c2) -> {
+            //Sorts the flags according to their tile value
+            int id1 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
+            int id2 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
+            if (id1 > id2) return 1;
+            if (id1 < id2) return -1;
+            return 0;
+        });
+        */
+        numberOfFlags = sortedFlags.size();
+        return sortedFlags;
+    }
 
     public boolean isPlaying() {
         return playing;
     }
+
+
 }

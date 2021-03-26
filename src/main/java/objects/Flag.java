@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Flag extends Vector2 implements IObject{
 
+    int orderNumber;
+
     public Flag(int x, int y){
         setPosition(x,y);
     }
@@ -23,5 +25,13 @@ public class Flag extends Vector2 implements IObject{
     @Override
     public float getY() {
         return this.y;
+    }
+
+    public void setOrderNumber(int n){
+        orderNumber = n;
+    }
+
+    public int getOrderNumber(){
+        return orderNumber;
     }
 }
