@@ -45,6 +45,16 @@ Naturligvis har programmet endret seg en del fra klassediagrammet siden vi start
 
 ###Brukerhistorier:
 
+**Brukerhistorie til større brett med startposisjoner**
+Som spiller ønsker jeg et stort nok brett så spilleropplevelsen blir bedre, og det skal inneholde startposisjoner.
+
+**Arbeidsoppgaver:**
+- Lage et nytt brett i tiled som er større og som inneholder startposisjoner.
+- Sørge for at maploader loader det nye brettet
+
+**Tester:**
+Når du kjører spillet skal brikken din være på et 12*16 brett med startposisjonene på venstre side.
+
 **Brukerhistorie LifeTokens:**
 Som spiller vil jeg kunne gå i hull, slik at jeg kan miste liv.
 
@@ -180,6 +190,17 @@ Test steg:
 - vent til programmeringsfasen
 
 Forventet resultat: Spiller kan se 9 kort visuelt i Gui'en
+
+###Refleksjon:
+For denne innlevering møtte vi på en del uforventede problemer. 
+Etter forrige innlevering satt vi oss ned og fant ut hvilket krav vi skulle sette til oss selv denne innleveringen, 
+dette er alle brukerhistoriene beskrevet over i tilleg til ordentlig rundelogikk slik at når spillet startes, så blir det spillt ferdig som forventet, selv med flere spillere. 
+Vi fant senere ut at dette innebar mer arbeidenn forventet. Vi trodde dette var et lite nok punkt til at kun ett gruppemedlem trengte å jobbe på det.
+Det viste seg at dette trengte tiden til de fleste på gruppen, siden vi blandt annet måtte endre på mye av strukturen til hele prosjektet, 
+og det var mye som måtte kommunisere med server.
+Til neste gang skal vi lage enda mindre deloppgaver på projectboard, som er litt mer overkommelig.
+Når det kommer til oppgaver rundt GUI føler vi at de er delt opp nok, men disse blir flyttet til neste innlevering,
+siden vi måtte fokusere på rundelogikk, og det er mye å sette seg inn i LibGDX.
 
 
 

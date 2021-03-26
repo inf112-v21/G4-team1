@@ -26,6 +26,5 @@ The game is over when the first robot visits all the flags. During the game, the
 
 ####Known bugs:
 * pushRobot will sometimes give an error, but works most times (Important: must give error to work)
-* Pushing player(2) into wall will render them invisible and player(1) replaces their position. Player(2) becomes visible if they move again.
 * If multiple players press enter to start the first programming phase game movement becomes buggy and will eventually crash.
 * List of flags is not sorted correctly, so the order you have to visit them is not accurate

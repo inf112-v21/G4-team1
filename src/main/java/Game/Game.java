@@ -103,7 +103,6 @@ public class Game {
                 } catch (Exception e) {
 
                 }
-                //TODO @Asgeir Robot.printCardsToTerminal() burde bli kallt her en plass
                 /*String[] list = hands.split(",");
                 ArrayList<String> list_ = new ArrayList<>();
                 for(String s : list) {
