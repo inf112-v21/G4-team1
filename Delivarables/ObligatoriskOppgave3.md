@@ -36,6 +36,13 @@ Arbeidet fordeles forholdsvis jevnt og alle behandles med like stor grad av resp
 
 ###Oppdatert Project Board:
 ![img_1.png](projectBoardOblig3.png)
+
+###Klassediagram:
+Legger ved klassediagram som vi glemte i forige innlevering. Klassediagrammet lagde vi føre vi begynte noen som helste programering,
+slik at vi hadde en god plan på hva som måtte implementeres. 
+Naturligvis har programmet endret seg en del fra klassediagrammet siden vi startet, vi har for eksempel ikke en Map klasse nå.
+![img_1.png](klasseDiagram.png)
+
 ###Brukerhistorier:
 
 **Brukerhistorie LifeTokens:**
@@ -146,7 +153,7 @@ Test steg:
 Forventet resultat: Spiller roteres i henhold til kortet
 
 
-**Brukerhistorie Kort i Gui:**
+**Brukerhistorie Kort i Gui (ikke implementert):**
 Som spiller vil jeg kunne se kortene jeg kan velge mellom, slik at spillet blir mer intuitivt
 
 **Akseptansekriterier:**
