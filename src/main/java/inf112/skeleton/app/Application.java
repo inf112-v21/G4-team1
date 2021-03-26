@@ -135,7 +135,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     @Override
     /**
-    Runs the game, cheks if its running, paused or finished,
+    Runs the game, checks if its running, paused or finished,
     Updates the board if the game is running. Calls draw function which calls the render
     function again.
      */
@@ -222,9 +222,11 @@ public class Application extends InputAdapter implements ApplicationListener {
                 player.setPosition(-5, -5);
                 continue;
             }
+
             if (playerInPit(player)) {
                 playerLayer.setCell(playerXPosition(player), playerYPosition(player), playerDiedCell);
                 player.loseLife();
+
                 if(player.getLifeTokens() == 0){
                     System.out.println("You are dead");
                     player.setPosition(-5, -5);
@@ -234,7 +236,9 @@ public class Application extends InputAdapter implements ApplicationListener {
                 if (game.checkIfWinner()) {
                     setGameState(State.STOPPED);
                 }
-            } else{
+            }
+
+            else{
                 if (player.getId() != null) {
                     playerLayer.setCell(playerXPosition(player),playerYPosition(player),playerCell.get(Integer.parseInt(player.getId()) - 1));
                 }
@@ -292,6 +296,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     public boolean playerInPit(Robot player) {
         return (holeLayer.getCell(playerXPosition(player), playerYPosition(player)) != null);
     }
+
 
     public ArrayList<Vector2> getEntities(TiledMapTileLayer layer){
         ArrayList<Vector2> entities = new ArrayList<Vector2>();
