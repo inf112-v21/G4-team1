@@ -87,4 +87,11 @@ Arbeid med rundelogikken.
 Mål å bli ferdig med alt i dag så det slipper å bli kaotisk i morgen.
 Lang arbeidsøkt
 
+##Møtereferat 4/12/2021
 
+Medlemmer i møte: Kristian, Ulrik, Nathaniel, Anders, Asgeir
+
+Tar opp hva som bør være fokus til siste innlevering med tanke på at vi mangler et par ting. 
+Gui en og rundelogikken trenger fortsatt mer arbeid. tre nye Mvp krav som er 1: lage nye arbeidsoppgaver bl.a at gameklassen 
+bare opprettes hos hosten, 2: gjøre det slik at spillet venter på at alle spillerene har gjort turen sin,
+3: lage flere objekter i spillet bl.a belte, vegger osv.
