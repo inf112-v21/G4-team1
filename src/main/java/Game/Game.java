@@ -72,9 +72,9 @@ public class Game {
         while (playing) {
             drawStep();
             for (int i = 0; i<5; i++){
-                playTurn();
+                //playTurn();
             }
-            discardStep();
+            //discardStep();
             return;
         }
     }
@@ -194,19 +194,25 @@ public class Game {
         ArrayList<Flag> sortedFlags = new ArrayList<>();
 
         for(Vector2 v : flagList){
+            System.out.println("x:"+v.x + "y:" +v.y);
             //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
             sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
         }
         //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
-/*        Collections.sort(sortedFlags, (c1, c2) -> {
+        /*
+        Collections.sort(sortedFlags, (c1, c2) -> {
+
             //Sorts the flags according to their tile value
+            System.out.println(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
+            System.out.println(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
             int id1 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
             int id2 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
             if (id1 > id2) return 1;
             if (id1 < id2) return -1;
             return 0;
-        });
-        */
+        }
+         );
+    */
         numberOfFlags = sortedFlags.size();
         return sortedFlags;
     }
@@ -214,6 +220,8 @@ public class Game {
     public boolean isPlaying() {
         return playing;
     }
+
+    public ArrayList<Flag> getFlags() {return flags;}
 
 
 }

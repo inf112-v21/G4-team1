@@ -25,6 +25,7 @@ public class Robot extends Vector2 implements IObject{
     boolean isServer = true;
     float startPosX = 0;
     float startPosY = 0;
+    int rotation;
 
     /** TODO
      * Finish checkIfRobotIsAtPosition()
@@ -37,8 +38,8 @@ public class Robot extends Vector2 implements IObject{
     public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
-
-       setPosition(x,y);
+        rotation=0;
+        setPosition(x,y);
     }
 
 
@@ -46,7 +47,7 @@ public class Robot extends Vector2 implements IObject{
         this.game = game;
         lifeTokens = 3;
         damageTokens = 0;
-
+        rotation=0;
         setPosition(x,y);
     }
 
@@ -269,6 +270,9 @@ public class Robot extends Vector2 implements IObject{
                 dir = "S";
                 break;
         }
+        setRotation(1);
+        System.out.println(rotation);
+        game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
     }
 
     /**
@@ -289,6 +293,9 @@ public class Robot extends Vector2 implements IObject{
                 dir = "N";
                 break;
         }
+        setRotation(-1);
+        System.out.println(rotation);
+        game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
     }
 
     /**
@@ -468,5 +475,17 @@ public class Robot extends Vector2 implements IObject{
 
     public void setHand(ArrayList<ICards> hand_) {
         hand = hand_;
+    }
+    public int getRotation(){
+        return rotation;
+    }
+    public void setRotation(int i){
+        rotation +=i;
+        if(rotation>3){
+            rotation=0;
+        }
+        if(rotation<0){
+            rotation=3;
+        }
     }
 }

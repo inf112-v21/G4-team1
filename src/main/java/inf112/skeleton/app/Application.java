@@ -187,10 +187,10 @@ public class Application extends InputAdapter implements ApplicationListener {
         }
 
         if(keycode == Input.Keys.ENTER){
-            if(game.getPlayers().get(0).isServer()){
             if(!game.isPlaying()) {
                 game.startGame();
-            }}
+                flags = game.getFlags();
+            }
         }
         return false;
     }
@@ -300,6 +300,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                 if(layer.getCell(x,y) != null){
                     Vector2 pos = new Vector2(x,y);
                     entities.add(pos);
+                    System.out.println("x: " + x + "y: " + y);
                 }
             }
         }
