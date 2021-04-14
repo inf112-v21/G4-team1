@@ -184,7 +184,6 @@ public class Game {
         ArrayList<Flag> sortedFlags = new ArrayList<>();
 
         for(Vector2 v : flagList){
-            System.out.println("x:"+v.x + "y:" +v.y);
             //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
             sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
         }

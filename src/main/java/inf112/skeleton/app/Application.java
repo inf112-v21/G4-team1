@@ -316,7 +316,6 @@ public class Application extends InputAdapter implements ApplicationListener {
                 if(layer.getCell(x,y) != null){
                     Vector2 pos = new Vector2(x,y);
                     entities.add(pos);
-                    System.out.println("x: " + x + "y: " + y);
                 }
             }
         }
