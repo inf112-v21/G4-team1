@@ -139,19 +139,14 @@ public class Client {
                     }
                 }
 
-                System.out.println("TEST TEST TEST TEST");
-                for (Robot rob : game.getPlayers()) {
-                    System.out.println(rob.getHand());
-                }
+
                 game.getPlayers().get(0).printCardsToTerminal();
             }
         });
     }
 
     public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
-        System.out.println("CARDS: " + cards);
         ArrayList<ICards> iCardsArrayList = new ArrayList<ICards>();
-        int iterator = 0;
         for (String s : cards) {
             switch (s.charAt(0)) {
                 case 'M':
@@ -171,7 +166,6 @@ public class Client {
                     iCardsArrayList.add(new TurningCard(true, true, Integer.parseInt(s.substring(1, s.length()))));
                     break;
             }
-            iterator++;
         }
 
         // DEBUG CARDS

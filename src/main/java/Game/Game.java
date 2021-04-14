@@ -53,12 +53,10 @@ public class Game {
 
 
         //playGame();
-        System.out.println("HERE1 " + players.get(0).isServer());
+        System.out.println("Server: " + players.get(0).isServer());
         System.out.println("ROBOT LENGTH: " + players.size());
         if (players.get(0).isServer()) {
-            System.out.println("HERE2");
             playGame();
-            System.out.println("HERE3");
         }
     }
 
