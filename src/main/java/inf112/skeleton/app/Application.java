@@ -108,6 +108,17 @@ public class Application extends InputAdapter implements ApplicationListener {
         renderer = new OrthogonalTiledMapRenderer(map,1/300f);
         renderer.setView(camera);
         Gdx.input.setInputProcessor(this);
+
+    }
+
+    public void addFlags(){
+        ArrayList<Flag> Flags = new ArrayList<>();
+
+        for(int i=0; i<flagLayer.getWidth(); i++){
+            for(int j=0; j<flagLayer.getHeight(); j++){
+
+            }
+        }
     }
 
     public void SetPlayerSkin(String playerSkinPath) {
