@@ -339,4 +339,6 @@ public class Application extends InputAdapter implements ApplicationListener {
     public TiledMapTileLayer getFlagLayer() {
         return flagLayer;
     }
+
+    public TiledMapTileLayer getWallsLayer() { return wallsLayer; }
 }

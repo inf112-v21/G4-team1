@@ -488,4 +488,5 @@ public class Robot extends Vector2 implements IObject{
             rotation=3;
         }
     }
+
 }
