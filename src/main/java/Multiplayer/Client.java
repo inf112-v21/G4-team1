@@ -156,9 +156,9 @@ public class Client {
             switch (s.charAt(0)) {
                 case 'M':
                     if (s.charAt(1) == '-') {
-                        iCardsArrayList.add(new MovementCard(s.charAt(2), Integer.parseInt(s.substring(3, s.length()))));
+                        iCardsArrayList.add(new MovementCard(Character.getNumericValue(s.charAt(2)), Integer.parseInt(s.substring(3, s.length()))));
                     } else {
-                        iCardsArrayList.add(new MovementCard(s.charAt(1), Integer.parseInt(s.substring(2, s.length()))));
+                        iCardsArrayList.add(new MovementCard(Character.getNumericValue(s.charAt(1)), Integer.parseInt(s.substring(2, s.length()))));
                     }
                     break;
                 case 'R':
