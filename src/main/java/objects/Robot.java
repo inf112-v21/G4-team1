@@ -299,7 +299,6 @@ public class Robot extends Vector2 implements IObject{
     }
 
     /**
-     *
      * @return the direction the robot is facing
      */
     public String getDir(){

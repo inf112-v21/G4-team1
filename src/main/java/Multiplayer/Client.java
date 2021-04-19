@@ -138,9 +138,9 @@ public class Client {
                         }
                     }
                 }
-
-
-                game.getPlayers().get(0).printCardsToTerminal();
+                for (Robot r : game.getPlayers()) {
+                    r.printCardsToTerminal();
+                }
             }
         });
     }
