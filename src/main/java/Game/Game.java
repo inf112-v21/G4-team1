@@ -5,12 +5,11 @@ import inf112.skeleton.app.Application;
 import objects.Flag;
 import objects.Robot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import Cards.*;
+import objects.Wall;
 
 public class Game {
     Boolean playing = false;
@@ -21,6 +20,7 @@ public class Game {
     Application application;
     String currentHands;
     ArrayList<Vector2> startPositions;
+    ArrayList<Wall> wallList;
 
     public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
@@ -35,13 +35,12 @@ public class Game {
     public void startGame() {
         startPositions = application.getEntities(application.getStartPositionLayer());
         playing = true;
-
-
+        ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
+        wallList = getWalls(walls);
         ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
         flags = sortFlags(entitiesList);
 
 
-        //TODO bestemme en startsposisjon som ikke er 0,0 (default)
         int count = 0;
         for (Robot rob: players){
             rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
@@ -54,12 +53,10 @@ public class Game {
 
 
         //playGame();
-        System.out.println("HERE1 " + players.get(0).isServer());
+        System.out.println("Server: " + players.get(0).isServer());
         System.out.println("ROBOT LENGTH: " + players.size());
         if (players.get(0).isServer()) {
-            System.out.println("HERE2");
             playGame();
-            System.out.println("HERE3");
         }
     }
 
@@ -103,13 +100,6 @@ public class Game {
                 } catch (Exception e) {
 
                 }
-                //TODO @Asgeir Robot.printCardsToTerminal() burde bli kallt her en plass
-                /*String[] list = hands.split(",");
-                ArrayList<String> list_ = new ArrayList<>();
-                for(String s : list) {
-                    list_.add(s);
-                }
-                players.get(0).setHand(players.get(0).getClient().simpleCardNamesToICards(list_));*/
             }
         }
     }
@@ -198,15 +188,19 @@ public class Game {
             sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
         }
         //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
-/*        Collections.sort(sortedFlags, (c1, c2) -> {
+
+        Collections.sort(sortedFlags, (c1, c2) -> {
+
             //Sorts the flags according to their tile value
-            int id1 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().toString());
-            int id2 = Integer.valueOf(application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().toString());
+
+            int id1 = application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().getId();
+            int id2 = application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().getId();
             if (id1 > id2) return 1;
             if (id1 < id2) return -1;
             return 0;
-        });
-        */
+        }
+         );
+
         numberOfFlags = sortedFlags.size();
         return sortedFlags;
     }
@@ -214,6 +208,33 @@ public class Game {
     public boolean isPlaying() {
         return playing;
     }
+
+    public ArrayList<Wall> getWalls(ArrayList<Vector2> walls){
+        ArrayList<Wall> wallList = new ArrayList<>();
+        for(Vector2 wall : walls){
+            int wallID = application.getWallsLayer().getCell(Math.round(wall.x), Math.round(wall.y)).getTile().getId();
+            switch (wallID){
+                case 29:
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "S"));
+                    break;
+                case 31:
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "N"));
+                    break;
+                case 30:
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "W"));
+                    break;
+                case 32:
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "SW"));
+                    break;
+                case 8:
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "SE"));
+                    break;
+                }
+        }
+        return wallList;
+    }
+
+    public ArrayList<Flag> getFlags() {return flags;}
 
 
 }

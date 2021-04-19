@@ -121,7 +121,6 @@ public class Client {
             @Override
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
-                //String[] result = "1,M264,R10,R95,R7,M184,M185,R2,R42,M154,2,U9,R48,M127,U76,L42,M192,L17,M158,L49".split(",");
                 String[] result = (objectList[0]+"").split(",");
                 ArrayList<String> simpleCardNames = new ArrayList<String>();
                 int robotIterator = 0;
@@ -140,26 +139,21 @@ public class Client {
                     }
                 }
 
-                System.out.println("TEST TEST TEST TEST");
-                for (Robot rob : game.getPlayers()) {
-                    System.out.println(rob.getHand());
-                }
+
                 game.getPlayers().get(0).printCardsToTerminal();
             }
         });
     }
 
     public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
-        System.out.println("CARDS: " + cards);
         ArrayList<ICards> iCardsArrayList = new ArrayList<ICards>();
-        int iterator = 0;
         for (String s : cards) {
             switch (s.charAt(0)) {
                 case 'M':
                     if (s.charAt(1) == '-') {
-                        iCardsArrayList.add(new MovementCard(s.charAt(2), Integer.parseInt(s.substring(3, s.length()))));
+                        iCardsArrayList.add(new MovementCard(Character.getNumericValue(s.charAt(2)), Integer.parseInt(s.substring(3, s.length()))));
                     } else {
-                        iCardsArrayList.add(new MovementCard(s.charAt(1), Integer.parseInt(s.substring(2, s.length()))));
+                        iCardsArrayList.add(new MovementCard(Character.getNumericValue(s.charAt(1)), Integer.parseInt(s.substring(2, s.length()))));
                     }
                     break;
                 case 'R':
@@ -172,7 +166,6 @@ public class Client {
                     iCardsArrayList.add(new TurningCard(true, true, Integer.parseInt(s.substring(1, s.length()))));
                     break;
             }
-            iterator++;
         }
 
         // DEBUG CARDS

@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 public class Main {
 
-    //Hovedmeny skal lage felles game klasse
+    //Hovedmeny skal lage felles game klasse etterhvert
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("RoboTestApp");
