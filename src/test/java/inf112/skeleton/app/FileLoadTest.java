@@ -19,12 +19,12 @@ public class FileLoadTest {
     @BeforeEach
     public void setUp(){
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("assets/RoboRallyTile.tmx");
+        map = mapLoader.load("assets/RoboRallyTile2.tmx");
     }
 
     @Test
     public void checkMapExists(){
-        File f = new File("assets/RoboRallyTile.tmx");
+        File f = new File("assets/RoboRallyTile2.tmx");
         assertTrue(f.exists());
     }
 }
