@@ -192,6 +192,9 @@ public class Application extends InputAdapter implements ApplicationListener {
                 game.startGame();
             }}
         }
+        if(keycode == Input.Keys.SHIFT_LEFT){
+            game.playTurn();
+        }
         return false;
     }
 
