@@ -435,6 +435,85 @@ public class Robot extends Vector2 implements IObject{
     }
 
     /**
+     * @param xPos
+     * @param yPos
+     * @return A wall if the tile contains a wall
+     * Returns null if it does not contain a wall
+     */
+
+    public ArrayList<Wall> getWallsOnTile(float xPos, float yPos){
+        ArrayList<Wall> walls;
+        walls = game.getWallList();
+
+        ArrayList<Wall> newWallsList = new ArrayList<>();
+
+        for(Wall wall : walls){
+            //wall har samme pos som robot
+            if((wall.getX() == xPos) && (wall.getY() == yPos)){
+                newWallsList.add(wall);
+            }
+        }
+        return newWallsList;
+    }
+
+    /**
+     * Checks if robot can move
+     * Made to prevent robot moving trough walls
+     * Should prohibit robots from moving through walls even if the wall is on the same tile as the robot
+     * @return
+     */
+    public Boolean robotCanMove(){
+        ArrayList<Wall> tileWithWall = getWallsOnTile(this.x,this.y);
+
+        if(!tileWithWall.isEmpty()){
+            for(Wall wall : tileWithWall){
+                if(dir.equals(wall.getDir())){
+                    return false;
+                }
+            }
+        }
+
+        Vector2 newTile = new Vector2(this.x, this.y);
+        switch (dir) {
+            case "N":
+                newTile.y += 1;
+                break;
+            case "E":
+                newTile.x += 1;
+                break;
+            case "S":
+                newTile.y -= 1;
+                break;
+            case "W":
+                newTile.x -= 1;
+                break;
+        }
+
+        ArrayList<Wall> newTileWithWall = getWallsOnTile(newTile.x,newTile.y);
+
+        if(!newTileWithWall.isEmpty()){
+            for(Wall wall : newTileWithWall){
+                switch (dir){
+                    case "N":
+                        if(wall.getDir().equals("S")){return false;}
+                        break;
+                    case "E":
+                        if(wall.getDir().equals("W")){return false;}
+                        break;
+                    case "S":
+                        if(wall.getDir().equals("N")){return false;}
+                        break;
+                    case "W":
+                        if(wall.getDir().equals("E")){return false;}
+                        break;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * To be used in next iteration of the project
      * @return
      */
