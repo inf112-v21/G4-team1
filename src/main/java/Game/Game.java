@@ -10,6 +10,7 @@ import java.util.*;
 
 import Cards.*;
 import objects.Wall;
+import org.lwjgl.system.CallbackI;
 
 public class Game {
     Boolean playing = false;
@@ -42,12 +43,12 @@ public class Game {
 
 
         int count = 0;
-        for (Robot rob: players){
-            rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
+        players.get(0).setPosition(startPositions.get(0).x, startPositions.get(0).y);
+        for (Robot rob: players) {
+            players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(count).x, startPositions.get(count).y), rob.getId());
             rob.setStartPosX(startPositions.get(count).x);
             rob.setStartPosY(startPositions.get(count).y);
             count++;
-
         }
         application.render();
 
