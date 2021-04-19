@@ -201,6 +201,7 @@ public class Application extends InputAdapter implements ApplicationListener {
             if(!game.isPlaying()) {
                 game.startGame();
                 flags = game.getFlags();
+
             }
         }
         return false;

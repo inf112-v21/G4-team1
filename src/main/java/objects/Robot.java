@@ -9,6 +9,7 @@ import Multiplayer.Client;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -142,7 +143,7 @@ public class Robot extends Vector2 implements IObject{
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
             pushPosition = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
-            if(!CheckIfOutOfBounds(newPosition)) {
+            if(!CheckIfOutOfBounds(newPosition) && robotCanMove()) {
                 switch (checkIfPositionIsClear(newPosition)) {
                     case 0:
                         // Position was clear
@@ -488,5 +489,7 @@ public class Robot extends Vector2 implements IObject{
             rotation=3;
         }
     }
+
+
 
 }

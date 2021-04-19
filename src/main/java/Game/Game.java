@@ -224,10 +224,12 @@ public class Game {
                     wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "W"));
                     break;
                 case 32:
-                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "SW"));
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "W"));
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "S"));
                     break;
                 case 8:
-                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "SE"));
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "E"));
+                    wallList.add(new Wall(Math.round(wall.x), Math.round(wall.y), "S"));
                     break;
                 }
         }
@@ -235,6 +237,8 @@ public class Game {
     }
 
     public ArrayList<Flag> getFlags() {return flags;}
+
+    public ArrayList<Wall> getWallList() {return wallList;}
 
 
 }
