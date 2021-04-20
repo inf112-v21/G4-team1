@@ -2,6 +2,7 @@ package Game;
 
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
+import objects.Belt;
 import objects.Flag;
 import objects.Robot;
 
@@ -21,6 +22,7 @@ public class Game {
     String currentHands;
     ArrayList<Vector2> startPositions;
     ArrayList<Wall> wallList;
+    ArrayList<Belt> beltList;
 
     public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
@@ -235,6 +237,30 @@ public class Game {
         }
         return wallList;
     }
+
+    public ArrayList<Belt> getBelts(ArrayList<Vector2> belts){
+        ArrayList<Belt> beltList = new ArrayList<>();
+
+        for(Vector2 belt : belts){
+            int beltId = application.getConveyorBeltLayer().getCell(Math.round(belt.x), Math.round(belt.y)).getTile().getId();
+
+            switch (beltId){
+                case 50:
+                    beltList.add(new Belt(Math.round(belt.x), Math.round(belt.y), "S",1));
+                    break;
+                case 52:
+                    beltList.add(new Belt(Math.round(belt.x), Math.round(belt.y), "E",1));
+                    break;
+                case 49:
+                    beltList.add(new Belt(Math.round(belt.x), Math.round(belt.y), "N",1));
+                    break;
+            }
+        }
+
+        return beltList;
+    }
+
+    public ArrayList<Belt> getBelts() {return beltList;}
 
     public ArrayList<Flag> getFlags() {return flags;}
 

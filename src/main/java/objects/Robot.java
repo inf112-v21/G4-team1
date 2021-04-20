@@ -513,6 +513,19 @@ public class Robot extends Vector2 implements IObject{
         return true;
     }
 
+    public void robotOnBelt(){
+        float xPos = this.x;
+        float yPos = this.y;
+
+        ArrayList<Belt> belts = game.getBelts();
+
+        for(Belt belt : belts){
+            if((xPos == belt.x) && (yPos == belt.y)){
+                move(1,belt.dir,false);
+            }
+        }
+    }
+
     /**
      * To be used in next iteration of the project
      * @return

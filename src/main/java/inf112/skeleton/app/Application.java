@@ -341,4 +341,6 @@ public class Application extends InputAdapter implements ApplicationListener {
     }
 
     public TiledMapTileLayer getWallsLayer() { return wallsLayer; }
+
+    public TiledMapTileLayer getConveyorBeltLayer() { return conveyorBeltLayer;}
 }
