@@ -22,6 +22,7 @@ public class Game {
     String currentHands;
     ArrayList<Vector2> startPositions;
     ArrayList<Wall> wallList;
+    int roundNumber = 0;
 
     public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
@@ -34,30 +35,36 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
-        startPositions = application.getEntities(application.getStartPositionLayer());
-        playing = true;
-        ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
-        wallList = getWalls(walls);
-        ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
-        flags = sortFlags(entitiesList);
+        if (roundNumber == 0) {
+            startPositions = application.getEntities(application.getStartPositionLayer());
+            playing = true;
+            ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
+            wallList = getWalls(walls);
+            ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
+            flags = sortFlags(entitiesList);
 
 
-        int count = 0;
-        players.get(0).setPosition(startPositions.get(0).x, startPositions.get(0).y);
-        for (Robot rob: players) {
-            players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(count).x, startPositions.get(count).y), rob.getId());
-            rob.setStartPosX(startPositions.get(count).x);
-            rob.setStartPosY(startPositions.get(count).y);
-            count++;
-        }
-        application.render();
+            int count = 0;
+            players.get(0).setPosition(startPositions.get(0).x, startPositions.get(0).y);
+            for (Robot rob : players) {
+                players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(count).x, startPositions.get(count).y), rob.getId());
+                rob.setStartPosX(startPositions.get(count).x);
+                rob.setStartPosY(startPositions.get(count).y);
+                count++;
+            }
+            application.render();
 
-
-        //playGame();
-        System.out.println("Server: " + players.get(0).isServer());
-        System.out.println("ROBOT LENGTH: " + players.size());
-        if (players.get(0).isServer()) {
-            playGame();
+            System.out.println("Server: " + players.get(0).isServer());
+            System.out.println("ROBOT LENGTH: " + players.size());
+            if (players.get(0).isServer()) {
+                playGame();
+            }
+        } else {
+            System.out.println("Server: " + players.get(0).isServer());
+            System.out.println("ROBOT LENGTH: " + players.size());
+            if (players.get(0).isServer()) {
+                playGame();
+            }
         }
     }
 
@@ -119,11 +126,13 @@ public class Game {
      * Then checks if anyone has won
      */
     public void playTurn(){
-        ArrayList<ICards> cards = new ArrayList();
+        System.out.println("ROUND STARTED: ");
         for (int i = 0; i < 5; i++){
+            ArrayList<ICards> cards = new ArrayList();
             for(Robot rob : players){
                 cards.add(rob.getFirstCard());
             }
+            System.out.println("CARDS: " + cards);
             //Sorts every players card so the one with highest priority goes first
             Collections.sort(cards, (c1, c2) -> {
                 if (c1.getPrio() > c2.getPrio()) return -1;
@@ -132,17 +141,21 @@ public class Game {
             });
 
             for (ICards c: cards){
-                ArrayList<Robot> playersCopy = players;
-                for (Robot rob: playersCopy){
-                    if (rob.getFirstCard().equals(c)){
-                        rob.moveBasedOnNextCard(true);
-                        playersCopy.remove(rob);
-                        break;
+                for (Robot rob: players) {
+                    try {
+                        if (rob.getFirstCard().equals(c)) {
+                            rob.moveBasedOnNextCard(true, true);
+                            break;
+                        }
+                    } catch (Exception e) {
+
                     }
                 }
             }
-            checkIfWinner();
+            //checkIfWinner();
         }
+        roundNumber++;
+        System.out.println("ROUND SHOULD HAVE FINISHED");
     }
 
     /**

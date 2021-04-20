@@ -71,6 +71,20 @@ public class Robot extends Vector2 implements IObject{
         }
     }
 
+    public void setPositionFromHost(float x, float y) {
+
+        if (game != null) {
+            game.getApplication().getPlayerLayer().setCell(Math.round(getX()), Math.round(getY()), null);
+        }
+
+        this.set(x,y);
+
+        if (game.getPlayers().get(0).client != null) {
+            game.getPlayers().get(0).client.UpdateClientPosition(new Vector2(x, y), getId());
+        }
+
+    }
+
     @Override
     public float getX() {
         return this.x;
@@ -90,16 +104,17 @@ public class Robot extends Vector2 implements IObject{
      * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
      * It will discard the used card from the current cards list.
      * @param animate
+     * @param playRound True if this is movement ordered by the host because of a round being played
      */
-    public void moveBasedOnNextCard(boolean animate){
+    public void moveBasedOnNextCard(boolean animate, boolean playRound){
         ICards card = drawAndDiscardFirstCardInList();
         if (card.getClass() == MovementCard.class) {
             MovementCard card_ = (MovementCard) card;
             System.out.println("Moving " + card_.getDistance() + " tiles in direction " + getDir());
-            moveBasedOnCard((MovementCard) card, animate);
+            moveBasedOnCard((MovementCard) card, animate, playRound);
         } else {
             TurningCard card_ = (TurningCard) card;
-            turnBasedOnCard((TurningCard) card);
+            turnBasedOnCard((TurningCard) card, playRound);
             if (card_.isUturn()) { System.out.println("Uturned, new direction is " + getDir()); }
             else if (card_.getDirection()) { System.out.println("Turned to the right, new direction is " + getDir()); }
             else { System.out.println("Turned to the left, new direction is " + getDir()); }
@@ -110,7 +125,7 @@ public class Robot extends Vector2 implements IObject{
      * moves x tiles in the direction the robot is facing
      * @param tiles number of tiles it moves
      */
-    public void move(int tiles, String dir_, Boolean animate){
+    public void move(int tiles, String dir_, Boolean animate, Boolean playRound){
         Vector2 moveDirection = new Vector2(0,0);
         switch (dir_) {
             case "N":
@@ -146,7 +161,11 @@ public class Robot extends Vector2 implements IObject{
                 switch (checkIfPositionIsClear(newPosition)) {
                     case 0:
                         // Position was clear
-                        setPosition(newPosition.x, newPosition.y);
+                        if (playRound) {
+                            setPositionFromHost(newPosition.x, newPosition.y);
+                        } else {
+                            setPosition(newPosition.x, newPosition.y);
+                        }
                         break;
                     case 1:
                         // Position blocked by a robot
@@ -165,7 +184,11 @@ public class Robot extends Vector2 implements IObject{
                                 pushRobot(robot.getId(), pushPosition, dir_);
                             }
                         }
-                        setPosition(newPosition.x, newPosition.y);
+                        if (playRound) {
+                            setPositionFromHost(newPosition.x, newPosition.y);
+                        } else {
+                            setPosition(newPosition.x, newPosition.y);
+                        }
                         break;
             }
             }
@@ -214,19 +237,19 @@ public class Robot extends Vector2 implements IObject{
      * Moves robot according to one of the given cards
      * @param movementCard Moves robot x tiles according to card
      */
-    public void moveBasedOnCard(MovementCard movementCard, Boolean animate) {
-        move(movementCard.getDistance(), getDir(), animate);
+    public void moveBasedOnCard(MovementCard movementCard, Boolean animate, Boolean playRound) {
+        move(movementCard.getDistance(), getDir(), animate, playRound);
     }
 
-    public void moveBasedOnCard(MovementCard movementCard, String dir) {
-        move(movementCard.getDistance(), dir, true);
+    public void moveBasedOnCard(MovementCard movementCard, String dir, Boolean playRound) {
+        move(movementCard.getDistance(), dir, true, playRound);
     }
 
     /**
      * Turns robot according to one of the given cards
      * @param turnCard Turns robot according to card
      */
-    public void turnBasedOnCard(TurningCard turnCard) {
+    public void turnBasedOnCard(TurningCard turnCard, Boolean playRound) {
         if (turnCard.isUturn()) {
             turnRight();
             turnRight();
@@ -349,6 +372,11 @@ public class Robot extends Vector2 implements IObject{
         chosenCardsFromHand.add(card);
     }
 
+    public void setChosenCardFromHand(ArrayList<ICards> card){
+        chosenCardsFromHand = new ArrayList<>();
+        chosenCardsFromHand = card;
+    }
+
 
     public void discardHand(Deck deck){
         for (ICards i: hand){
@@ -392,7 +420,7 @@ public class Robot extends Vector2 implements IObject{
      * @param cardsToPrint 9 cards to choose from
      */
     public void chooseCards(ArrayList<ICards> cardsToPrint){
-        while (chosenCardsFromHand.size()<5){
+        while (chosenCardsFromHand.size()<5) {
             System.out.println("Enter a number between 1-9");
             Scanner scanner = new Scanner(System.in);
             if(!scanner.hasNextInt()){
@@ -410,6 +438,18 @@ public class Robot extends Vector2 implements IObject{
                 System.out.println("This card is already chosen, chose a new");
             }
         }
+
+        String cards = "";
+
+        cards += getId();
+        cards += ",";
+        for(ICards card : chosenCardsFromHand){
+            cards += card.getSimpleCardName();
+            cards += ",";
+        }
+        cards = cards.substring(0, cards.length() - 1);
+
+        getClient().emitChosenCards(cards);
     }
 
     public String getId() {
@@ -419,10 +459,10 @@ public class Robot extends Vector2 implements IObject{
     public void setId(String id) {
         this.id = id;
         try {
-            System.out.println("clientID: " + client.getId());
+            /*System.out.println("clientID: " + client.getId());
             System.out.println("type: " + client.getId().getClass().getName());
             System.out.println("1: " + client.getId());
-            System.out.println("type: " + "1".getClass().getName());
+            System.out.println("type: " + "1".getClass().getName());*/
             if (client.getId() == "1") {
                 isServer = true;
             } else {
@@ -458,6 +498,10 @@ public class Robot extends Vector2 implements IObject{
 
     public Client getClient(){
         return client;
+    }
+
+    public void setClient(Client client_){
+        client = client_;
     }
 
     public float getStartPositionX() {

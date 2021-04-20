@@ -83,7 +83,7 @@ public class Client {
                 String[] result = (objectList[0]+"").split(",");
                 for (Robot robot : game.getPlayers()) {
                     if (Integer.parseInt(robot.getId()) == Integer.parseInt(result[0])) {
-                        robot.moveBasedOnCard(new MovementCard(Integer.parseInt(result[1]), 999), result[2]);
+                        robot.moveBasedOnCard(new MovementCard(Integer.parseInt(result[1]), 999), result[2], false);
                     }
                 }
             }
@@ -143,6 +143,44 @@ public class Client {
                 game.getPlayers().get(0).printCardsToTerminal();
             }
         });
+
+        socket.on("emitChosenCards", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String[] result = (objectList[0]+"").split(",");
+                System.out.println("RECIEVED CHOSEN CARDS");
+                ArrayList<String> simpleCardNames = new ArrayList<String>();
+                int robotIterator = 0;
+                int robotID = Integer.parseInt(result[0]) - 1;
+                for (int i = 0; i < result.length; i++) {
+                    if (result[i].equals(game.getPlayers().get(robotID).getId())) {
+                        System.out.println("RESULT[i] (ID) " + result[i]);
+                        simpleCardNames = new ArrayList<>();
+                        // Get the 5 next elements of the result array, which is the 9 cards
+                        for (int j = 1; j < 6; j++) {
+                            simpleCardNames.add(result[(i+j)]);
+                        }
+                        game.getPlayers().get(robotID).setChosenCardFromHand(simpleCardNamesToICards(simpleCardNames));
+                        System.out.println("First card priority: " + game.getPlayers().get(robotID).getChosenCardsFromHand().get(0).getPrio());
+                        robotIterator++;
+                        if (robotIterator >= game.getPlayers().size()); {
+                            i = result.length;
+                        }
+                    }
+                }
+            }
+        });
+
+        socket.on("startRound", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String[] result = (objectList[0]+"").split(",");
+                System.out.println("START THE ROUND");
+                game.playTurn();
+            }
+        });
     }
 
     public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
@@ -197,6 +235,11 @@ public class Client {
 
     public void emitCards(String cards) {
         socket.emit("emitCards", cards);
+    }
+
+    public void emitChosenCards(String cards) {
+        System.out.println("EMITTING CHOSEN CARDS");
+        socket.emit("emitChosenCards", cards);
     }
 
     public String getId() {

@@ -55,13 +55,13 @@ public class robotTest {
         // Checks vertical movement
         float initialYCoordinate = robot.getY();
         robot.setDirection("N");
-        robot.move(3, robot.getDir(), false);
+        robot.move(3, robot.getDir(), false, false);
         assertEquals(initialYCoordinate + 3, robot.getY(), 0.1);
 
         // Check horisontal movement
         float initialXCoordinate = robot.getX();
         robot.setDirection("W");
-        robot.move(3, robot.getDir(), false);
+        robot.move(3, robot.getDir(), false, false);
         assertEquals(initialXCoordinate + -3, robot.getX(), 0.1);
     }
 
@@ -75,12 +75,12 @@ public class robotTest {
 
         // Checks if robot moves 1 up
         robot.chooseCardFromHand(new MovementCard(1,0));
-        robot.moveBasedOnNextCard(true);
+        robot.moveBasedOnNextCard(true, false);
         assertEquals(1, robot.getY(), 0.1);
 
         // Checks if robot turns 1 time to the right
         robot.chooseCardFromHand(new TurningCard(true, false, 0));
-        robot.moveBasedOnNextCard(true);
+        robot.moveBasedOnNextCard(true, false);
         assertEquals("E", robot.getDir());
 
         // Checks if robot can do a sequence of cards
@@ -89,9 +89,9 @@ public class robotTest {
         robot.chooseCardFromHand(new MovementCard(3,0));
 
         Vector2 originalPosition = new Vector2(robot.getX(), robot.getY());
-        robot.moveBasedOnNextCard(true);
-        robot.moveBasedOnNextCard(true);
-        robot.moveBasedOnNextCard(true);
+        robot.moveBasedOnNextCard(true, false);
+        robot.moveBasedOnNextCard(true, false);
+        robot.moveBasedOnNextCard(true, false);
         assertEquals(new Vector2(originalPosition.x + 2, originalPosition.y - 3), new Vector2(robot.getX(), robot.getY()));
 
     }
