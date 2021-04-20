@@ -230,6 +230,7 @@ public class Client {
     }
 
     public void UpdateClientPosition(Vector2 position, String id) {
+        //System.out.println("UPDATING POSITION: " + id + "," + position.x + "," + position.y);
         socket.emit("updateClientPosition", id + "," + position.x + "," + position.y);
     }
 
@@ -242,9 +243,15 @@ public class Client {
         socket.emit("emitChosenCards", cards);
     }
 
+    public void emitRoundOverFlag() {
+        socket.emit("emitRoundOverFlag", "");
+    }
+
     public String getId() {
         return id;
     }
+
+    public Socket getSocket() { return socket; }
 
     public void setId(String id) {
         this.id = id;

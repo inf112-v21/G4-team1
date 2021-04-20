@@ -155,6 +155,7 @@ public class Game {
             //checkIfWinner();
         }
         roundNumber++;
+        players.get(0).getClient().emitRoundOverFlag();
         System.out.println("ROUND SHOULD HAVE FINISHED");
     }
 

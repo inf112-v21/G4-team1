@@ -153,7 +153,6 @@ public class Robot extends Vector2 implements IObject{
         Vector2 newPosition;
         // The position the robot will push another robot to each loop. It's the position two steps ahead, instead of 1 step ahead.
         Vector2 pushPosition;
-
         for (int i = 0; i < tiles; i++) {
             newPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
             pushPosition = new Vector2(getX() + (moveDirection.x * 2), getY() + (moveDirection.y * 2));
@@ -190,7 +189,7 @@ public class Robot extends Vector2 implements IObject{
                             setPosition(newPosition.x, newPosition.y);
                         }
                         break;
-            }
+                }
             }
             if (animate) {
                 try {
@@ -420,6 +419,7 @@ public class Robot extends Vector2 implements IObject{
      * @param cardsToPrint 9 cards to choose from
      */
     public void chooseCards(ArrayList<ICards> cardsToPrint){
+        chosenCardsFromHand = new ArrayList<>();
         while (chosenCardsFromHand.size()<5) {
             System.out.println("Enter a number between 1-9");
             Scanner scanner = new Scanner(System.in);
