@@ -250,14 +250,14 @@ public class Robot extends Vector2 implements IObject{
      */
     public void turnBasedOnCard(TurningCard turnCard, Boolean playRound) {
         if (turnCard.isUturn()) {
-            turnRight(false);
-            turnRight(false);
+            turnRight(playRound);
+            turnRight(playRound);
         }
         else {
             if (turnCard.getDirection()) {
-                turnRight(false);
+                turnRight(playRound);
             } else {
-                turnLeft(false);
+                turnLeft(playRound);
             }
         }
     }
@@ -296,9 +296,9 @@ public class Robot extends Vector2 implements IObject{
         System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
 
-        /*if (!calledFromServer) {
+        if (calledFromServer) {
             game.getPlayers().get(0).getClient().turnLeft(getId());
-        }*/
+        }
 
         try {
             Thread.sleep(800);
@@ -331,9 +331,9 @@ public class Robot extends Vector2 implements IObject{
         System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
 
-        /*if (!calledFromServer) {
+        if (calledFromServer) {
             game.getPlayers().get(0).getClient().turnRight(getId());
-        }*/
+        }
 
         try {
             Thread.sleep(800);

@@ -128,13 +128,11 @@ public class Game {
      * Then checks if anyone has won
      */
     public void playTurn(){
-        System.out.println("ROUND STARTED: ");
         for (int i = 0; i < 5; i++){
             ArrayList<ICards> cards = new ArrayList();
             for(Robot rob : players){
                 cards.add(rob.getFirstCard());
             }
-            System.out.println("CARDS: " + cards);
             //Sorts every players card so the one with highest priority goes first
             Collections.sort(cards, (c1, c2) -> {
                 if (c1.getPrio() > c2.getPrio()) return -1;
@@ -158,7 +156,6 @@ public class Game {
         }
         roundNumber++;
         players.get(0).getClient().emitRoundOverFlag();
-        System.out.println("ROUND SHOULD HAVE FINISHED");
     }
 
     /**

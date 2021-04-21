@@ -187,10 +187,9 @@ public class Client {
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
                 String result = (objectList[0]+"");
-                System.out.println("TURNING LEFT FOR " + result);
                 for(Robot robot : game.getPlayers()) {
                     if (robot.getId().equals(result)) {
-                        robot.turnLeft(true);
+                        robot.turnLeft(false);
                     }
                 }
             }
@@ -201,10 +200,9 @@ public class Client {
             public void call(Object... objects) {
                 Object[] objectList = Arrays.stream(objects).toArray();
                 String result = (objectList[0]+"");
-                System.out.println("TURNING RIGHT FOR " + result);
                 for(Robot robot : game.getPlayers()) {
                     if (robot.getId().equals(result)) {
-                        robot.turnRight(true);
+                        robot.turnRight(false);
                     }
                 }
             }
