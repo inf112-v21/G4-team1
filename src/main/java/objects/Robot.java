@@ -471,6 +471,8 @@ public class Robot extends Vector2 implements IObject{
         cards = cards.substring(0, cards.length() - 1);
 
         getClient().emitChosenCards(cards);
+
+        System.out.println("You've finished choosing cards, wait for round to start");
     }
 
     public String getId() {
@@ -584,7 +586,7 @@ public class Robot extends Vector2 implements IObject{
 
         for(Belt belt : belts){
             if((xPos == belt.x) && (yPos == belt.y)){
-                move(1,belt.dir,false);
+                move(1,belt.dir,false, false);
             }
         }
     }
