@@ -197,9 +197,12 @@ public class Application extends InputAdapter implements ApplicationListener {
             } else if (keycode == Input.Keys.SPACE) {
                 if(!game.getPlayers().get(0).getChosenCardsFromHand().isEmpty()) {
                     game.getPlayers().get(0).moveBasedOnNextCard(false);
+                    return true;
                 }
                 else {
+                    game.discardStep();
                     game.drawStep();
+                    return true;
                 }
             }
 
