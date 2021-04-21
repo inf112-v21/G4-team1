@@ -106,14 +106,14 @@ public class Robot extends Vector2 implements IObject{
         ICards card = drawAndDiscardFirstCardInList();
         if (card.getClass() == MovementCard.class) {
             MovementCard card_ = (MovementCard) card;
-            System.out.println("Moving " + card_.getDistance() + " tiles in direction " + getDir());
+            //System.out.println("Moving " + card_.getDistance() + " tiles in direction " + getDir());
             moveBasedOnCard((MovementCard) card, animate, playRound);
         } else {
             TurningCard card_ = (TurningCard) card;
             turnBasedOnCard((TurningCard) card, playRound);
-            if (card_.isUturn()) { System.out.println("Uturned, new direction is " + getDir()); }
+            /*if (card_.isUturn()) { System.out.println("Uturned, new direction is " + getDir()); }
             else if (card_.getDirection()) { System.out.println("Turned to the right, new direction is " + getDir()); }
-            else { System.out.println("Turned to the left, new direction is " + getDir()); }
+            else { System.out.println("Turned to the left, new direction is " + getDir()); }*/
         }
     }
 
@@ -185,6 +185,12 @@ public class Robot extends Vector2 implements IObject{
                             setPosition(newPosition.x, newPosition.y);
                         }
                         break;
+                }
+            } else {
+                if (playRound) {
+                    setPositionFromHost(getX(), getY());
+                } else {
+                    setPosition(getX(), getY());
                 }
             }
             if (animate) {
@@ -289,7 +295,7 @@ public class Robot extends Vector2 implements IObject{
                 break;
         }
         setRotation(1);
-        System.out.println(rotation);
+        //System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
 
         if (calledFromServer) {
@@ -324,7 +330,7 @@ public class Robot extends Vector2 implements IObject{
                 break;
         }
         setRotation(-1);
-        System.out.println(rotation);
+        //System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
 
         if (calledFromServer) {
