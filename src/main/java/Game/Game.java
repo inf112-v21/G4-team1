@@ -37,8 +37,13 @@ public class Game {
     public void startGame() {
         startPositions = application.getEntities(application.getStartPositionLayer());
         playing = true;
+
         ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
         wallList = getWalls(walls);
+
+        ArrayList<Vector2> belts = application.getEntities(application.getConveyorBeltLayer());
+        beltList = getBelts(belts);
+
         ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
         flags = sortFlags(entitiesList);
 
@@ -132,10 +137,10 @@ public class Game {
                 return 0;
             });
 
-            for (ICards c: cards){
+            for (ICards c: cards) {
                 ArrayList<Robot> playersCopy = players;
-                for (Robot rob: playersCopy){
-                    if (rob.getFirstCard().equals(c)){
+                for (Robot rob : playersCopy) {
+                    if (rob.getFirstCard().equals(c)) {
                         rob.moveBasedOnNextCard(true);
                         playersCopy.remove(rob);
                         break;
