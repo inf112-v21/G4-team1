@@ -463,6 +463,7 @@ public class Robot extends Vector2 implements IObject{
      * @return
      */
     public Boolean robotCanMove(){
+        if(!game.isPlaying()) return true;
         ArrayList<Wall> tileWithWall = getWallsOnTile(this.x,this.y);
 
         if(!tileWithWall.isEmpty()){
