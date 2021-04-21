@@ -44,6 +44,7 @@ public class Robot extends Vector2 implements IObject{
         damageTokens = 0;
         rotation=0;
         setPosition(x,y);
+        deck = new Deck();
     }
 
     public void InitializeClient(Game game, Application application) {
@@ -330,10 +331,13 @@ public class Robot extends Vector2 implements IObject{
 
     public void drawHand(){
         for (int i = 0; i<9; i++) {
-            hand.add(deck.draw());
+            hand.add(getDeck().draw());
         }
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
 
     public ArrayList<ICards> getHand(){
         return hand;
