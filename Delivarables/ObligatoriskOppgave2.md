@@ -1,6 +1,6 @@
 # Obligatorisk oppgave 2
 
-###Rollene
+### Rollene
 
 **Teamleder:** Kristian 
 
@@ -22,13 +22,13 @@ Ulrik har også fått rollen som referats-ansvarlig.
 Gruppedynamikken er god og vi har flytende kommunikasjon under møtene. Vi har ikke opplevd store problemer med prosjektet selv om vi alle har forskjellig erfaring. Hvis det er problemer med noe blir det tatt opp med en gang slik at det ikke bygger seg opp.
 I hvert møte går vi tydelig gjennom hva hvert enkelt medlem holder på med, og hvor langt vi har kommet, og hva de skal jobbe videre med. Dette gjør slik at alle vet nøyaktig hve de skal jobbe med til en hver tid.
 
-###Prosjektstruktur
+### Prosjektstruktur
 Til nå har vi greid å oppfylle alle Mvp kravene samt begynt å jobbe litt med mer utfyllende spill logikk. 
 Vi bruker project board til å se hva som holdes på med og hva som har blitt gjort. 
 Hvis det kommer noen spørsmål har vi laget en egen discord slik at kommukasjonen ikke stopper opp mellom møtene.
 I tilleg brukes codeWithMe hvis flere programmerer på samme ting for å unngå kluss.
 
-###Retrospektiv
+### Retrospektiv
 
 Det er noen ting vi har hatt fokus på å prøve å forbedre siden forrige innlevering, som vi gikk gjennom på møte 24. februar. 
 Dette er mer oppfulgte møtetider. 
@@ -36,13 +36,13 @@ Vi skal også ha mer fokus på tester, og ha flere manuelle visuelle tester.
 Vi skal også forbedre commits, det innebærer tydeligere og mer beskrivende commit meldinger og bedre fordeling av commits, noe som er vanskelig siden det er forskjellig programeringskompetanse og når vi bruker codeWithMe, er det en person som commiter alt som blir gjort.
 
 
-#####ProjectBoard
+##### ProjectBoard
 
 ![img.png](img.png)
 Utklipp av project board under utviklingen. Oppgaver som ikke er selvinlysende er forklart med komentar som dukker opp når du klikker på den.
 
-###Brukerhistorier med akseptansekriterier
-####Mvp krav 6:
+### Brukerhistorier med akseptansekriterier
+#### Mvp krav 6:
 Som spiller vil jeg kunne spille sammen med andre, slik at det blir konkurranse om å vinne.
 
 **Akseptansekriterier:**
@@ -67,7 +67,7 @@ For å teste flerspiller-kravet, brukte vi en enkel manuell test. To eller flere
 - Lage logikk i programmet som registrerer vinneren
 
 
-####Mvp krav 7:
+#### Mvp krav 7:
 Som spiller vil jeg få utdelt kort, slik at jeg har mulighet til å spille de.
 
 **Akseptansekriterier:**
@@ -96,7 +96,7 @@ For å teste at alle 9 kortene viser, kjører en først main. Da vil spill-vindu
 
 Kortene er formatert for lesbarhet, noe som gjør det lett å se at alle 9 kortene blir printet ut slik at spilleren kan velge mellom de.
 
-####Mvp krav 8:
+#### Mvp krav 8:
 Som spiller vil jeg ha muligheten til å velge 5 kort, slik at jeg kan planlegge runden min.
 
 **Akseptansekriterier:**
@@ -136,7 +136,7 @@ Dette funket, testen passerer.
 For siste test ville vi se at en bare fikk valgt fem kort og ikke flere. Dette ble testet ved å velge fem ulike kort.
 Etter det femte kortet har blitt valgt burde ikke brukeren få opp en ny kortvelger-linje. Det skjer ikke, testen passerer.
 
-####Mvp krav 9:
+#### Mvp krav 9:
 
 Som robot vil jeg ha muligheten til å bevege meg i henhold til valgte kort, slik at jeg kan vinne spillet.
 
@@ -172,7 +172,7 @@ For move-kortene er det lettere å teste rent visuellt. For å teste disse korte
 Si at en har fem move1-kort etter hverandre, så vil roboten flytte fem brikker. 
 Vi valgte fem move-kort og telte opp på forhånd hvor mange ruter den burde bevege seg. Så sammenligent vi det med hvor mange ruter roboten faktisk flyttet seg.
 Disse sammsvarte, så testen passerer. 
-###Vår prioritering:
+### Vår prioritering:
 Vi har ikke endret eller tilpasset MVP kravene fra første innlevering, da vi syntes de passet bra og var gjennomførbare.
 Vi har hatt stor fokus på å få til multiplayer tidlig i denne innleveringen, fordi vi anntok at dette kom til å ta lengst tid.
 På tiden vi leverer følger ikke spillet alle spillereglene, men alle originale MVP kravene er innfridd.
