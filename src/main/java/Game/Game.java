@@ -11,6 +11,7 @@ import java.util.*;
 
 import Cards.*;
 import objects.Wall;
+import org.lwjgl.system.CallbackI;
 
 public class Game {
     Boolean playing = false;
@@ -22,6 +23,7 @@ public class Game {
     ArrayList<Vector2> startPositions;
     ArrayList<Wall> wallList;
     ArrayList<Belt> beltList;
+    int roundNumber = 0;
 
     public Game(ArrayList<Robot> playerList, Application application) {
         this.application = application;
@@ -33,35 +35,38 @@ public class Game {
      * Resets all players position and starts the game
      */
     public void startGame() {
-        startPositions = application.getEntities(application.getStartPositionLayer());
-        playing = true;
-
-        ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
-        wallList = getWalls(walls);
-
-        ArrayList<Vector2> belts = application.getEntities(application.getConveyorBeltLayer());
-        beltList = getBelts(belts);
-
-        ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
-        flags = sortFlags(entitiesList);
+        if (roundNumber == 0) {
+            startPositions = application.getEntities(application.getStartPositionLayer());
+            playing = true;
+            ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
+            wallList = getWalls(walls);
+            ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
+            flags = sortFlags(entitiesList);
 
 
-        int count = 0;
-        for (Robot rob: players){
-            rob.setPosition(startPositions.get(count).x, startPositions.get(count).y);
-            rob.setStartPosX(startPositions.get(count).x);
-            rob.setStartPosY(startPositions.get(count).y);
-            count++;
+            int count = 0;
+            int startPositionIndex = startPositions.size() - count - 1;
+            players.get(0).setPosition(startPositions.get(startPositionIndex).x, startPositions.get(startPositionIndex).y);
+            for (Robot rob : players) {
+                startPositionIndex = startPositions.size() - count - 1;
+                players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(startPositionIndex).x, startPositions.get(startPositionIndex).y), rob.getId());
+                rob.setStartPosX(startPositions.get(startPositionIndex).x);
+                rob.setStartPosY(startPositions.get(startPositionIndex).y);
+                count++;
+            }
+            application.render();
 
-        }
-        application.render();
-
-
-        //playGame();
-        System.out.println("Server: " + players.get(0).isServer());
-        System.out.println("ROBOT LENGTH: " + players.size());
-        if (players.get(0).isServer()) {
-            playGame();
+            System.out.println("Server: " + players.get(0).isServer());
+            System.out.println("ROBOT LENGTH: " + players.size());
+            if (players.get(0).isServer()) {
+                playGame();
+            }
+        } else {
+            System.out.println("Server: " + players.get(0).isServer());
+            System.out.println("ROBOT LENGTH: " + players.size());
+            if (players.get(0).isServer()) {
+                playGame();
+            }
         }
     }
 
@@ -123,8 +128,8 @@ public class Game {
      * Then checks if anyone has won
      */
     public void playTurn(){
-        ArrayList<ICards> cards = new ArrayList();
         for (int i = 0; i < 5; i++){
+            ArrayList<ICards> cards = new ArrayList();
             for(Robot rob : players){
                 cards.add(rob.getFirstCard());
             }
@@ -135,18 +140,22 @@ public class Game {
                 return 0;
             });
 
-            for (ICards c: cards) {
-                ArrayList<Robot> playersCopy = players;
-                for (Robot rob : playersCopy) {
-                    if (rob.getFirstCard().equals(c)) {
-                        rob.moveBasedOnNextCard(true);
-                        playersCopy.remove(rob);
-                        break;
+            for (ICards c: cards){
+                for (Robot rob: players) {
+                    try {
+                        if (rob.getFirstCard().equals(c)) {
+                            rob.moveBasedOnNextCard(true, true);
+                            break;
+                        }
+                    } catch (Exception e) {
+
                     }
                 }
             }
-            checkIfWinner();
+            //checkIfWinner();
         }
+        roundNumber++;
+        players.get(0).getClient().emitRoundOverFlag();
     }
 
     /**
