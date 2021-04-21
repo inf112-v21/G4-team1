@@ -65,7 +65,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="CoveyorBeltLayer" width="16" height="12">
+ <layer id="7" name="ConveyorBeltLayer" width="16" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,50,0,0,0,0,

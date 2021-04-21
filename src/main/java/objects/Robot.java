@@ -512,6 +512,20 @@ public class Robot extends Vector2 implements IObject{
         return true;
     }
 
+    public void robotOnBelt(){ //Må kanskje kalles på i game, på slutten av runden
+        float xPos = this.x;
+        float yPos = this.y;
+
+        ArrayList<Belt> belts = game.getBelts();
+        System.out.println(belts);
+
+        for(Belt belt : belts){
+            if((xPos == belt.x) && (yPos == belt.y)){
+                move(1,belt.dir,false);
+            }
+        }
+    }
+
     /**
      * To be used in next iteration of the project
      * @return
