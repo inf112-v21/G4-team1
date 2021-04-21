@@ -100,7 +100,7 @@ public class robotTest {
     public void turnLeftTest(){
         robot = new Robot(0,0);
         robot.setDirection("S");
-        robot.turnLeft();
+        robot.turnLeft(false);
         assertEquals("E", robot.getDir());
     }
 
@@ -108,7 +108,7 @@ public class robotTest {
     public void turnRightTest(){
         robot = new Robot(0,0);
         robot.setDirection("S");
-        robot.turnRight();
+        robot.turnRight(false);
         assertEquals("W", robot.getDir());
     }
 

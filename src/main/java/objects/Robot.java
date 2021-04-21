@@ -250,14 +250,14 @@ public class Robot extends Vector2 implements IObject{
      */
     public void turnBasedOnCard(TurningCard turnCard, Boolean playRound) {
         if (turnCard.isUturn()) {
-            turnRight();
-            turnRight();
+            turnRight(false);
+            turnRight(false);
         }
         else {
             if (turnCard.getDirection()) {
-                turnRight();
+                turnRight(false);
             } else {
-                turnLeft();
+                turnLeft(false);
             }
         }
     }
@@ -276,7 +276,7 @@ public class Robot extends Vector2 implements IObject{
     /**
      * Turns robot in left
      */
-    public void turnLeft(){
+    public void turnLeft(boolean calledFromServer){
 
         switch (dir) {
             case "N":
@@ -295,12 +295,24 @@ public class Robot extends Vector2 implements IObject{
         setRotation(1);
         System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
+
+        /*if (!calledFromServer) {
+            game.getPlayers().get(0).getClient().turnLeft(getId());
+        }*/
+
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+
     }
 
     /**
      * Turns robot right
      */
-    public void turnRight(){
+    public void turnRight(boolean calledFromServer){
         switch (dir) {
             case "N":
                 dir = "E";
@@ -318,6 +330,17 @@ public class Robot extends Vector2 implements IObject{
         setRotation(-1);
         System.out.println(rotation);
         game.getApplication().getPlayerLayer().getCell(Math.round(getX()),Math.round(getY())).setRotation(getRotation());
+
+        /*if (!calledFromServer) {
+            game.getPlayers().get(0).getClient().turnRight(getId());
+        }*/
+
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**

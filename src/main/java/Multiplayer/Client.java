@@ -181,6 +181,34 @@ public class Client {
                 game.playTurn();
             }
         });
+
+        socket.on("turnLeft", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String result = (objectList[0]+"");
+                System.out.println("TURNING LEFT FOR " + result);
+                for(Robot robot : game.getPlayers()) {
+                    if (robot.getId().equals(result)) {
+                        robot.turnLeft(true);
+                    }
+                }
+            }
+        });
+
+        socket.on("turnRight", new Emitter.Listener() {
+            @Override
+            public void call(Object... objects) {
+                Object[] objectList = Arrays.stream(objects).toArray();
+                String result = (objectList[0]+"");
+                System.out.println("TURNING RIGHT FOR " + result);
+                for(Robot robot : game.getPlayers()) {
+                    if (robot.getId().equals(result)) {
+                        robot.turnRight(true);
+                    }
+                }
+            }
+        });
     }
 
     public ArrayList<ICards> simpleCardNamesToICards(ArrayList<String> cards) {
@@ -245,6 +273,14 @@ public class Client {
 
     public void emitRoundOverFlag() {
         socket.emit("emitRoundOverFlag", "");
+    }
+
+    public void turnRight(String id) {
+        socket.emit("turnRight", id);
+    }
+
+    public void turnLeft(String id) {
+        socket.emit("turnLeft", id);
     }
 
     public String getId() {

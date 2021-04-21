@@ -45,11 +45,13 @@ public class Game {
 
 
             int count = 0;
-            players.get(0).setPosition(startPositions.get(0).x, startPositions.get(0).y);
+            int startPositionIndex = startPositions.size() - count - 1;
+            players.get(0).setPosition(startPositions.get(startPositionIndex).x, startPositions.get(startPositionIndex).y);
             for (Robot rob : players) {
-                players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(count).x, startPositions.get(count).y), rob.getId());
-                rob.setStartPosX(startPositions.get(count).x);
-                rob.setStartPosY(startPositions.get(count).y);
+                startPositionIndex = startPositions.size() - count - 1;
+                players.get(0).getClient().UpdateClientPosition(new Vector2(startPositions.get(startPositionIndex).x, startPositions.get(startPositionIndex).y), rob.getId());
+                rob.setStartPosX(startPositions.get(startPositionIndex).x);
+                rob.setStartPosY(startPositions.get(startPositionIndex).y);
                 count++;
             }
             application.render();
