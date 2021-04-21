@@ -1,7 +1,7 @@
 # INF112 Maven template 
-##Deloppgave 1
+## Deloppgave 1
 
-###Kompetanse
+### Kompetanse
 
 **Kristian Oterholt:** 
 Har erfaring med Java fra inf101 of inf102. Går IKT 4. semester
@@ -15,7 +15,7 @@ Erfaring med Java fra inf101 og inf102, litt python fra inf100, Går IKT 4. Seme
 **Anders Refvik Torsvik :**
 Erfaring med Java fra inf101 og inf102, litt python fra inf100, Går IKT 4. Semester
 
-###Roller
+### Roller
 
 **Teamleder:** Kristian
 
@@ -52,19 +52,19 @@ men siden vi bare er 4, funker dette bra. Når en issue lukkes blir den lagt i "
 
 Denne applikasjonen skal inneholde muligheten til å spille brettspillet RoboRally digitalt. Spillet vil inneholde funksjonalitet basert på brettspill-utgaven, men spesifisert av oppgaveteksten gitt av UiB. Målet er at spillet skal ha en grei spillopplevelse med mulighet for multiplayer.
 
-####Brukerhistorie
+#### Brukerhistorie
 
 
 Som spiller ønsker jeg å kunne se brettet jeg spiller på og de forskjellige brikkene på brettet for å kunne bevege meg.
 
-####Arbeidsoppgaver:
+#### Arbeidsoppgaver:
 
 * Lage brettet i programmet 'tiled'
 * Vise brettet i aplikasjonen
 * Vise spiller på aplikasjonen
 * Spiller skal kunne klytte på brettet
 
-####Akseptansekriterier
+#### Akseptansekriterier
 
 Gitt at
 
@@ -75,17 +75,17 @@ når Spiller trykker på ->
 
 så beveger spiller seg på brettet i retning ->.
 
-####Brukerhistorie:
+#### Brukerhistorie:
 
 
 Som spiller ønsker jeg å kunne besøke flagg i spillet, slik at det er mulig å vinne.
 
-####Arbeidsoppgaver:
+#### Arbeidsoppgaver:
 
 * Flagg skal vises på brettet
 * Spiller skal registrere når den går over flagg
 
-####Akseptansekriterier
+#### Akseptansekriterier
 
 
 
@@ -101,11 +101,11 @@ når spiller går fra felt (6,5) til felt(6,6)
 
 så vinner spilleren
 
-##Testing
+## Testing
 For testingen lagde vi bare en JUnit test til dette programmet, FileLoadTest.
 Denne testen, tester på om det finnes en fil som heter RoboRallyTile, altså tmx filen for kartet.
 
-####Visuelle tester
+#### Visuelle tester
 Vi foretok noen visuelle tester for spillbrettet og for beveging av karaktern.
 For spillbrettet sjekket vi at alle de ulike lagene viste (baselayer, holelayer,flaglayer og playerlayer).
 Når alle de ulike lagene kunne sees, var testen passert.

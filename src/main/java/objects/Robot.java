@@ -28,14 +28,6 @@ public class Robot extends Vector2 implements IObject{
     float startPosY = 0;
     int rotation;
 
-    /** TODO
-     * Finish checkIfRobotIsAtPosition()
-     * Finish pushRobot()
-     * Integrate with server
-     */
-
-
-
     public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
