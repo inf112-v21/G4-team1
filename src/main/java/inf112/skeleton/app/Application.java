@@ -198,6 +198,9 @@ public class Application extends InputAdapter implements ApplicationListener {
                 if(!game.getPlayers().get(0).getChosenCardsFromHand().isEmpty()) {
                     game.getPlayers().get(0).moveBasedOnNextCard(false);
                 }
+                else {
+                    game.drawStep();
+                }
             }
 
         }
