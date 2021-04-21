@@ -18,7 +18,7 @@ The game is over when the first robot visits all the flags. During the game, the
 #### How to play the game:
 * Clone the latest version 
 * Open it in your editor
-* Run Main.java
+* Run Main.java (src/main/java/inf112/skeleton/app/)
 * To play multiplayer, have other people do the same, and you will automatically connect to eachother
 * When everyone is in, the server-client presses enter to start the game for everyone (server-client has ID 1 in console)
 * To play a card write the corresponding number (1-9)

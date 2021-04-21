@@ -16,7 +16,6 @@ public class Game {
     ArrayList<Robot> players;
     int numberOfFlags;
     ArrayList<Flag> flags;
-    Deck deck;
     Application application;
     String currentHands;
     ArrayList<Vector2> startPositions;
@@ -26,7 +25,6 @@ public class Game {
         this.application = application;
 
         players = playerList;
-        deck = new Deck();
     }
 
     /**
@@ -84,7 +82,7 @@ public class Game {
         for (Robot rob : players) {
             hands += rob.getId();
             hands += ",";
-            rob.drawHand(deck);
+            rob.drawHand();
             for(ICards card : rob.getHand()){
                 hands += card.getSimpleCardName();
                 hands += ",";
@@ -109,7 +107,7 @@ public class Game {
      */
     public void discardStep(){
         for (Robot rob : players) {
-            rob.discardHand(deck);
+            rob.discardHand();
         }
     }
 

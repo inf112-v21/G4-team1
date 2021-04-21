@@ -27,12 +27,14 @@ public class Robot extends Vector2 implements IObject{
     float startPosX = 0;
     float startPosY = 0;
     int rotation;
+    Deck deck;
 
     public Robot(int x, int y){
         lifeTokens = 3;
         damageTokens = 0;
         rotation=0;
         setPosition(x,y);
+        deck = new Deck();
     }
 
 
@@ -326,7 +328,7 @@ public class Robot extends Vector2 implements IObject{
         return chosenCardsFromHand.remove(0);
     }
 
-    public void drawHand(Deck deck){
+    public void drawHand(){
         for (int i = 0; i<9; i++) {
             hand.add(deck.draw());
         }
@@ -342,7 +344,7 @@ public class Robot extends Vector2 implements IObject{
     }
 
 
-    public void discardHand(Deck deck){
+    public void discardHand(){
         for (ICards i: hand){
             deck.discardCard(i);
         }
