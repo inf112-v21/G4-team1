@@ -95,3 +95,21 @@ Tar opp hva som bør være fokus til siste innlevering med tanke på at vi mangl
 Gui en og rundelogikken trenger fortsatt mer arbeid. tre nye Mvp krav som er 1: lage nye arbeidsoppgaver bl.a at gameklassen 
 bare opprettes hos hosten, 2: gjøre det slik at spillet venter på at alle spillerene har gjort turen sin,
 3: lage flere objekter i spillet bl.a belte, vegger osv.
+
+##Møtereferat 4/21/2021
+
+Medlemmer i møte: Kristian, Ulrik, Nathaniel, Anders, Asgeir
+
+Jobbing på belt og wall klassen. Wall fungerer som planlagt men Belt ble ikke helt
+ferdig implementert. Planlagt å få til det i morgendagen. Vi har så å si blitt
+enig om alt det som skal være 100% klart til innleveringen. Spill-logikken er også under arbeid
+
+##Møtereferat 4/22/2021
+
+Medlemmer i møte: Kristian, Ulrik, Anders
+
+Fellesprogrammering. Ser på hva som skal til for at belts skal fungere. Anders har gjort mesteparten allerede.
+Planlegger siste møte
+i morgen rundt kl 2 for å få satt alt sammen til innlevering. 
+Nå fungerer mer av spill-logikken 
+samt går det å spille flere runder.
