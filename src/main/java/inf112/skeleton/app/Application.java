@@ -202,6 +202,7 @@ public class Application extends InputAdapter implements ApplicationListener {
                 else {
                     game.discardStep();
                     game.drawStep();
+                    players.get(0).robotOnBelt();
                     return true;
                 }
             }

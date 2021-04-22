@@ -4,13 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Belt extends Vector2 implements IObject {
 
-    String dir;
-    int power;
+    String beltDir;
+    int beltPower;
 
     public Belt (int x, int y, String dir, int power){
         setPosition(x,y);
-        dir = dir;
-        power = power;
+        beltDir = dir;
+        beltPower = power;
     }
     public void setPosition(float x, float y) {
         this.set(x,y);
@@ -25,10 +25,10 @@ public class Belt extends Vector2 implements IObject {
     }
 
     public String getDir(){
-        return dir;
+        return beltDir;
     }
 
     public int getPower() {
-        return power;
+        return beltPower;
     }
 }

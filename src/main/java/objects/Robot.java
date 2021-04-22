@@ -272,14 +272,12 @@ public class Robot extends Vector2 implements IObject{
         if ((direction.equals("N")) || (direction.equals("E")) || (direction.equals("S")) || (direction.equals("W"))) {
             dir = direction;
         }
-
     }
 
     /**
      * Turns robot in left
      */
     public void turnLeft(boolean calledFromServer){
-
         switch (dir) {
             case "N":
                 dir = "W";
@@ -592,7 +590,8 @@ public class Robot extends Vector2 implements IObject{
 
         for(Belt belt : belts){
             if((xPos == belt.x) && (yPos == belt.y)){
-                move(1,belt.dir,false, false);
+                System.out.println("BeltDir" + belt.getDir());
+                move(1,belt.getDir(),false, false);
             }
         }
     }
@@ -655,7 +654,4 @@ public class Robot extends Vector2 implements IObject{
             rotation=3;
         }
     }
-
-
-
 }

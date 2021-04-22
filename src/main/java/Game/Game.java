@@ -38,8 +38,13 @@ public class Game {
         if (roundNumber == 0) {
             startPositions = application.getEntities(application.getStartPositionLayer());
             playing = true;
+
             ArrayList<Vector2> walls = application.getEntities(application.getWallsLayer());
             wallList = getWalls(walls);
+
+            ArrayList<Vector2> belts = application.getEntities(application.getConveyorBeltLayer());
+            beltList = getBelts(belts);
+
             ArrayList<Vector2> entitiesList = application.getEntities(application.getFlagLayer());
             flags = sortFlags(entitiesList);
 
