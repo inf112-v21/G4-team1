@@ -24,6 +24,16 @@ I tilleg har vi lært at det er viktig å
 bruke mer tid på å organisere koden for å unngå at det ligger metoder
 eller kode i f.eks game.java som heller kunne vært i robot.java. Det hjelper mye senere når man skal forstå hva koden gjør eller gjøre endringer.
 
+### Kommunikasjon:
+
+Vi har en discord server som vi fortsatt bruker til prosjektet. I tillegg har vi en messenger gruppe hvor
+alle møtetidene blir publisert dagen før og man kan eventuelt melde om man kan møte opp
+eller ikke. Teamleder Kristian er som oftest den som tar ansvar for at alle vet når neste møte
+er planlagt.
+
+
+
+
 ### Retroperspektiv:
 
 Opp mot siste oblig har vi jobbet med å fikse problemer spillet samt implementere objekter som walls og belt. I tillegg har vi jobbet med rundelogikken/spillogikken slik at spillet fungerer mer som planlagt. En ting vi har merket og som vi hadde gjort annerledes hvis vi skulle startet på nytt er å jobbe mer jevnlig. På grunn av de satte oblig fristene endte vi opp med å jobbe mye opp mot fristene. Dette skapte litt stressende stemning opp mot oblig 3 hvor det var mye vi følte vi ikke hadde fått gjort. Opp mot denne obligen og når det kommer ting som påskeferie inn i bildet og man fort ender opp med å ikke jobbe med prosjektet på 1-2 uker.
@@ -95,6 +105,44 @@ så skal spiller i neste programmeringsfase befinne seg på (0,2)
 - Implementere metode for å identifisere belter på brettet
 - La spiller beveges i beltets retning hvis han ender turen sin på den
 
+**Brukerhistorie Rotering:**
+Som spiller vil jeg kunne se at jeg roterer meg, slik at spillet blir lettere å forstå.
+
+**Akseptansekriterier:**
+
+Gitt at
+
+spiller kan visuelt se brikken sin peke i retning North.
+
+spiller velger kort "turn right" i programmeringsfasen
+
+når kort "turn right" blir spilt
+
+så skal spiller visuelt se brikke peke i retning East.
+
+**Arbeidsoppgaver:**
+- Knytte spiller retning (N,E,S,W) til det respektive bildet som peker den retningen.
+- Lage logikk som holder kontroll på spiller sin retning.
+
+**Brukerhistorie Meny:(ble aldri helt implementert)** Som spiller vil jeg se en meny når jeg starter programmet, slik at jeg kan velge når jeg vil starte spillet.
+
+**Akseptansekriterier:**
+
+- Gitt at
+
+- spiller starter programmet
+
+- så skal en meny vises
+
+- når spiller velger "start spill"
+
+- så skal spillet starte.
+
+**Arbeidsoppgaver:**
+
+- Lage en meny til RoboRalley.
+- Lage metode som registrerer valg og gjennomfører det.
+
 ###### Manuelle tester:
 
 **Manuell test Flag:** Spiller må gå igjennom flagg i riktig rekkefølge for å vinne
@@ -121,8 +169,32 @@ Test steg:
 - gjennomfør programmeringsfasen slik at du ender på en beltebrikke
 - trykk "SPACE" for å starte neste runde
 
-Forventet resultat: Spiller beveger seg +1 i beltets retning.
+Forventet resultat: Spiller beveger seg +1 i beltets retning
 
+**Manuell test Wall:** Spiller skal stoppes av vegger
 
+Forutsetning: Det må være en vegg på brettet
 
+Test steg:
+
+- Trykke enter for å starte spillet
+- Bevege spiller til en vegg
+- Prøve å gå igjennom veggen
+
+Forventet resultat: Spiller skal ikke klare å gå igjennom veggen
+
+**Manuell test Rotering:**
+Spiller skal kunne rotere seg i spillet og se det
+
+Forutsetning: spiller må kunne velge å rotere seg
+
+Test steg:
+
+- start spillet
+- trykk enter
+- vent til programmeringsfasen
+- velg et roteringskort
+- fullfør programmeringsfasen
+
+Forventet resultat: Spiller roteres i henhold til kortet
 
