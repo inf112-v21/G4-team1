@@ -16,15 +16,15 @@ The game is over when the first robot visits all the flags. During the game, the
 
 
 #### How to play the game:
-* Clone the latest version 
-* Open it in your editor
-* Run Main.java (src/main/java/inf112/skeleton/app/)
-* To play multiplayer, have other people do the same, and you will automatically connect to eachother
-* When everyone is in, the server-client presses enter to start the game for everyone (server-client has ID 1 in console)
-* To play a card write the corresponding number (1-9)
-* when every player has played 5 cards, they will be executed
+* Clone the latest version
+* Run Main.java (src/main/java/inf112/skeleton/app/).
+* To play multiplayer, have other people do the same, and you will automatically connect to eachother.
+* When everyone is in, the server-client presses enter to start the game for everyone (server-client has ID 1 in the console).
+* To play a card write the corresponding number (1-9), the nonserver-clients need to do this first, then the server clients does it.
+* The moves will be executed automatically.
+* To start a new round, the server-client presses space
+* Visit each flag in order to win.
 
 #### Known bugs:
-* pushRobot will sometimes give an error, but works most times (Important: must give error to work)
-* If multiple players press enter to start the first programming phase game movement becomes buggy and will eventually crash.
-* List of flags is not sorted correctly, so the order you have to visit them is not accurate
+* Starting new rounds sometimes gives out multiple hands in multiplayer.
+* Some print messages gets sent multiple times in multiplayer.
