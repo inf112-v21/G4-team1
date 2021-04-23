@@ -61,6 +61,7 @@ Teamet våres fungerer bra og vi jobber effektivt sammen. Selv nå når stressfa
 ### Brukerhistorier:
 
 **Brukerhistorie Vegg**
+
 Som spiller vil jeg kunne bli stoppet av vegger, slik at jeg må planlegge turen min rundt de.
 
 **Akseptansekriterier:**
@@ -82,6 +83,7 @@ så skal spiller miste bli stoppet av veggen og ikke bevege seg.
 
 
 **Brukerhistorie Belt**
+
 Som spiller vil jeg kunne beveges av belter, slik at jeg kan gjøre mer avanserte trekk
 
 **Akseptansekriterier:**
@@ -143,7 +145,7 @@ så skal spiller visuelt se brikke peke i retning East.
 - Lage en meny til RoboRalley.
 - Lage metode som registrerer valg og gjennomfører det.
 
-###### Manuelle tester:
+### Manuelle tester:
 
 **Manuell test Flag:** Spiller må gå igjennom flagg i riktig rekkefølge for å vinne
 
