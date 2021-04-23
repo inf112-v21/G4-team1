@@ -8,8 +8,8 @@ public class Deck {
     ArrayList<ICards> discardPile;
 
     public Deck(){
-        cardDeck = new ArrayList<ICards>();
-        discardPile = new ArrayList<ICards>();
+        cardDeck = new ArrayList<>();
+        discardPile = new ArrayList<>();
 
         //18 move 1 cards
         AddMovementCardsToDeck(18, 1);
@@ -29,7 +29,7 @@ public class Deck {
         //Turn left cards
         AddTurnCardsToDeck(18, false, false);
 
-        //Uturn cards
+        //U-turn cards
         AddTurnCardsToDeck(6, true, true);
 
         shuffle();
@@ -73,13 +73,11 @@ public class Deck {
      */
     public ICards draw(){
         if (cardDeck.isEmpty()){
-            for (ICards i: discardPile){
-                cardDeck.add(i);
-            }
+            cardDeck.addAll(discardPile);
             shuffle();
         }
         if (cardDeck.isEmpty()){
-            System.out.println("Tomt deck");
+            System.out.println("Empty deck");
             return null;
         }
         return cardDeck.remove(0);

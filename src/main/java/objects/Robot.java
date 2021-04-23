@@ -9,7 +9,6 @@ import Multiplayer.Client;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.Application;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -91,29 +90,19 @@ public class Robot extends Vector2 implements IObject{
         return this.y;
     }
 
-    public void setStartPosition(float x, float y){
-        startPosX = x;
-        startPosY = y;
-    }
 
     /**
      * This method moves the robot based on the next movement card, which is the first card in the currentCards list.
      * It will discard the used card from the current cards list.
-     * @param animate
+     * @param animate True if move is to be animated
      * @param playRound True if this is movement ordered by the host because of a round being played
      */
     public void moveBasedOnNextCard(boolean animate, boolean playRound){
         ICards card = drawAndDiscardFirstCardInList();
         if (card.getClass() == MovementCard.class) {
-            MovementCard card_ = (MovementCard) card;
-            //System.out.println("Moving " + card_.getDistance() + " tiles in direction " + getDir());
             moveBasedOnCard((MovementCard) card, animate, playRound);
         } else {
-            TurningCard card_ = (TurningCard) card;
             turnBasedOnCard((TurningCard) card, playRound);
-            /*if (card_.isUturn()) { System.out.println("Uturned, new direction is " + getDir()); }
-            else if (card_.getDirection()) { System.out.println("Turned to the right, new direction is " + getDir()); }
-            else { System.out.println("Turned to the left, new direction is " + getDir()); }*/
         }
     }
 
@@ -164,7 +153,8 @@ public class Robot extends Vector2 implements IObject{
                         break;
                     case 1:
                         // Position blocked by a robot
-                        Vector2 tempPosition = new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
+                        new Vector2(getX() + moveDirection.x, getY() + moveDirection.y);
+                        Vector2 tempPosition;
                         for (int j = 0; j < 100; j++) {
                             tempPosition = new Vector2(newPosition.x + (moveDirection.x * j), newPosition.y + (moveDirection.y * j));
                             if (CheckIfOutOfBounds(tempPosition)) {
@@ -208,7 +198,7 @@ public class Robot extends Vector2 implements IObject{
     }
     /**
      * Check if position is clear
-     * @param position
+     * @param position to be checked
      * @return 0 means position is clear, 1 means position has a robot
      */
     public int checkIfPositionIsClear(Vector2 position) {
@@ -366,10 +356,6 @@ public class Robot extends Vector2 implements IObject{
         return visitedFlags;
     }
 
-    /**
-     * To be used in next iteration of the project
-     * @return
-     */
     public ICards getFirstCard(){
         return chosenCardsFromHand.get(0);
     }
@@ -486,15 +472,7 @@ public class Robot extends Vector2 implements IObject{
     public void setId(String id) {
         this.id = id;
         try {
-            /*System.out.println("clientID: " + client.getId());
-            System.out.println("type: " + client.getId().getClass().getName());
-            System.out.println("1: " + client.getId());
-            System.out.println("type: " + "1".getClass().getName());*/
-            if (client.getId() == "1") {
-                isServer = true;
-            } else {
-                isServer = true;
-            }
+            isServer = client.getId().equals("1");
         }
         catch (Exception e) {
 
@@ -502,8 +480,8 @@ public class Robot extends Vector2 implements IObject{
     }
 
     /**
-     * @param xPos
-     * @param yPos
+     * @param xPos x Position
+     * @param yPos y Position
      * @return A wall if the tile contains a wall
      * Returns null if it does not contain a wall
      */
@@ -515,7 +493,6 @@ public class Robot extends Vector2 implements IObject{
         ArrayList<Wall> newWallsList = new ArrayList<>();
 
         for(Wall wall : walls){
-            //wall har samme pos som robot
             if((wall.getX() == xPos) && (wall.getY() == yPos)){
                 newWallsList.add(wall);
             }
@@ -527,7 +504,7 @@ public class Robot extends Vector2 implements IObject{
      * Checks if robot can move
      * Made to prevent robot moving trough walls
      * Should prohibit robots from moving through walls even if the wall is on the same tile as the robot
-     * @return
+     * @return True if robot can move
      */
     public Boolean robotCanMove(){
         if(!game.isPlaying()) return true;
@@ -581,7 +558,7 @@ public class Robot extends Vector2 implements IObject{
         return true;
     }
 
-    public void robotOnBelt(){ //Må kanskje kalles på i game, på slutten av runden
+    public void robotOnBelt(){
         float xPos = this.x;
         float yPos = this.y;
 
@@ -594,14 +571,6 @@ public class Robot extends Vector2 implements IObject{
                 move(1,belt.getDir(),false, false);
             }
         }
-    }
-
-    /**
-     * To be used in next iteration of the project
-     * @return
-     */
-    public Game getGame() {
-        return game;
     }
 
     public ArrayList<ICards> getChosenCardsFromHand() {
@@ -620,10 +589,6 @@ public class Robot extends Vector2 implements IObject{
 
     public Client getClient(){
         return client;
-    }
-
-    public void setClient(Client client_){
-        client = client_;
     }
 
     public float getStartPositionX() {

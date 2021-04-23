@@ -6,12 +6,10 @@ import objects.Belt;
 import objects.Flag;
 import objects.Robot;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import Cards.*;
 import objects.Wall;
-import org.lwjgl.system.CallbackI;
 
 public class Game {
     Boolean playing = false;
@@ -80,15 +78,7 @@ public class Game {
      * the games turn order
      */
     public void playGame() {
-
-        while (playing) {
-            drawStep();
-            for (int i = 0; i<5; i++){
-                //playTurn();
-            }
-            //discardStep();
-            return;
-        }
+        drawStep();
     }
 
     /**
@@ -134,7 +124,7 @@ public class Game {
      */
     public void playTurn(){
         for (int i = 0; i < 5; i++){
-            ArrayList<ICards> cards = new ArrayList();
+            ArrayList<ICards> cards = new ArrayList<>();
             for(Robot rob : players){
                 cards.add(rob.getFirstCard());
             }
@@ -157,7 +147,6 @@ public class Game {
                     }
                 }
             }
-            //checkIfWinner();
         }
         roundNumber++;
         players.get(0).getClient().emitRoundOverFlag();
@@ -183,10 +172,6 @@ public class Game {
         return false;
     }
 
-    public Flag finalFlag(){
-       return flags.get(flags.size()-1);
-    }
-
     public ArrayList<Robot> getPlayers() {
         return players;
     }
@@ -203,14 +188,10 @@ public class Game {
         ArrayList<Flag> sortedFlags = new ArrayList<>();
 
         for(Vector2 v : flagList){
-            //legge til i flagsliste etter størrelse, minst verdi først, representerer første flag
             sortedFlags.add(new Flag(Math.round(v.x), Math.round(v.y)));
         }
-        //TODO: flaggene skal sorteres ordentlig, det under kompilerer ikke
 
         Collections.sort(sortedFlags, (c1, c2) -> {
-
-            //Sorts the flags according to their tile value
 
             int id1 = application.getFlagLayer().getCell(Math.round(c1.x), Math.round(c1.y)).getTile().getId();
             int id2 = application.getFlagLayer().getCell(Math.round(c2.x), Math.round(c2.y)).getTile().getId();

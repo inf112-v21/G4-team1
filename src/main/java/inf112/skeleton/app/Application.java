@@ -20,7 +20,6 @@ import objects.Robot;
 import Game.Game;
 import com.badlogic.gdx.math.Vector2;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -81,9 +80,6 @@ public class Application extends InputAdapter implements ApplicationListener {
         game = new Game(players, this);
         players.get(0).InitializeClient(game, this);
 
-        String playerSkinPath = "assets/player.png";
-
-
         batch = new SpriteBatch();
 
         mapLoader = new TmxMapLoader();
@@ -98,7 +94,7 @@ public class Application extends InputAdapter implements ApplicationListener {
         conveyorBeltLayer = (TiledMapTileLayer) map.getLayers().get("ConveyorBeltLayer");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("PlayerLayer");
 
-        SetPlayerSkin(playerSkinPath);
+        SetPlayerSkin();
 
 
 
@@ -111,18 +107,8 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     }
 
-    public void addFlags(){
-        ArrayList<Flag> Flags = new ArrayList<>();
-
-        for(int i=0; i<flagLayer.getWidth(); i++){
-            for(int j=0; j<flagLayer.getHeight(); j++){
-
-            }
-        }
-    }
-
-    public void SetPlayerSkin(String playerSkinPath) {
-        playerCell = new ArrayList<TiledMapTileLayer.Cell>();
+    public void SetPlayerSkin() {
+        playerCell = new ArrayList<>();
         playerDiedCell = new TiledMapTileLayer.Cell();
         playerWonCell = new TiledMapTileLayer.Cell();
 
@@ -144,12 +130,13 @@ public class Application extends InputAdapter implements ApplicationListener {
         System.exit(0);
     }
 
-    @Override
+
     /**
-    Runs the game, checks if its running, paused or finished,
-    Updates the board if the game is running. Calls draw function which calls the render
-    function again.
+     * Runs the game, checks if its running, paused or finished,
+     * Updates the board if the game is running. Calls draw function which calls the render
+     * function again.
      */
+    @Override
     public void render() {
 
         switch(state){
@@ -166,10 +153,10 @@ public class Application extends InputAdapter implements ApplicationListener {
 
     }
 
-    @Override
     /**
-    Oppdaterer posisjonen til spiller, enten ved piltast eller kort.
+     *  Updates the position of a player, with keys or cards
      */
+    @Override
     public boolean keyUp(int keycode){
 
         if (arrowKeysEnabled) {
@@ -197,14 +184,13 @@ public class Application extends InputAdapter implements ApplicationListener {
             } else if (keycode == Input.Keys.SPACE) {
                 if(!game.getPlayers().get(0).getChosenCardsFromHand().isEmpty()) {
                     game.getPlayers().get(0).moveBasedOnNextCard(false, false);
-                    return true;
                 }
                 else {
                     game.discardStep();
                     game.drawStep();
                     players.get(0).robotOnBelt();
-                    return true;
                 }
+                return true;
             }
 
         }
@@ -238,7 +224,7 @@ public class Application extends InputAdapter implements ApplicationListener {
     /**
     Updates the game board, checks if any players are on flag or hole tiles.
     If a players stands on a flag tiles, it calls checkIfWinner in game to see if the game is done
-    Sets gamestate to stopped if checkifwinner is true.
+    Sets gameState to stopped if checkIfWinner is true.
      */
     public void update() {
         for (Robot player : game.getPlayers()) {
@@ -323,7 +309,7 @@ public class Application extends InputAdapter implements ApplicationListener {
 
 
     public ArrayList<Vector2> getEntities(TiledMapTileLayer layer){
-        ArrayList<Vector2> entities = new ArrayList<Vector2>();
+        ArrayList<Vector2> entities = new ArrayList<>();
         for(int x = 0; x < mapWidth; x++){
             for(int y = 0; y < mapHeight;y++){
                 if(layer.getCell(x,y) != null){
@@ -333,11 +319,6 @@ public class Application extends InputAdapter implements ApplicationListener {
             }
         }
         return entities;
-    }
-
-
-    public void AddPlayer(Robot robot) {
-        game.getPlayers().get(0).add(robot);
     }
 
     public TiledMapTileLayer getPlayerLayer() {

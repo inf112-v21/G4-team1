@@ -10,9 +10,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import objects.Robot;
-import org.lwjgl.system.CallbackI;
 
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,9 +68,6 @@ public class Client {
                 Robot robot = new Robot(0,0, game_);
                 robot.setId(id);
                 game_.AddPlayer(robot);
-                /*Robot robot = new Robot(0, 0);
-                robot.setId(objectList[0]+"");
-                game.addPlayer(robot);*/
             }
         });
 
